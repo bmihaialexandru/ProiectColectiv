@@ -6,7 +6,7 @@ export class ContactPage extends React.Component {
    return (
      <div className='page-content'>
        <h2>Contact</h2>
-       <p className="default-text">iLift's contanct info.</p>
+       <p className="default-text">iLift's contact info.</p>
      </div>
    );
  }
