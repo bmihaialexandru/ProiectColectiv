@@ -2,13 +2,18 @@
 
 include('..\db\db_manager.php');
 
-class UserController {
-	private $db;
-	public function __construct() {
-		$db = new DBUtils();
-	}
-	
-	public function get_user_with_password($name, $password_hash) {
-		
-	}
+class UserController
+{
+    private $db;
+
+    public function __construct()
+    {
+        $db = new DBUtils();
+    }
+
+    public function get_user_with_password($name, $password_hash)
+    {
+        return $this->db->checkuser($name, $password_hash);
+    }
+}
 ?>
