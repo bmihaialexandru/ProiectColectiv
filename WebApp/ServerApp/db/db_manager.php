@@ -28,8 +28,8 @@ class DBUtils {
 	}
 
 	public function checkuser($username,$password){
-		$sql = 'SELECT * FROM users WHERE username = ? AND password=?';
-		$stmt=$this->pdo.prepare($sql);
+		$sql = 'SELECT * FROM users WHERE name = ? AND passwordhash=?';
+		$stmt=$this->pdo->prepare($sql);
 		$stmt->execute([$username,$password]);
 		$user = $stmt->fetch();
 		if($user)
@@ -39,5 +39,4 @@ class DBUtils {
 		return false;
 	}
 }
-
 ?>

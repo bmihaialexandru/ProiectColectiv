@@ -6,8 +6,8 @@ include('UserController.php');
 class Controller {
 	public $uctrl;
 	
-	public function __construct() {
-		$uctrl = new UserController();
+	function __construct() {
+		$this->uctrl = new UserController();
 	}
 }
 
