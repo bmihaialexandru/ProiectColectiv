@@ -2,24 +2,26 @@
 include("..\controllers\controller.php");
 
 
-if($this->get_request_method() != "POST")
+if(!$_SERVER["REQUEST_METHOD"] != "POST")
 {
-$this->response('',406);
+   echo "error";
 }
+else{
 $ctrl = new Controller();
-$username = $this->_request['username'];
-$password = $this->_request['ppassword'];
-
-// Input validations
+$username = $_POST['username'];
+$password = $_POST['password'];
+echo $username;
+echo $password;
+ //Input validations
 if(!empty($username) and !empty($password))
 {
 	$res=$ctrl->uctrl->checkuser($username,$password);
     if($res != false) {
-        $this->response($this->json($result), 200);
+        echo "succcess";
     }
     else {
-        $error = array('status' => "Failed", "msg" => "Invalid Email address or Password");
-        $this->response($this->json($error), 400);
+        echo "error";
     }
+}
 }
 ?>
