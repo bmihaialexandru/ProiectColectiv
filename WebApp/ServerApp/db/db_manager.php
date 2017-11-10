@@ -28,7 +28,7 @@ class DBUtils {
 	}
 
 	public function checkuser($username,$password){
-		$sql = 'SELECT * FROM users WHERE name = ? AND passwordhash=?';
+		$sql = 'SELECT * FROM user WHERE name = ? AND passwordhash=?';
 		$stmt=$this->pdo->prepare($sql);
 		$stmt->execute([$username,$password]);
 		$user = $stmt->fetch();
@@ -37,6 +37,13 @@ class DBUtils {
 			return $user;
 		}
 		return false;
+	}
+	
+	public function adduser($username,$password_hash,$phone,$email) {
+		$sql = "INSERT INTO user(name, phone_number, email, passwordhash, user_type) VALUES(?,?,?,?,?);";
+		$stmt=$this->pdo->prepare($sql);
+		$stmt->execute([$username, $phone, $email, $password_hash, 0]);
+		return 0;
 	}
 }
 ?>
