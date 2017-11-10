@@ -15,7 +15,7 @@ if($_SERVER["REQUEST_METHOD"] != "POST")
 	$security_token = $_POST['token'];
 	
 	// we need to be sure that this token has admin rights before other changes are made.
-	if(!$ctrl->uctrl->validate_token($security_token, "register"))
+	if(!$ctrl->uctrl->validate_token($security_token, $username, "register"))
 	{
 		$message->answer = "Error";
 		echo json_encode($message);

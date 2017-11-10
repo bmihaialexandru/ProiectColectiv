@@ -45,5 +45,22 @@ class DBUtils {
 		$stmt->execute([$username, $phone, $email, $password_hash, 0]);
 		return 0;
 	}
+	
+	public function get_user_by_name($username) {
+		$sql = "SELECT * FROM user WHERE name = ?";
+		$stmt = $this->pdo->prepare($sql);
+		$stmt->execute([$username]);
+		$user = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		return $user;
+	}
+	
+	public function update_password($id, $pass_hash)
+	{
+		$sql = "UPDATE user SET passwordhash = ?, pass_changed = 1 WHERE id = ?";
+		$stmt = $this->pdo->prepare($sql);
+		$stmt->execute([$pass_hash, $id]);
+		return 0;
+	}
+	
 }
 ?>
