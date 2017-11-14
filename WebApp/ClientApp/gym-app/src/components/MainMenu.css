@@ -1,0 +1,8 @@
+.Navigation > li {
+    display: inline;
+} 
+.Navigation > li > a {
+    text-decoration: none;
+    color: #faed26;
+    padding: 50px;
+}
