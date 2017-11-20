@@ -1,0 +1,7 @@
+.header-logo-ilift {
+    height: 60px;
+    width: 200px;
+    border: 2px white;
+    background: url("../images/logo.png") no-repeat;
+    background-size: contain;
+}
