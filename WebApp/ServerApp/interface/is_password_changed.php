@@ -1,5 +1,7 @@
 <?php
 error_reporting(E_ERROR | E_PARSE);
+
+include("../services/JWTService.php");
 include("..\controllers\controller.php");
 if($_SERVER["REQUEST_METHOD"] != "POST")
 {
@@ -8,11 +10,21 @@ if($_SERVER["REQUEST_METHOD"] != "POST")
 }
 	else{
 	$ctrl = new Controller();
-	$username = $_POST['username'];
+	$jwt_service = new JWTService();
+	//$username = $_POST['username'];
 	$security_token = $_POST['token'];
-	
-	// we need to be sure that this token has admin rights before other changes are made.
-	if(!$ctrl->uctrl->validate_token($security_token, $username, "register"))
+	$token_ok = true;
+
+	try
+    {
+        $username = $jwt_service->validateToken($security_token)["name"];
+    }
+    catch(Exception $e)
+    {
+        $token_ok = false;
+    }
+
+	if($token_ok == false)
 	{
 		$message->answer = "Error";
 		echo json_encode($message);
