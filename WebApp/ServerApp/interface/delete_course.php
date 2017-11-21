@@ -20,6 +20,7 @@ if($_SERVER["REQUEST_METHOD"] != "POST")
 else{
     $ctrl = new Controller();
     $tokenService = new JWTService();
+    $id = $_POST["id"];
     $token = $_POST["token"];
     $token_ok = true;
     $data = null;
@@ -31,6 +32,10 @@ else{
         if($user["user_type"] != $data["role"])
         {
             throw new Exception("Mismatch user role");
+        }
+        if($user["user_type"] != 1)
+        {
+            throw new Exception("Only admins can delete courses!");
         }
     }
     catch(Exception $e)
@@ -47,14 +52,7 @@ else{
     else
     {
         $message->answer = "Success";
-        if($data["role"] == "1")
-        {
-            $message->role = "Administrator";
-        }
-        else
-        {
-            $message->role = "User";
-        }
+        $ctrl->cctrl->delete_course($id);
         echo json_encode($message);
     }
 
