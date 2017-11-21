@@ -1,6 +1,7 @@
 <?php
 error_reporting(E_ERROR | E_PARSE);
 include("..\controllers\controller.php");
+include("..\services\JWTService.php");
 if($_SERVER["REQUEST_METHOD"] != "POST")
 {
    $message->answer = "Error";
@@ -8,21 +9,25 @@ if($_SERVER["REQUEST_METHOD"] != "POST")
 }
 	else{
 	$ctrl = new Controller();
-	$username = $_POST['username'];
+	$jwt_serv = new JWTService();
 	$new_password = $_POST['new_password'];
 	$old_password = $_POST['old_password'];
 	$security_token = $_POST['token'];
-	
-	// we need to be sure that this token has admin rights before other changes are made.
-	if(!$ctrl->uctrl->validate_token($security_token, $username, "register"))
-	{
-		$message->answer = "Error";
-		echo json_encode($message);
-	}
+    $token_ok = true;
+	try {
+        $username = $jwt_serv->validateToken($security_token)["name"];
+
+    } catch(Exception $e)
+    {
+        $token_ok = false;
+    }
+	if($token_ok == false)
+    {
+        // TODO: we need to discuss here if we want to give a HTTP status or a JSON in case of an error?
+        header('HTTP/1.0 401 Unauthorized');
+    }
 	else
-	{
-		
-		 //TODO: validate email and phone number
+    {
 		if(!empty($username) and !empty($old_password) and !empty($new_password))
 		{
 		
@@ -35,12 +40,14 @@ if($_SERVER["REQUEST_METHOD"] != "POST")
 			else 
 			{
 				$message->answer = "Error";
+				$message->reason = "Mismatch between old password given and real old password";
 				echo json_encode($message);
 			}
 		}
 		else
 		{
 			$message->answer = "Error";
+			$message->reason = "New password and old password must not be empty!";
 			echo json_encode($message);
 		}
 	}

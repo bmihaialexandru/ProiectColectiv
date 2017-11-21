@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 10, 2017 at 04:04 PM
+-- Generation Time: Nov 21, 2017 at 08:44 PM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -29,10 +29,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `course` (
   `id` int(10) NOT NULL,
   `name` varchar(100) NOT NULL,
-  `description` varchar(500) NOT NULL,
-  `max_number_of_users` int(3) NOT NULL,
-  `trainer_id` int(10) NOT NULL,
-  `schedule_id` int(10) NOT NULL
+  `description` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -52,14 +49,17 @@ CREATE TABLE `feedback` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `schedule`
+-- Table structure for table `schedule_entry`
 --
 
-CREATE TABLE `schedule` (
-  `id` int(10) NOT NULL,
-  `day` int(1) NOT NULL,
+CREATE TABLE `schedule_entry` (
+  `id` int(11) NOT NULL,
+  `day` date NOT NULL,
   `hour_start` time NOT NULL,
-  `hour_finish` time NOT NULL
+  `hour_finish` time NOT NULL,
+  `id_course` int(11) NOT NULL,
+  `id_trainer` int(11) NOT NULL,
+  `id_training_room` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -70,7 +70,7 @@ CREATE TABLE `schedule` (
 
 CREATE TABLE `subscribtion` (
   `id_user` int(10) NOT NULL,
-  `id_course` int(10) NOT NULL
+  `id_schentry` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -81,6 +81,20 @@ CREATE TABLE `subscribtion` (
 
 CREATE TABLE `trainer` (
   `id` int(10) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `url_photo` varchar(100) NOT NULL,
+  `description` varchar(600) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `training_room`
+--
+
+CREATE TABLE `training_room` (
+  `id_training_room` int(11) NOT NULL,
+  `max_capacity` int(11) NOT NULL,
   `name` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -116,9 +130,7 @@ INSERT INTO `user` (`id`, `name`, `phone_number`, `email`, `passwordhash`, `user
 -- Indexes for table `course`
 --
 ALTER TABLE `course`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_course_schedule` (`schedule_id`),
-  ADD KEY `fk_course_trainer` (`trainer_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `feedback`
@@ -129,23 +141,33 @@ ALTER TABLE `feedback`
   ADD KEY `fk_feedback_user` (`user_id`);
 
 --
--- Indexes for table `schedule`
+-- Indexes for table `schedule_entry`
 --
-ALTER TABLE `schedule`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `schedule_entry`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_schentry_course` (`id_course`),
+  ADD KEY `fk_schentry_trainer` (`id_trainer`),
+  ADD KEY `fk_schentry_room` (`id_training_room`);
 
 --
 -- Indexes for table `subscribtion`
 --
 ALTER TABLE `subscribtion`
-  ADD KEY `fk_subscribtion_course` (`id_course`),
-  ADD KEY `fk_subscribtion_user` (`id_user`);
+  ADD PRIMARY KEY (`id_user`,`id_schentry`),
+  ADD KEY `fk_subscribtion_user` (`id_user`),
+  ADD KEY `fk_subscription_schentry` (`id_schentry`);
 
 --
 -- Indexes for table `trainer`
 --
 ALTER TABLE `trainer`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `training_room`
+--
+ALTER TABLE `training_room`
+  ADD PRIMARY KEY (`id_training_room`);
 
 --
 -- Indexes for table `user`
@@ -168,15 +190,20 @@ ALTER TABLE `course`
 ALTER TABLE `feedback`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT for table `schedule`
+-- AUTO_INCREMENT for table `schedule_entry`
 --
-ALTER TABLE `schedule`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `schedule_entry`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `trainer`
 --
 ALTER TABLE `trainer`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `training_room`
+--
+ALTER TABLE `training_room`
+  MODIFY `id_training_room` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `user`
 --
@@ -187,13 +214,6 @@ ALTER TABLE `user`
 --
 
 --
--- Constraints for table `course`
---
-ALTER TABLE `course`
-  ADD CONSTRAINT `fk_course_schedule` FOREIGN KEY (`schedule_id`) REFERENCES `schedule` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_course_trainer` FOREIGN KEY (`trainer_id`) REFERENCES `trainer` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
 -- Constraints for table `feedback`
 --
 ALTER TABLE `feedback`
@@ -201,11 +221,19 @@ ALTER TABLE `feedback`
   ADD CONSTRAINT `fk_feedback_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Constraints for table `schedule_entry`
+--
+ALTER TABLE `schedule_entry`
+  ADD CONSTRAINT `fk_schentry_course` FOREIGN KEY (`id_course`) REFERENCES `course` (`id`),
+  ADD CONSTRAINT `fk_schentry_room` FOREIGN KEY (`id_training_room`) REFERENCES `training_room` (`id_training_room`),
+  ADD CONSTRAINT `fk_schentry_trainer` FOREIGN KEY (`id_trainer`) REFERENCES `trainer` (`id`);
+
+--
 -- Constraints for table `subscribtion`
 --
 ALTER TABLE `subscribtion`
-  ADD CONSTRAINT `fk_subscribtion_course` FOREIGN KEY (`id_course`) REFERENCES `course` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_subscribtion_user` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_subscription_schentry` FOREIGN KEY (`id_schentry`) REFERENCES `schedule_entry` (`id`),
+  ADD CONSTRAINT `fk_user_subscription` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
