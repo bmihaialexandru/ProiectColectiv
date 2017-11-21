@@ -12,7 +12,7 @@ class TrainerController
 
     public function __construct()
     {
-        $this->db = new DBUtils();
+        $this->db = new TrainerDAO();
     }
 
     public function editTrainer($id, $newName, $newPassword)

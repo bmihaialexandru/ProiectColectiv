@@ -6,6 +6,8 @@
  * Time: 4:39 PM
  */
 
+include("../db/db_manager.php");
+
 class UserDAO
 {
     private $db;
@@ -38,7 +40,7 @@ class UserDAO
         $sql = "SELECT * FROM user WHERE name = ?";
         $stmt = $this->db->prepare($sql);
         $stmt->execute([$username]);
-        $user = $stmt->fetchAll(db::FETCH_ASSOC);
+        $user = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $user;
     }
 

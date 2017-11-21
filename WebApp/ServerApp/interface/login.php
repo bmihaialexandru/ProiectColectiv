@@ -1,9 +1,12 @@
 <?php
-error_reporting(E_ERROR | E_PARSE);
+error_reporting(E_ERROR);
+
 include("..\controllers\controller.php");
+include("../services/JWTService.php");
 if($_SERVER["REQUEST_METHOD"] != "POST")
 {
-   echo "error";
+   $message->answer = "Error";
+   echo json_encode($message);
 }
 	else{
 	$ctrl = new Controller();
@@ -16,19 +19,24 @@ if($_SERVER["REQUEST_METHOD"] != "POST")
 		$res=$ctrl->uctrl->get_user_with_password($username, $password);
 		if($res != false) 
 		{
-			$token = $tokenService->createToken($res["role"], $username);
-			echo json_encode(new LoginSuccess($res["role"], $token));
+			$token = $tokenService->createToken($res["user_type"], $username);
+            $message->answer = "Success";
+            $message->token = $token;
+            echo json_encode($message);
 		}
 		else 
 		{
 			$message->answer = "Error";
+			$message->reason = "Invalid username or password";
 			echo json_encode($message);
 		}
 	}
 	else
 	{
 		$message->answer = "Error";
+		$message->reason = "Username and password must not be blank!";
 		echo json_encode($message);
 	}
 }
+
 ?>

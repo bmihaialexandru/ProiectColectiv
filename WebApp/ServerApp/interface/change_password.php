@@ -10,17 +10,24 @@ if($_SERVER["REQUEST_METHOD"] != "POST")
 	else{
 	$ctrl = new Controller();
 	$jwt_serv = new JWTService();
-    //$username = $_POST['username'];
 	$new_password = $_POST['new_password'];
 	$old_password = $_POST['old_password'];
 	$security_token = $_POST['token'];
-	
-    $username = $jwt_serv->validateToken($security_token)["username"];
-	
+    $token_ok = true;
+	try {
+        $username = $jwt_serv->validateToken($security_token)["name"];
+
+    } catch(Exception $e)
+    {
+        $token_ok = false;
+    }
+	if($token_ok == false)
+    {
+        // TODO: we need to discuss here if we want to give a HTTP status or a JSON in case of an error?
+        header('HTTP/1.0 401 Unauthorized');
+    }
 	else
-	{
-		
-		 //TODO: validate email and phone number
+    {
 		if(!empty($username) and !empty($old_password) and !empty($new_password))
 		{
 		
@@ -33,12 +40,14 @@ if($_SERVER["REQUEST_METHOD"] != "POST")
 			else 
 			{
 				$message->answer = "Error";
+				$message->reason = "Mismatch between old password given and real old password";
 				echo json_encode($message);
 			}
 		}
 		else
 		{
 			$message->answer = "Error";
+			$message->reason = "New password and old password must not be empty!";
 			echo json_encode($message);
 		}
 	}

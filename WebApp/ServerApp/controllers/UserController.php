@@ -1,6 +1,6 @@
 <?php
 
-include('..\userDAO\userDAO_manager.php');
+include('..\DAO\UserDAO.php');
 
 class UserController
 {
@@ -8,7 +8,7 @@ class UserController
 
     public function __construct()
     {
-        $this->userDAO = new userDAOUtils();
+        $this->userDAO = new UserDAO();
     }
 
     public function get_user_with_password($name, $password)
