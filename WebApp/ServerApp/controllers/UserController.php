@@ -1,6 +1,6 @@
 <?php
 
-include('..\DAO\UserDAO.php');
+require_once('..\DAO\UserDAO.php');
 
 class UserController
 {
@@ -73,12 +73,6 @@ class UserController
         }
         return $users[0];
     }
-	
-	// TODO: really validate token, for now it will return TRUE for any user
-	public function validate_token($token, $username, $section)
-	{
-		return true;
-	}
-	
+
 }
 ?>

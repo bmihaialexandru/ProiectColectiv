@@ -1,8 +1,9 @@
 <?php
-error_reporting(E_ERROR);
+error_reporting(E_ERROR | E_PARSE);
 
-include("..\controllers\controller.php");
-include("../services/JWTService.php");
+require_once("../controllers/controller.php");
+require_once("../services/JWTService.php");
+
 if($_SERVER["REQUEST_METHOD"] != "POST")
 {
    $message->answer = "Error";

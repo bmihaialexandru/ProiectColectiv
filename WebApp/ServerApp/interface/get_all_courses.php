@@ -47,14 +47,7 @@ else{
     else
     {
         $message->answer = "Success";
-        if($data["role"] == "1")
-        {
-            $message->role = "Administrator";
-        }
-        else
-        {
-            $message->role = "User";
-        }
+        $message->courses = $ctrl->cctrl->get_all_courses();
         echo json_encode($message);
     }
 
