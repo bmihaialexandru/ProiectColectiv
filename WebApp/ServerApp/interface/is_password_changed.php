@@ -32,8 +32,7 @@ if($_SERVER["REQUEST_METHOD"] != "POST")
 	}
 	else
 	{
-		
-		 //TODO: validate email and phone number
+
 		if(!empty($username))
 		{
 		

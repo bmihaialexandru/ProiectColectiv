@@ -57,6 +57,7 @@ else{
         {
             $message->answer = "Error";
             $message->reason = "Name or description are empty!";
+            echo json_encode($message);
         }
         else
         {

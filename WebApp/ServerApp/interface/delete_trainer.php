@@ -20,8 +20,7 @@ if($_SERVER["REQUEST_METHOD"] != "POST")
 else{
     $ctrl = new Controller();
     $tokenService = new JWTService();
-    $name = $_POST["name"];
-    $description = $_POST["description"];
+    $id = $_POST["id"];
     $token = $_POST["token"];
     $token_ok = true;
     $data = null;
@@ -36,7 +35,7 @@ else{
         }
         if($user["user_type"] != 1)
         {
-            throw new Exception("User role not administrator!");
+            throw new Exception("Only admins can delete courses!");
         }
     }
     catch(Exception $e)
@@ -52,18 +51,11 @@ else{
     }
     else
     {
-        if(empty($name) || empty($description))
-        {
-            $message->answer = "Error";
-            $message->reason = "Name or description are empty!";
-            echo json_encode($message);
-        }
-        else
-        {
-            $message->answer = "Success";
-            $ctrl->cctrl->add_new_course($name, $description);
-            echo json_encode($message);
-        }
+        $message->answer = "Success";
+        $url_photo = $ctrl->tctrl->getTrainer($id)['url_photo'];
+        unlink($url_photo);
+        $ctrl->tctrl->deleteTrainer($id);
+        echo json_encode($message);
     }
 
 }
