@@ -16,14 +16,14 @@ class TrainerController
         $this->db = new TrainerDAO();
     }
 
-    public function addTrainer($name, $urlPhoto)
+    public function addTrainer($name, $urlPhoto, $description)
     {
-        $this->db->addTrainerDAO($name, $urlPhoto);
+        $this->db->addTrainerDAO($name, $urlPhoto, $description);
     }
 
-    public function editTrainer($id, $newName, $newUrlPhoto)
+    public function editTrainer($id, $newName, $newUrlPhoto, $description)
     {
-        $this->db->editTrainerDAO($id,$newName,$newUrlPhoto);
+        $this->db->editTrainerDAO($id,$newName,$newUrlPhoto, $description);
     }
 
     public function deleteTrainer($id)

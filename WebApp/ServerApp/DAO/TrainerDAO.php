@@ -16,11 +16,11 @@ class TrainerDAO
         $this->db = new DBUtils();
     }
 
-    public function addTrainerDAO($name, $urlPhoto)
+    public function addTrainerDAO($name, $urlPhoto, $description)
     {
-        $sql = 'INSERT INTO trainer (`name`, url_photo) VALUES (?, ?)';
+        $sql = 'INSERT INTO trainer (`name`, url_photo, description) VALUES (?, ?, ?)';
         $stmt=$this->db->prepare($sql);
-        $stmt->execute([$name,$urlPhoto]);   
+        $stmt->execute([$name,$urlPhoto, $description]);
     }
 
     public function getTrainerDAO($id)
@@ -41,11 +41,11 @@ class TrainerDAO
         return $result;
     }
 
-    public function editTrainerDAO($id, $newName, $newUrlPhoto)
+    public function editTrainerDAO($id, $newName, $newUrlPhoto, $description)
     {
-        $sql = 'UPDATE trainer set `name` = ?, url_photo = ? WHERE id = ?';
+        $sql = 'UPDATE trainer set `name` = ?, url_photo = ?, description = ? WHERE id = ?';
         $stmt=$this->db->prepare($sql);
-        $stmt->execute([$newName,$newUrlPhoto,$id]);
+        $stmt->execute([$newName, $newUrlPhoto, $description, $id]);
     }
 
     public function deleteTrainerDAO($id)

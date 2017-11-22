@@ -21,7 +21,7 @@ else{
     $ctrl = new Controller();
     $tokenService = new JWTService();
     $name = $_POST["name"];
-    //$description = $_POST["description"];
+    $description = $_POST["description"];
     $token = $_POST["token"];
     $token_ok = true;
     $data = null;
@@ -87,10 +87,10 @@ else{
         else
         {
 
-            if (empty($name))
+            if (empty($name) || empty($description))
             {
                 $message->answer = "Error";
-                $message->reason = "Name empty!";
+                $message->reason = "Name or description empty!";
                 echo json_encode($message);
             }
             else
@@ -99,7 +99,7 @@ else{
                 $target_file = $target_dir . $saved_file_name . "." . $imageFileType;
                 if (move_uploaded_file($_FILES["photo"]["tmp_name"], $target_file)) {
                     $message->answer = "Success";
-                    $ctrl->tctrl->addTrainer($name, $target_file);
+                    $ctrl->tctrl->addTrainer($name, $target_file, $description);
                     echo json_encode($message);
                 }
                 else
