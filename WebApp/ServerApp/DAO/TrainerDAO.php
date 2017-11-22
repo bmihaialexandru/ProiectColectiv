@@ -6,6 +6,8 @@
  * Time: 4:31 PM
  */
 
+require_once("../db/db_manager.php");
+
 class TrainerDAO
 {
     private $db;
@@ -14,9 +16,9 @@ class TrainerDAO
         $this->db = new DBUtils();
     }
 
-    public function addTrainerDAO($id, $name, $urlPhoto)
+    public function addTrainerDAO($name, $urlPhoto)
     {
-        $sql = 'INSERT INTO trainer (name, url_photo) VALUES (?, ?)';
+        $sql = 'INSERT INTO trainer (`name`, url_photo) VALUES (?, ?)';
         $stmt=$this->db->prepare($sql);
         $stmt->execute([$name,$urlPhoto]);   
     }
@@ -27,11 +29,7 @@ class TrainerDAO
         $stmt=$this->db->prepare($sql);
         $stmt->execute([$id,]);
         $trainer = $stmt->fetch();
-        if($trainer)
-        {
-            return $trainer;
-        }
-        return false;
+        return $trainer;
     }
 
     public function getAllTrainersDAO()
@@ -39,17 +37,13 @@ class TrainerDAO
         $sql = 'SELECT * FROM trainer';
         $stmt=$this->db->prepare($sql);
         $stmt->execute();
-        $result = $stmt->fetchAll();
-        if($result)
-        {
-            return $result;
-        }
-        return false;
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
     }
 
     public function editTrainerDAO($id, $newName, $newUrlPhoto)
     {
-        $sql = 'UPDATE trainer set name = ?, url_photo = ? WHERE id = ?';
+        $sql = 'UPDATE trainer set `name` = ?, url_photo = ? WHERE id = ?';
         $stmt=$this->db->prepare($sql);
         $stmt->execute([$newName,$newUrlPhoto,$id]);
     }

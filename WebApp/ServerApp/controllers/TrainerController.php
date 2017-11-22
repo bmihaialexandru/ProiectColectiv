@@ -5,7 +5,8 @@
  * Date: 11/21/2017
  * Time: 4:14 PM
  */
-include('..\DAO\TrainerDAO.php');
+require_once('../DAO/TrainerDAO.php');
+
 class TrainerController
 {
     private $db;
@@ -17,23 +18,26 @@ class TrainerController
 
     public function addTrainer($name, $urlPhoto)
     {
-            $this->db->addTrainerDAO($name, $urlPhoto);
+        $this->db->addTrainerDAO($name, $urlPhoto);
     }
 
     public function editTrainer($id, $newName, $newUrlPhoto)
     {
-        $this->db->getTrainerDAO($id);
         $this->db->editTrainerDAO($id,$newName,$newUrlPhoto);
     }
 
     public function deleteTrainer($id)
     {
-        $this->db->getTrainerDAO($id);
         $this->db->deleteTrainerDAO($id);
     }   
 
     public function getAllTrainers()
     {
-        $this->db->getAllTrainersDAO();
-    }    
+        return $this->db->getAllTrainersDAO();
+    }
+
+    public function getTrainer($id)
+    {
+        return $this->db->getTrainerDAO($id);
+    }
 }
