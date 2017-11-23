@@ -6,6 +6,8 @@
  * Time: 4:31 PM
  */
 
+require_once("../db/db_manager.php");
+
 class TrainerDAO
 {
     private $db;
@@ -14,27 +16,39 @@ class TrainerDAO
         $this->db = new DBUtils();
     }
 
-    public function getTrainer($id)
+    public function addTrainerDAO($name, $urlPhoto, $description)
+    {
+        $sql = 'INSERT INTO trainer (`name`, url_photo, description) VALUES (?, ?, ?)';
+        $stmt=$this->db->prepare($sql);
+        $stmt->execute([$name,$urlPhoto, $description]);
+    }
+
+    public function getTrainerDAO($id)
     {
         $sql = 'SELECT * FROM trainer WHERE id = ?';
-        $stmt=$this->db->prepabre($sql);
+        $stmt=$this->db->prepare($sql);
         $stmt->execute([$id,]);
         $trainer = $stmt->fetch();
-        if($trainer)
-        {
-            return $trainer;
-        }
-        return false;
+        return $trainer;
     }
 
-    public function editTrainer($id, $newName, $newUrlPhoto)
+    public function getAllTrainersDAO()
     {
-        $sql = 'UPDATE trainer set name = ?, url_photo = ? WHERE id = ?';
+        $sql = 'SELECT * FROM trainer';
         $stmt=$this->db->prepare($sql);
-        $stmt->execute([$newName,$newUrlPhoto,$id]);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
     }
 
-    public function deleteTrainer($id)
+    public function editTrainerDAO($id, $newName, $newUrlPhoto, $description)
+    {
+        $sql = 'UPDATE trainer set `name` = ?, url_photo = ?, description = ? WHERE id = ?';
+        $stmt=$this->db->prepare($sql);
+        $stmt->execute([$newName, $newUrlPhoto, $description, $id]);
+    }
+
+    public function deleteTrainerDAO($id)
     {
         $sql = 'DELETE from trainer where id = ?';
         $stmt=$this->db->prepare($sql);

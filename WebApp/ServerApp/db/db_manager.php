@@ -1,6 +1,6 @@
 <?php
 
-include('credentials.php');
+require_once('credentials.php');
 
 class DBUtils {
 	

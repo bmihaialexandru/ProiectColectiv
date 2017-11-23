@@ -6,7 +6,7 @@
  * Time: 4:39 PM
  */
 
-include("../db/db_manager.php");
+require_once("../db/db_manager.php");
 
 class UserDAO
 {

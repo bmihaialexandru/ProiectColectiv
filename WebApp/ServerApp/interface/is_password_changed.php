@@ -1,8 +1,9 @@
 <?php
 error_reporting(E_ERROR | E_PARSE);
 
-include("../services/JWTService.php");
-include("..\controllers\controller.php");
+require_once("../controllers/controller.php");
+require_once("../services/JWTService.php");
+
 if($_SERVER["REQUEST_METHOD"] != "POST")
 {
    $message->answer = "Error";
@@ -31,8 +32,7 @@ if($_SERVER["REQUEST_METHOD"] != "POST")
 	}
 	else
 	{
-		
-		 //TODO: validate email and phone number
+
 		if(!empty($username))
 		{
 		
