@@ -6,8 +6,11 @@ import {SubscriptionTypes} from '../components/SubscriptionTypes';
 import {News} from '../components/News';
 import {Footer} from '../components/Footer';
 
+import {_reloadJs} from '../js/reloadJs';
+
 export class SchedulePage extends Component {
   render() {
+    _reloadJs();
     return (
       <div id="fh5co-wrapper">
       <div id="fh5co-page">
