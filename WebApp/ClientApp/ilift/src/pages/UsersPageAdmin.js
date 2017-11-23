@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {HeaderAdmin} from '../components/HeaderAdmin';
 import {FooterAdmin} from '../components/FooterAdmin';
+import '../template/css/inputBox.css';
 
 export class UsersPageAdmin extends Component {
   componentWillReceiveProps(nextProps){
@@ -32,16 +33,40 @@ export class UsersPageAdmin extends Component {
          
           <div className="row about">
             <div className="col-md-7 col-md-offset-0 animate-box">
-              <p>ListView cu Userii </p>
+              <form method="get" action="/search" id="search">
+                 <input name="q" type="text" size="40" placeholder="Search..." />
+              </form>
             </div>
 
             <div className="col-md-5 col-md-offset-0 animate-box">
-              <p> COmponenta de register  user vine aici </p>
-            </div>
+              
+
+                <div class="container">
+      
+                    <div class="">
+                  
+                      
+                        <h1 class="text-centter">Register new user</h1>
+                        
+                        <input type="text" name="username" placeholder="Name" />
+                        <input type="text" name="phone" placeholder="Phone" />
+                        <input type="text" name="email" placeholder="E-mail" />
+                        <input type="password" name="password" placeholder="Password" />
+                        
+                        <input type="submit" name="signup_submit" value="Sign up" />
+                      
+
+                    </div>
+
+              </div>
+
 
           </div>
+
         </div>
       </div>
+  
+    </div>
     
 
         <FooterAdmin/>
