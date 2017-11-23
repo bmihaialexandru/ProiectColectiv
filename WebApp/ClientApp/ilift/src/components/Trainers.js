@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
+import {Link} from 'react-router-dom';
+
+import {_reloadJs} from '../js/reloadJs';
 
 export class Trainers extends Component {
 
 
   render() {
+	  _reloadJs();
         return (
             <div id="fh5co-team-section" className="fh5co-lightgray-section">
 			<div className="container">
@@ -24,7 +28,7 @@ export class Trainers extends Component {
 									<span>Body Trainer</span>
 									<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia</p>
 									<p className="fh5co-social-icons">
-										<span className="comment"><a href=""><i className="icon-bubble22" onClick={() => alert("this is feedback")}></i>21</a></span>
+										<span className="comment"><Link to={{ pathname: '/feedback', state: {entityName: "Badila Mihai", entityType: "trainer"} }}><i className="icon-bubble22"></i>21</Link></span>
 									</p>
 								</div>
 							</div>

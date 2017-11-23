@@ -33,6 +33,12 @@ export class Header extends Component {
                         <li><Link to={'/schedule'}>Schedule</Link></li>
                         <li><Link to={'/about'}>About</Link></li>
                         <li><Link to={'/contact'}>Contact</Link></li>
+                        <li className="ilift-account">
+                            <Link to={'/profile'}>
+                                <div className="ilift-account-image"></div>
+                                <div className="ilift-account-name">Bogdi</div>
+                            </Link>
+                        </li>
                     </ul>
                 </nav>
             </div>
