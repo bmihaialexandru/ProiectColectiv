@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {HeaderAdmin} from '../components/HeaderAdmin';
-import {Footer} from '../components/Footer';
+import {FooterAdmin} from '../components/FooterAdmin';
 
 export class TrainersPageAdmin extends Component {
   componentWillReceiveProps(nextProps){
@@ -41,7 +41,7 @@ export class TrainersPageAdmin extends Component {
         </div>
       </div>
 
-        <Footer/>
+        <FooterAdmin/>
         </div>
         </div>
       );

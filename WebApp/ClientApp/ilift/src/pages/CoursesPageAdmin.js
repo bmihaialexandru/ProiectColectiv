@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {HeaderAdmin} from '../components/HeaderAdmin';
-import {Footer} from '../components/Footer';
+import {FooterAdmin} from '../components/FooterAdmin';
 
 export class CoursesPageAdmin extends Component {
   render() {
@@ -41,7 +41,7 @@ export class CoursesPageAdmin extends Component {
       </div>
     
 
-        <Footer/>
+        <FooterAdmin/>
         </div>
         </div>
       );

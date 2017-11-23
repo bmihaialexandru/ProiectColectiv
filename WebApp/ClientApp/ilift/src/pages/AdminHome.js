@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Footer} from '../components/Footer';
+import {FooterAdmin} from '../components/FooterAdmin';
 import {HeaderAdmin} from '../components/HeaderAdmin';
 
 
@@ -44,7 +44,7 @@ export class AdminHome extends Component {
         </div>
       </div>
 
-        <Footer/>
+        <FooterAdmin/>
         </div>
         </div>
       );
