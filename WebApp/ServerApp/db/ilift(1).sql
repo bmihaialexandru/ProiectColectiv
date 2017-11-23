@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.5.2
+-- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 21, 2017 at 08:44 PM
--- Server version: 10.1.21-MariaDB
--- PHP Version: 5.6.30
+-- Generation Time: Nov 23, 2017 at 01:51 PM
+-- Server version: 10.1.28-MariaDB
+-- PHP Version: 7.0.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -86,6 +88,13 @@ CREATE TABLE `trainer` (
   `description` varchar(600) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `trainer`
+--
+
+INSERT INTO `trainer` (`id`, `name`, `url_photo`, `description`) VALUES
+(1, 'Gica Ionica', '../uploads/php7571png', '');
+
 -- --------------------------------------------------------
 
 --
@@ -119,8 +128,9 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `name`, `phone_number`, `email`, `passwordhash`, `user_type`, `pass_changed`) VALUES
-(1, 'admin', '0771490344', 'nicubodea96@gmail.com', '7b9504998358c934138ee62407eaa702fd1aab8f', 0, 1),
-(5, 'testy', '07312', 'abcd', 'b24ffa4f898b756cf8fb6b98641dd90b83f1c02f', 0, 0);
+(1, 'admin', '0771490344', 'nicubodea96@gmail.com', '9f7382a2dbc31d350f98131cc1b9337ee1e5c759', 1, 1),
+(5, 'testy', '07312', 'abcd', 'b24ffa4f898b756cf8fb6b98641dd90b83f1c02f', 0, 0),
+(6, 'user_normal', 'dummy', 'dummy', 'd8913df37b24c97f28f840114d05bd110dbb2e44', 0, 0);
 
 --
 -- Indexes for dumped tables
@@ -184,31 +194,37 @@ ALTER TABLE `user`
 --
 ALTER TABLE `course`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `feedback`
 --
 ALTER TABLE `feedback`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `schedule_entry`
 --
 ALTER TABLE `schedule_entry`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `trainer`
 --
 ALTER TABLE `trainer`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- AUTO_INCREMENT for table `training_room`
 --
 ALTER TABLE `training_room`
   MODIFY `id_training_room` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
 --
 -- Constraints for dumped tables
 --
@@ -234,6 +250,7 @@ ALTER TABLE `schedule_entry`
 ALTER TABLE `subscribtion`
   ADD CONSTRAINT `fk_subscription_schentry` FOREIGN KEY (`id_schentry`) REFERENCES `schedule_entry` (`id`),
   ADD CONSTRAINT `fk_user_subscription` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`);
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
