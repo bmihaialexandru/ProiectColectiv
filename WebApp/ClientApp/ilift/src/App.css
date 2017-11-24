@@ -77,3 +77,8 @@
   display: inline;
   font-style: italic;
 }
+
+.feedback-box{
+  padding: 20px;
+  border: 1px solid #848484;
+}

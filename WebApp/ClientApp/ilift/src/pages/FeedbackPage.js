@@ -7,18 +7,47 @@ import {session} from '../Session/Session';
 import StarRatingComponent from 'react-star-rating-component';
 import {_reloadJs} from '../js/reloadJs';
 import {Redirect} from 'react-router-dom';
-
+import $ from 'jquery';
+import {FeedbackCard} from '../components/FeedbackCard';
 
 export class FeedbackPage extends Component {
 
     constructor(props){
         super(props);
         this.state = {
-            rating: null
+            rating: null,
+            list : [
+              {
+                author: "Anna Kendrick",
+                rating: 4,
+                description: "Those abs!"
+              },
+              {
+                author: "Jason Momoa",
+                rating: 5,
+                description: "Great energy!"
+              },
+              {
+                author: "Bradley Cooper",
+                rating: 4,
+                description: "Definitely trying that again!"
+              },
+              {
+                author: "Nicole Sherzinger",
+                rating: 3,
+                description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum non molestie est. Sed mattis sem vitae faucibus vehicula. "
+              },
+              {
+                author: "The Rock",
+                rating: 5,
+                description: "Great guy, but I can lift more than him!"
+              }
+            ]
         }
     }
 
   render() {
+      $('html,body').scrollTop(0);
       _reloadJs();
       console.log(this.props.location.entityName);
       if(!this.props.location.state){
@@ -43,9 +72,22 @@ export class FeedbackPage extends Component {
           </div>
         </div>
       </div>
+      <div style={{backgroundColor: "#fcfcfc"}}>
+      <br/><br/>
+      <div className="col-md-11 col-md-offset-2 animate-box" style={{fontSize: "24px"}}>Previous feedbacks:</div>
+      <div className="row text-center animate-box">
+         <div className="col-md-8 col-md-offset-2 schedule-container">
+          {this.state.list.map( x => 
+							<FeedbackCard 
+                author={x.author}
+                rating={x.rating}
+								description={x.description}
+							/>
+					)}
+        </div>
+      </div>
 
-
-      <div id="fh5co-contact">
+    <div id="fh5co-contact">
 		<div className="container">
         <div className="row">
         <div className="col-md-6 animate-box">
@@ -78,6 +120,7 @@ export class FeedbackPage extends Component {
             </div>
           </div>
         </div>
+      </div>
       </div>
       </div>
       </div>

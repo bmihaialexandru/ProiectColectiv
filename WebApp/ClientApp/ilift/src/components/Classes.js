@@ -44,7 +44,8 @@ export class Classes extends Component {
           <div id="fh5co-programs-section">
             <div className="container">
                 {this.state.list.map( x => 
-                        <ClassCard image={x.image}
+                        <ClassCard 
+                            image={x.image}
                             courseName={x.courseName}
                             description={x.description}
                         />

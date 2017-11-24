@@ -5,6 +5,7 @@ import {Footer} from '../components/Footer';
 import {Classes} from '../components/Classes';
 import {login} from '../WebApis/LoginWebApi';
 import {session} from '../Session/Session';
+import { Redirect } from 'react-router-dom';
 
 import {_reloadJs} from '../js/reloadJs';
 
@@ -69,18 +70,20 @@ export class LoginPage extends Component {
   }
 
   _loginUser(username, password){
-    const response = login(username, password)
-      .then(result => {
+    //const response = login(username, password)
+     // .then(result => {
         session.email = "tipitza@gmail.com";
         session.username = username;
         session.token = "token";
-        document.getElementsByClassName("ilift-account")[0].style.display = "inline";
+        // document.getElementsByClassName("ilift-account")[0].style.display = "inline";
         document.getElementsByClassName("ilift-account-name")[0].innerHTML = username;
+
+        window.location.replace("/");
     
-        return result;
-      })
-      .catch(error => {
-          alert(error);
-      });
+      //  return result;
+      // })
+      // .catch(error => {
+      //     alert(error);
+      // });
     }
 }
