@@ -7,7 +7,7 @@ export class HeaderAdmin extends Component {
   render() {
         return (
         <div id="fh5co-header">
-        <header id="fh5co-header-sectionAdmin">
+        <header id="fh5co-header-section">
         <div className="container">
             <div className="nav-header">
                 <h1 id="fh5co-logo"><Link to={'/'}><div className="header-logo-ilift"></div></Link></h1>
