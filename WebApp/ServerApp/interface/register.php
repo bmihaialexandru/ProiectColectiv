@@ -31,16 +31,11 @@ if($_SERVER["REQUEST_METHOD"] != "POST")
     {
         $token_ok = false;
     }
-	// we need to be sure that this token has admin rights before other changes are made.
-	//if(!$ctrl->uctrl->validate_token($security_token, $username, "register"))
-	//{
-	//	$message->answer = "Error";
-	//	echo json_encode($message);
-	//}
 
     if($token_ok == false)
     {
-        $message->answer = "UNAUTHORIZED!!!";
+        $message->answer = "Error";
+        $message->reason = "Invalid token";
         echo json_encode($message);
     }
 	else
