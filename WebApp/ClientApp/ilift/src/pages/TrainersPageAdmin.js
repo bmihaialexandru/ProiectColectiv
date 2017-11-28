@@ -15,6 +15,7 @@ const trainers=[
 {id:7,name:'Nicu Bodea',position:'Bodybuilding Trainer'},
 {id:8,name:'Cristian Baciu',position:'Yoga Instructor'}
 ]
+
 const MyList = ({
   virtual,
   itemHeight,
