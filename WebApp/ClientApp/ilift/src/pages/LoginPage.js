@@ -3,7 +3,7 @@ import {Header} from '../components/Header';
 import {Schedule} from '../components/Schedule';
 import {Footer} from '../components/Footer';
 import {Classes} from '../components/Classes';
-import {UserService} from "../services/UserService";
+import {SingletonService} from "../services/SingletonService";
 import {login} from '../WebApis/LoginWebApi';
 import {session} from '../Session/Session';
 import { Redirect } from 'react-router-dom';
@@ -52,7 +52,6 @@ export class LoginPage extends Component {
           <div className="col-md-12 col-md-offset-9">
             <div className="form-group">
               <button type="submit" value="Sign in" className="btn btn-primary" onClick={() => {
-
                         this._loginUser(document.getElementById("username").value, document.getElementById("password").value);
               }}>
                Sign in 
@@ -73,31 +72,14 @@ export class LoginPage extends Component {
 
   _loginUser(username, password){
 
-      // TODO: use singletons
-      new UserService().login(username, password).then(result => {
-
+      SingletonService.UserService.login(username, password).then(result => {
           if(result === null) {
-            alert("Login failed!");
             return;
           }
+
           localStorage.setItem("token", result);
+
           window.location.replace("/");
       });
-
-
-    //const response = login(username, password)
-     // .then(result => {
-        //session.email = "tipitza@gmail.com";
-        //session.username = username;
-        //session.token = "token";
-        // document.getElementsByClassName("ilift-account")[0].style.display = "inline";
-        //document.getElementsByClassName("ilift-account-name")[0].innerHTML = username;
-
-
-      //  return result;
-      // })
-      // .catch(error => {
-      //     alert(error);
-      // });
     }
 }

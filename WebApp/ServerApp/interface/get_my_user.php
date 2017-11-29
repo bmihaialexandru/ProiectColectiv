@@ -11,6 +11,7 @@ error_reporting(E_ERROR | E_PARSE);
 
 require_once("../controllers/controller.php");
 require_once("../services/JWTService.php");
+include("./headers.php");
 
 if($_SERVER["REQUEST_METHOD"] != "POST")
 {
@@ -23,6 +24,7 @@ else{
     $token = $_POST["token"];
     $token_ok = true;
     $data = null;
+    $user = null;
 
     try
     {
@@ -47,14 +49,9 @@ else{
     else
     {
         $message->answer = "Success";
-        if($data["role"] == "1")
-        {
-            $message->role = "Administrator";
-        }
-        else
-        {
-            $message->role = "User";
-        }
+        // don't propagate the password hash to front-end, it's dangerous
+        unset($user["passwordhash"]);
+        $message->user = $user;
         echo json_encode($message);
     }
 

@@ -6,7 +6,6 @@ import {SubscriptionTypes} from '../components/SubscriptionTypes';
 import {News} from '../components/News';
 import {Footer} from '../components/Footer';
 import { Link } from 'react-router-dom';
-import {session} from '../Session/Session';
 
 import {_reloadJs} from '../js/reloadJs';
 
