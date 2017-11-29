@@ -3,6 +3,7 @@ import {Header} from '../components/Header';
 import {Schedule} from '../components/Schedule';
 import {Footer} from '../components/Footer';
 import {Classes} from '../components/Classes';
+import {UserService} from "../services/UserService";
 
 export class LoginPage extends Component {
   render() {
@@ -45,7 +46,7 @@ export class LoginPage extends Component {
           <div className="col-md-12 col-md-offset-9">
             <div className="form-group">
               <button type="submit" value="Sign in" className="btn btn-primary" onClick={() => {
-                        alert(document.getElementById("username").value + " " + document.getElementById("password").value);
+                        new UserService().login(document.getElementById("username").value, document.getElementById("password").value)
               }}>
                Sign in 
               </button>
