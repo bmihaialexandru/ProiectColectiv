@@ -73,13 +73,14 @@ export class LoginPage extends Component {
 
   _loginUser(username, password){
 
+      // TODO: use singletons
       new UserService().login(username, password).then(result => {
 
           if(result === null) {
             alert("Login failed!");
             return;
           }
-          session.token = result;
+          localStorage.setItem("token", result);
           window.location.replace("/");
       });
 
