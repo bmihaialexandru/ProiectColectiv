@@ -8,6 +8,8 @@ import {AboutPage} from './pages/AboutPage';
 import {ContactPage} from './pages/ContactPage';
 import {SchedulePage} from './pages/SchedulePage';
 import {LoginPage} from './pages/LoginPage';
+import {ProfilePage} from './pages/ProfilePage';
+import {FeedbackPage} from './pages/FeedbackPage';
 
 class App extends Component {
   render() {
@@ -22,6 +24,8 @@ class App extends Component {
             <Route exact path='/schedule' component={SchedulePage} />
             <Route exact path='/contact' component={ContactPage} />
             <Route exact path='/about' component={AboutPage} />
+            <Route exact path='/profile' component={ProfilePage} />
+            <Route exact path='/feedback' component={FeedbackPage} />
          </Switch>
       </div>
     </Router>

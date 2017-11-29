@@ -5,8 +5,11 @@ import {Footer} from '../components/Footer';
 import {Classes} from '../components/Classes';
 import $ from 'jquery'; 
 
+import {_reloadJs} from '../js/reloadJs';
+
 export class CoursesPage extends Component {
   render() {
+    _reloadJs();
     return (
       <div id="fh5co-wrapper">
       <div id="fh5co-page">

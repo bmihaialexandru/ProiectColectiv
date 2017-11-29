@@ -11,7 +11,7 @@ export class UserService extends Component {
     }
 
     login(username, password) {
-        fetch(this.server + "/interface/login.php", {
+        return fetch(this.server + "/interface/login.php", {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -23,20 +23,16 @@ export class UserService extends Component {
 
     static _get_token_from_result(result) {
         try {
-
-            let token = "";
             if(result["answer"].localeCompare("Success") !== 0)
             {
                 // TODO: do this preetier maybe :D
                 alert("Username and password incorrect!");
-                return;
+                return null;
             }
-
-            token = result["token"];
-            // put token somewhere -> where ?
-            alert(token);
+            return result["token"];
         } catch(error) {
             alert("Critical error: "+ error + ", please try again later");
+            return null;
         }
     }
 

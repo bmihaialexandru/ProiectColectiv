@@ -1,72 +1,57 @@
 import React, { Component } from 'react';
+import {ClassCard} from './ClassCard';
 
 export class Classes extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            list : [
+                {
+                    image : require("./images/fit-dumbell.svg"),
+                    courseName : "Body Combat",
+                    description : "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. "
+                },
+                {
+                    image : require("./images/fit-cycling.svg"),
+                    courseName : "Cycling program",
+                    description : "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. "
+                },
+                {
+                    image : require("./images/fit-yoga.svg"),
+                    courseName : "Yoga programs",
+                    description : "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. "
+                },
+                {
+                    image : require("./images/fit-boxing.svg"),
+                    courseName : "Boxing fitness",
+                    description : "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. "
+                },
+                {
+                    image : require("./images/fit-swimming.svg"),
+                    courseName : "Swimming program",
+                    description : "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. "
+                },
+                {
+                    image : require("./images/fit-massage.svg"),
+                    courseName : "Massage",
+                    description : "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. "
+                },
+        ]}
+    };
 
-  render() {
+    render() {
         return (
           <div id="fh5co-programs-section">
             <div className="container">
-                <div className="row">
-                    <div className="col-md-8 col-md-offset-2">
-                        <div className="heading-section text-center animate-box">
-                            <h2>Our Programs</h2>
-                            <p>Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
-                        </div>
-                    </div>
-                </div>
-                <div className="row text-center">
-                    <div className="col-md-4 col-sm-6">
-                        <div className="program animate-box">
-                            <img src={require("./images/fit-dumbell.svg")} alt="Cycling"/>
-                            <h3>Body Combat</h3>
-                            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
-                            <span><a href="#" className="btn btn-default">Join Now</a></span>
-                        </div>
-                    </div>
-                    <div className="col-md-4 col-sm-6">
-                        <div className="program animate-box">
-                            <img src={require("./images/fit-yoga.svg")} alt=""/>
-                            <h3>Yoga Programs</h3>
-                            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
-                            <span><a href="#" className="btn btn-default">Join Now</a></span>
-                        </div>
-                    </div>
-                    <div className="col-md-4 col-sm-6">
-                        <div className="program animate-box">
-                            <img src={require("./images/fit-cycling.svg")} alt=""/>
-                            <h3>Cycling Program</h3>
-                            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
-                            <span><a href="#" className="btn btn-default">Join Now</a></span>
-                        </div>
-                    </div>
-                    <br/>
-                    <div className="col-md-4 col-sm-6">
-                        <div className="program animate-box">
-                            <img src={require("./images/fit-boxing.svg")} alt="Cycling"/>
-                            <h3>Boxing Fitness</h3>
-                            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
-                            <span><a href="#" className="btn btn-default">Join Now</a></span>
-                        </div>
-                    </div>
-                    <div className="col-md-4 col-sm-6">
-                        <div className="program animate-box">
-                            <img src={require("./images/fit-swimming.svg")} alt=""/>
-                            <h3>Swimming Program</h3>
-                            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
-                            <span><a href="#" className="btn btn-default">Join Now</a></span>
-                        </div>
-                    </div>
-                    <div className="col-md-4 col-sm-6">
-                        <div className="program animate-box">
-                            <img src={require("./images/fit-massage.svg")} alt=""/>
-                            <h3>Massage</h3>
-                            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
-                            <span><a href="#" className="btn btn-default">Join Now</a></span>
-                        </div>
-                    </div>
-                </div>
+                {this.state.list.map( x => 
+                        <ClassCard 
+                            image={x.image}
+                            courseName={x.courseName}
+                            description={x.description}
+                        />
+                )}
             </div>
         </div>
         );
-    }
+    };
 }
