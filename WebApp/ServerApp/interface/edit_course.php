@@ -27,7 +27,12 @@ else{
     $token = $_POST["token"];
     $token_ok = true;
     $data = null;
+    $saved_file_name = "";
 
+    if($_FILES["photo"] != NULL)
+    {
+        $saved_file_name = pathinfo($_FILES["photo"]["tmp_name"])['filename'];
+    }
     try
     {
         $data = $tokenService->validateToken($token);
@@ -46,6 +51,7 @@ else{
         $token_ok = false;
     }
 
+
     if($token_ok == false)
     {
         $message->answer = "Error";
@@ -54,17 +60,76 @@ else{
     }
     else
     {
-        if(empty($name) || empty($description) || empty($id))
+        // edit these so we don't screw this shit
+        $upload_ok = 1;
+        $reason_failed = "";
+        $target_dir = "";
+        $imageFileType = "";
+
+        if($_FILES["photo"] != NULL)
+        {
+            // process the image sent, if any
+            $target_dir = "../uploads/";
+            $target_file = $target_dir . basename($_FILES["photo"]["name"]);
+            $imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
+
+            if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+                && $imageFileType != "svg") {
+                $upload_ok = 0;
+                $reason_failed = "Not a valid format! Only JPG/JPEG/PNG/SVG accepted!";
+            }
+
+            // 5 mb max file zile
+            if ($_FILES["photo"]["size"] > 5000000) {
+                $upload_ok = 0;
+                $reason_failed = "File too large!";
+            }
+        }
+        if($upload_ok == 0)
         {
             $message->answer = "Error";
-            $message->reason = "Name or description are empty!";
+            $message->reason = $reason_failed;
             echo json_encode($message);
         }
         else
         {
-            $message->answer = "Success";
-            $ctrl->cctrl->update_course($id, $name, $description);
-            echo json_encode($message);
+
+            if (empty($name) || empty($description))
+            {
+                $message->answer = "Error";
+                $message->reason = "Name or description empty!";
+                echo json_encode($message);
+            }
+            else
+            {
+                // if the user requested to edit the photo
+                if($_FILES["photo"] != NULL)
+                {
+                    $target_file = $target_dir . $saved_file_name . "." . $imageFileType;
+
+                    //delete the old photo, we don't need it anymore on the server side
+
+                    $url_photo = $ctrl->cctrl->get_course($id)['url_photo'];
+                    unlink($url_photo);
+
+                    if (move_uploaded_file($_FILES["photo"]["tmp_name"], $target_file)) {
+                        $message->answer = "Success";
+                        $ctrl->cctrl->update_course($id, $name, $target_file, $description);
+                        echo json_encode($message);
+                    } else {
+                        $message->answer = "Error";
+                        $message->reason = "File transfer failed for some reason!";
+                        echo json_encode($message);
+                    }
+                }
+                else
+                {
+                    $url_photo = $ctrl->cctrl->get_course($id)['url_photo'];
+                    $message->answer = "Success";
+                    $ctrl->cctrl->update_course($id, $name, $url_photo, $description);
+                    echo json_encode($message);
+                }
+            }
         }
     }
 

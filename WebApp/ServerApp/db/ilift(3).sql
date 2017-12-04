@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 04, 2017 at 10:33 PM
+-- Generation Time: Dec 04, 2017 at 10:47 PM
 -- Server version: 10.1.28-MariaDB
 -- PHP Version: 7.0.25
 
@@ -31,7 +31,8 @@ SET time_zone = "+00:00";
 CREATE TABLE `course` (
   `id` int(10) NOT NULL,
   `name` varchar(100) NOT NULL,
-  `description` varchar(500) NOT NULL
+  `description` varchar(500) NOT NULL,
+  `url_photo` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
