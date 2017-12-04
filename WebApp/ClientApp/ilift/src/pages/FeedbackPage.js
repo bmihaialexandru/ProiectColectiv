@@ -47,7 +47,7 @@ export class FeedbackPage extends Component {
     }
 
   render() {
-      $('html,body').scrollTop(0);
+      //$('html,body').scrollTop(0);
       _reloadJs();
       console.log(this.props.location.entityName);
       if(!this.props.location.state){

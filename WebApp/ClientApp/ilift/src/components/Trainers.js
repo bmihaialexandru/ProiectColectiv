@@ -2,71 +2,84 @@ import React, { Component } from 'react';
 import {TrainerCard} from './TrainerCard';
 
 import {_reloadJs} from '../js/reloadJs';
+import {SingletonService} from "../services/SingletonService";
 
 export class Trainers extends Component {
 
-	constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
-            list : [
-                {
-                    imageUrl : require("./images/trainer-1.jpg"),
-					name : "Badila Mihai",
-					domain : "Body trainer",
-					numberOfFeedbacks: 21,
-                    description : "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. "
-				},
-				{
-                    imageUrl : require("./images/trainer-2.jpg"),
-					name : "Bica Denisa",
-					domain : "Boxing, ACF instructor",
-					numberOfFeedbacks: 11,
-                    description : "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. "
-				},
-				{
-                    imageUrl : require("./images/trainer-3.jpg"),
-					name : "Strimbei Codrin",
-					domain : "HIIT insturctor",
-					numberOfFeedbacks: 3,
-                    description : "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. "
-				},
-				{
-                    imageUrl : require("./images/trainer-4.jpg"),
-					name : "Carausu Catrinel",
-					domain : "TRX instructor",
-					numberOfFeedbacks: 23,
-                    description : "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. "
-				},
-				{
-                    imageUrl : require("./images/trainer-5.jpg"),
-					name : "Alexa Sabina",
-					domain : "Pilates instructor",
-					numberOfFeedbacks: 13,
-                    description : "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. "
-				},
-				{
-                    imageUrl : require("./images/trainer-6.jpg"),
-					name : "Bocios Titus",
-					domain : "Cross-fit instructor",
-					numberOfFeedbacks: 10,
-                    description : "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. "
-				},
-				{
-                    imageUrl : require("./images/trainer-7.jpg"),
-					name : "Bodea Nicolae",
-					domain : "Strongman instructor",
-					numberOfFeedbacks: 23,
-                    description : "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. "
-				},
-				{
-                    imageUrl : require("./images/trainer-8.jpg"),
-					name : "Baciu Cristian",
-					domain : "Yoga instructor",
-					numberOfFeedbacks: 5,
-                    description : "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. "
-                }
-        ]}
-    };
+            list: []
+        };
+        /*[
+                        {
+                            imageUrl : require("./images/trainer-1.jpg"),
+                            name : "Badila Mihai",
+                            domain : "Body trainer",
+                            numberOfFeedbacks: 21,
+                            description : "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. "
+                        },
+                        {
+                            imageUrl : require("./images/trainer-2.jpg"),
+                            name : "Bica Denisa",
+                            domain : "Boxing, ACF instructor",
+                            numberOfFeedbacks: 11,
+                            description : "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. "
+                        },
+                        {
+                            imageUrl : require("./images/trainer-3.jpg"),
+                            name : "Strimbei Codrin",
+                            domain : "HIIT insturctor",
+                            numberOfFeedbacks: 3,
+                            description : "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. "
+                        },
+                        {
+                            imageUrl : require("./images/trainer-4.jpg"),
+                            name : "Carausu Catrinel",
+                            domain : "TRX instructor",
+                            numberOfFeedbacks: 23,
+                            description : "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. "
+                        },
+                        {
+                            imageUrl : require("./images/trainer-5.jpg"),
+                            name : "Alexa Sabina",
+                            domain : "Pilates instructor",
+                            numberOfFeedbacks: 13,
+                            description : "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. "
+                        },
+                        {
+                            imageUrl : require("./images/trainer-6.jpg"),
+                            name : "Bocios Titus",
+                            domain : "Cross-fit instructor",
+                            numberOfFeedbacks: 10,
+                            description : "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. "
+                        },
+                        {
+                            imageUrl : require("./images/trainer-7.jpg"),
+                            name : "Bodea Nicolae",
+                            domain : "Strongman instructor",
+                            numberOfFeedbacks: 23,
+                            description : "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. "
+                        },
+                        {
+                            imageUrl : require("./images/trainer-8.jpg"),
+                            name : "Baciu Cristian",
+                            domain : "Yoga instructor",
+                            numberOfFeedbacks: 5,
+                            description : "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. "
+                        }
+                ]}*/
+
+        SingletonService.TrainerService.get_all_trainers().then((result) => {
+        	if(result === null)
+			{
+				return;
+			}
+			this.setState({list: result});
+		});
+
+    }
+
 
   render() {
 	  _reloadJs();
@@ -82,16 +95,18 @@ export class Trainers extends Component {
 					</div>
 				</div>
 				<div className="row text-center">
-					
-					{this.state.list.map( x => 
-							<TrainerCard 
+					{
+						this.state.list.map( x =>
+							<TrainerCard
+								id = {x.id}
 								imageUrl={x.imageUrl}
 								name={x.name}
-								domain={x.domain}
+								//domain={x.domain}
 								numberOfFeedbacks={x.numberOfFeedbacks}
 								description={x.description}
 							/>
-					)}
+						)
+					}
 					
 				</div>
 			</div>

@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import {ClassCard} from './ClassCard';
+import {SingletonService} from "../services/SingletonService";
 
 export class Classes extends Component {
     constructor(props){
         super(props);
         this.state = {
-            list : [
+            list : [] /*[
                 {
                     image : require("./images/fit-dumbell.svg"),
                     courseName : "Body Combat",
@@ -36,7 +37,16 @@ export class Classes extends Component {
                     courseName : "Massage",
                     description : "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. "
                 },
-        ]}
+        ]*/
+        };
+
+        SingletonService.CourseService.get_all_courses().then((result) => {
+            if(result === null)
+            {
+                return;
+            }
+           this.setState({list: result});
+        });
     };
 
     render() {
@@ -44,10 +54,12 @@ export class Classes extends Component {
           <div id="fh5co-programs-section">
             <div className="container">
                 {this.state.list.map( x => 
-                        <ClassCard 
+                        <ClassCard
+                            id = {x.id}
                             image={x.image}
                             courseName={x.courseName}
                             description={x.description}
+                            numberOfFeedbacks = {x.numberOfFeedbacks}
                         />
                 )}
             </div>
