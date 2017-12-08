@@ -11,6 +11,7 @@ error_reporting(E_ERROR | E_PARSE);
 
 require_once("../controllers/controller.php");
 require_once("../services/JWTService.php");
+include("./headers.php");
 
 if($_SERVER["REQUEST_METHOD"] != "POST")
 {
@@ -27,7 +28,6 @@ else{
     $data = null;
 
     $saved_file_name = pathinfo($_FILES["photo"]["tmp_name"])['filename'];
-
 
     try
     {
@@ -63,6 +63,7 @@ else{
         $upload_ok = 1;
         $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
         $reason_failed = "";
+
 
         if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
             && $imageFileType != "svg" )

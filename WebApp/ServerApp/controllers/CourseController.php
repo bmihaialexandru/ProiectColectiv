@@ -11,14 +11,14 @@ class CourseController
         $this->db = new CourseDAO();
     }
 
-    public function add_new_course($name, $description)
+    public function add_new_course($name, $url_photo, $description)
     {
-        $this->db->add_course($name, $description);
+        $this->db->add_course($name, $url_photo, $description);
     }
 
-    public function update_course($id, $name, $description)
+    public function update_course($id, $name, $url_photo, $description)
     {
-        $this->db->update_course($id, $name, $description);
+        $this->db->update_course($id, $name, $url_photo, $description);
     }
 
     public function get_course($id)

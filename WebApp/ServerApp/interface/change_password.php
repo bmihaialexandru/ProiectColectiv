@@ -3,6 +3,7 @@ error_reporting(E_ERROR | E_PARSE);
 
 require_once("../controllers/controller.php");
 require_once("../services/JWTService.php");
+include("./headers.php");
 
 if($_SERVER["REQUEST_METHOD"] != "POST")
 {
@@ -25,8 +26,9 @@ if($_SERVER["REQUEST_METHOD"] != "POST")
     }
 	if($token_ok == false)
     {
-        // TODO: we need to discuss here if we want to give a HTTP status or a JSON in case of an error?
-        header('HTTP/1.0 401 Unauthorized');
+        $message->answer = "Error";
+        $message->reason = "Invalid token";
+        echo json_encode($message);
     }
 	else
     {

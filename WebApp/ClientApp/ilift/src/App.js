@@ -13,6 +13,8 @@ import {TrainersPageAdmin} from './pages/TrainersPageAdmin';
 import {SchedulePageAdmin} from './pages/SchedulePageAdmin';
 import {UsersPageAdmin} from './pages/UsersPageAdmin';
 import {AdminHome} from './pages/AdminHome';
+import {ProfilePage} from './pages/ProfilePage';
+import {FeedbackPage} from './pages/FeedbackPage';
 
 class App extends Component {
   render() {
@@ -32,6 +34,9 @@ class App extends Component {
             <Route exact path='/managetrainers' component={TrainersPageAdmin}/>
             <Route exact path='/manageschedules' component={SchedulePageAdmin}/>
             <Route exact path='/manageusers' component={UsersPageAdmin}/>
+            <Route exact path='/profile' component={ProfilePage} />
+            <Route exact path='/feedback' component={FeedbackPage} />
+
          </Switch>
       </div>
     </Router>

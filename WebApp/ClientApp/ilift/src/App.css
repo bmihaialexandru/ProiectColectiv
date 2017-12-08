@@ -61,3 +61,24 @@
 .contact-map {
   background-image: url(template/images/map.jpg)
 }
+
+.ilift-account {
+  top: -10px;
+  display: none;
+}
+
+.ilift-account-image {
+  background: url('./components/images/account.png') no-repeat;
+  background-size: contain;
+  height: 40px;
+  width: 40px;
+}
+.ilift-account-name {
+  display: inline;
+  font-style: italic;
+}
+
+.feedback-box{
+  padding: 20px;
+  border: 1px solid #848484;
+}

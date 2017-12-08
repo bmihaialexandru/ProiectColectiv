@@ -7,6 +7,8 @@ import {News} from '../components/News';
 import {Footer} from '../components/Footer';
 import { Link } from 'react-router-dom';
 
+import {_reloadJs} from '../js/reloadJs';
+
 export class HomePage extends Component {
 
   componentWillReceiveProps(nextProps){
@@ -15,6 +17,8 @@ export class HomePage extends Component {
   }
 
   render() {
+    _reloadJs();
+    console.log("session token: " + localStorage.getItem("token"));
     return (
       <div id="fh5co-wrapper">
         <div id="fh5co-page">

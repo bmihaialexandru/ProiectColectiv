@@ -5,8 +5,11 @@ import {Footer} from '../components/Footer';
 import {Trainers} from '../components/Trainers';
 import {Classes} from '../components/Classes';
 
+import {_reloadJs} from '../js/reloadJs';
+
 export class TrainersPage extends Component {
   render() {
+    _reloadJs();
     return (
       <div id="fh5co-wrapper">
       <div id="fh5co-page">

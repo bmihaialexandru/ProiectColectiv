@@ -11,6 +11,7 @@ error_reporting(E_ERROR | E_PARSE);
 
 require_once("../controllers/controller.php");
 require_once("../services/JWTService.php");
+include("./headers.php");
 
 if($_SERVER["REQUEST_METHOD"] != "POST")
 {
@@ -125,7 +126,7 @@ else{
                 {
                     $url_photo = $ctrl->tctrl->getTrainer($id)['url_photo'];
                     $message->answer = "Success";
-                    $ctrl->tctrl->editTrainer($id, $name, $url_photo);
+                    $ctrl->tctrl->editTrainer($id, $name, $url_photo, $description);
                     echo json_encode($message);
                 }
             }

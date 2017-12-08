@@ -25,7 +25,11 @@ class TrainerDAO
 
     public function getTrainerDAO($id)
     {
-        $sql = 'SELECT * FROM trainer WHERE id = ?';
+        $sql = 'SELECT trainer.*, count(feedback_trainer.id_trainer) as number_of_feedbacks
+        FROM trainer 
+        LEFT JOIN feedback_trainer ON(trainer.id = feedback_trainer.id_trainer)
+        WHERE trainer.id = ?
+        GROUP BY trainer.id';
         $stmt=$this->db->prepare($sql);
         $stmt->execute([$id,]);
         $trainer = $stmt->fetch();
@@ -34,7 +38,10 @@ class TrainerDAO
 
     public function getAllTrainersDAO()
     {
-        $sql = 'SELECT * FROM trainer';
+        $sql = 'SELECT trainer.*, count(feedback_trainer.id_trainer) as number_of_feedbacks
+        FROM trainer 
+        LEFT JOIN feedback_trainer ON(trainer.id = feedback_trainer.id_trainer)
+        GROUP BY trainer.id';
         $stmt=$this->db->prepare($sql);
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
