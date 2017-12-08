@@ -3,6 +3,7 @@
 require_once('UserController.php');
 require_once('CourseController.php');
 require_once('TrainerController.php');
+require_once('SubscribtionController.php');
 
 // add all controllers here, include only one controller
 class Controller {
@@ -14,6 +15,8 @@ class Controller {
 		$this->uctrl = new UserController();
 		$this->cctrl = new CourseController();
 		$this->tctrl = new TrainerController();
+
+		$this->subctrl = new SubscribtionController();
 	}
 }
 
