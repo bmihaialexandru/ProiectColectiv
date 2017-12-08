@@ -36,7 +36,7 @@ class JWTService
 
     public function createToken($role, $username)
     {
-        $data = ["name"=>$username, "role"=>$role];
+        $data = ["name"=>$username, "role"=>$role, "timestamp" => time()];
 
         $jwt = JWT::encode(
             $data,      //Data to be encoded in the JWT

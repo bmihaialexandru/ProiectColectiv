@@ -12,7 +12,6 @@ if($_SERVER["REQUEST_METHOD"] != "POST")
 	else{
 	$ctrl = new Controller();
 	$jwt_service = new JWTService();
-	//$username = $_POST['username'];
 	$security_token = $_POST['token'];
 	$token_ok = true;
 
@@ -36,7 +35,7 @@ if($_SERVER["REQUEST_METHOD"] != "POST")
 		if(!empty($username))
 		{
 		
-			$res=$ctrl->uctrl->is_password_changed($username, $old_password, $new_password);
+			$res=$ctrl->uctrl->is_password_changed($username);
 			if($res == 0) 
 			{
 				$message->answer = "False";

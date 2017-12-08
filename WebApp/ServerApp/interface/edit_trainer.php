@@ -125,7 +125,7 @@ else{
                 {
                     $url_photo = $ctrl->tctrl->getTrainer($id)['url_photo'];
                     $message->answer = "Success";
-                    $ctrl->tctrl->editTrainer($id, $name, $url_photo);
+                    $ctrl->tctrl->editTrainer($id, $name, $url_photo, $description);
                     echo json_encode($message);
                 }
             }
