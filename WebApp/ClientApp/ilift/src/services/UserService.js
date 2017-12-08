@@ -90,7 +90,9 @@ export class UserService extends Component {
             if(result["answer"].localeCompare("Success") !== 0)
             {
                 alert(result["reason"]);
+                return null;
             }
+            return "Success";
         } catch(error) {
             alert("Critical error: "+ error + ", please try again later");
         }

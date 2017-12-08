@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {HeaderAdmin} from '../components/HeaderAdmin';
 import {FooterAdmin} from '../components/FooterAdmin';
 import '../template/css/inputBox.css';
+import {SingletonService} from '../services/SingletonService'
 
 export class UsersPageAdmin extends Component {
   componentWillReceiveProps(nextProps){
@@ -48,12 +49,12 @@ export class UsersPageAdmin extends Component {
                       
                         <h1 class="text-centter">Register new user</h1>
                         
-                        <input type="text" name="username" placeholder="Name" />
-                        <input type="text" name="phone" placeholder="Phone" />
-                        <input type="text" name="email" placeholder="E-mail" />
-                        <input type="password" name="password" placeholder="Password" />
+                        <input type="text" name="username" id="username" placeholder="Name" />
+                        <input type="text" name="phone" id="phone" placeholder="Phone" />
+                        <input type="text" name="email" id="email" placeholder="E-mail" />
+                        <input type="password" name="password" id="password" placeholder="Password" />
                         
-                        <input type="submit" name="signup_submit" value="Sign up" />
+                        <input type="submit" name="signup_submit" value="Sign up" onClick={() => this.register()} />
                       
 
                     </div>
@@ -73,5 +74,22 @@ export class UsersPageAdmin extends Component {
         </div>
         </div>
       );
+  }
+
+  register() {
+    let username = document.getElementById("username").value;
+    let phone = document.getElementById("phone").value;
+    let email = document.getElementById("email").value;
+    let password = document.getElementById("password").value;
+    let token = localStorage.getItem("token");
+
+    console.log(username);
+
+    SingletonService.UserService.register(token, username, password, phone, email).then((result) => {
+      console.log(result);
+      if(result != null) {
+        alert("Cel mai bun user sa inregistrat c suckes");
+      }
+    });
   }
 }
