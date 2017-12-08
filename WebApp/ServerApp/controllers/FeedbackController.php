@@ -25,6 +25,15 @@ class FeedbackController
         return 0;
     }
 
+    public function DeleteFeedback($id)
+    {
+        if($this->feedbackDb->GetFeedbackById($id) == null){
+            return 1;
+        }
+        $this->feedbackDb->DeleteFeedback($id);
+        return 0;
+    }
+
     public function GetFeedbacks($id)
     {
         if($this->courseDb->get_course($id) == null){

@@ -28,4 +28,20 @@ class FeedbackDAO
         $feedback = $stmt->fetchAll();
         return $feedback;
     }
+
+    public function GetFeedbackById($id)
+    {
+        $sql = 'SELECT * from feedback where id = ?';
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([$id]);
+        $feedback = $stmt->fetchAll();
+        return $feedback;
+    }
+
+    public function DeleteFeedback($id)
+    {
+        $sql = 'DELETE FROM feedback where id = ?';
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([$id]);
+    }
 }
