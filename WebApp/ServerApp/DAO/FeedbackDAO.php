@@ -22,7 +22,7 @@ class FeedbackDAO
 
     public function GetFeedbacksForCourse($id)
     {
-        $sql = 'SELECT * from feedback WHERE course_id = ?';
+        $sql = 'SELECT feedback.*, `user`.name as username from feedback inner join `user` on feedback.user_id = `user`.id WHERE course_id = ?';
         $stmt = $this->db->prepare($sql);
         $stmt->execute([$id]);
         $feedback = $stmt->fetchAll();
