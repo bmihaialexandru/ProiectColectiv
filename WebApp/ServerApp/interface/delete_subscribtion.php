@@ -37,10 +37,10 @@ else{
     else
     {
         //TODO: validate email and phone number
-        if(!empty($id_entry))
+        if(!empty($sc_entry))
         {
 
-            $ctrl->subctrl->delete_subscribtion($user["id"], $id_entry);
+            $ctrl->subctrl->delete_subscribtion($user["id"], $sc_entry);
             $message->answer = "Success";
             echo json_encode($message);
 

@@ -25,7 +25,7 @@ class SubscribtionsDAO
 
     public function delete_subscribtion($id_user, $id_sc_entry)
     {
-        $sql = "DELETE * FROM subscribtion WHERE id_user=? and id_schentry = ?";
+        $sql = "DELETE FROM subscribtion WHERE id_user=? and id_schentry = ?";
         $stmt = $this->db->prepare($sql);
         $stmt->execute([$id_user, $id_sc_entry]);
     }
