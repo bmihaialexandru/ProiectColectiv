@@ -23,6 +23,10 @@ class SubscribtionController
         {
             return 1;
         }
+        if(!$this->dao->verify_slots($id_schentry))
+        {
+            return 2;
+        }
         $this->dao->add_new_subscribtion($id_user, $id_schentry);
         return 0;
     }

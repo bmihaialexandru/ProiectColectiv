@@ -37,19 +37,25 @@ else{
     else
     {
         //TODO: validate email and phone number
-        if(!empty($id_entry))
+        if(!empty($sc_entry))
         {
 
-            $res=$ctrl->subctrl->add_subscribtion($user["id"], $id_entry);
+            $res=$ctrl->subctrl->add_subscribtion($user["id"], $sc_entry);
             if($res == 0)
             {
                 $message->answer = "Success";
                 echo json_encode($message);
             }
-            else
+            else if($res == 1)
             {
                 $message->answer = "Error";
                 $message->reason = "Already subscribed to this entry!";
+                echo json_encode($message);
+            }
+            else if($res == 2)
+            {
+                $message->answer = "Error";
+                $message->reason = "Maximum capacity for this schedule reached!";
                 echo json_encode($message);
             }
         }
