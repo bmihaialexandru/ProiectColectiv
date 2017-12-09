@@ -50,7 +50,8 @@ else {
         }
         else{
             $message->answer = "Success";
-            echo json_encode($feedbacks);
+            $message->feedbacks = $feedbacks;
+            echo json_encode($message);
         }
     }
 }
