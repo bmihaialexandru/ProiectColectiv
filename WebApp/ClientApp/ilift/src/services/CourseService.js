@@ -71,7 +71,7 @@ export class CourseService extends Component {
                 'Accept': 'application/json',
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: "token="+localStorage.getItem("token")+"id="+id
+            body: "token="+localStorage.getItem("token")+"&id="+id
         }).then(result => {
             return result.json();
         }).then(result => {
@@ -86,7 +86,7 @@ export class CourseService extends Component {
                 'Accept': 'application/json',
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: "token="+localStorage.getItem("token")+"id="+id
+            body: "token="+localStorage.getItem("token")+"&id="+id
         }).then(result => {
             return result.json();
         }).then(result => {

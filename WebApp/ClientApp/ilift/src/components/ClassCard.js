@@ -12,7 +12,7 @@ export class ClassCard extends Component {
 
         return (
             <div className="col-md-4 col-sm-6">
-                <div className="program animate-box">
+                <div className="program">
                     <img src={image} alt=""/>
                     <h3>{courseName}</h3>
                     <p>{description}</p>
