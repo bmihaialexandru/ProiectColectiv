@@ -56,6 +56,30 @@ class ScheduleEntryDAO
         $stmt->execute([$id]);
     }
 
+    public function get_current_week_schedule()
+    {
+        $date = date("Y-m-d");
+        if(date('w', strtotime($date)) == 6 or date('w', strtotime($date)) == 0)
+        {
+            $period = ' +1 day';
+        }
+        else
+        {
+            $period = ' -1 day';
+        }
+        while(date('w', strtotime($date)) != 1)
+        {
+            $date = date('Y-m-d', strtotime($date . $period));
+        }
+
+        $finish = date('Y-m-d', strtotime($date. ' +4 days'));
+        $sql = "SELECT * FROM schedule_entry WHERE `day` >= ? and `day` <= ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([$date, $finish]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    }
+
     public function add_schedule_entry($day, $hour_start, $hour_finish, $id_course, $id_trainer, $id_training_room)
     {
         $sql = 'INSERT INTO schedule_entry(`day`, hour_start, hour_finish,id_course, id_trainer, id_training_room) VALUES(?,?,?,?,?,?)';

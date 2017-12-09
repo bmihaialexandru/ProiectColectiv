@@ -46,4 +46,9 @@ class ScheduleEntryController
     {
         $this->db->delete_schedule_entry($id);
     }
+
+    public function get_current_week()
+    {
+        return $this->db->get_current_week_schedule();
+    }
 }

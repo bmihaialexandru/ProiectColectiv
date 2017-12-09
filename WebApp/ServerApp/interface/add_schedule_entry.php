@@ -65,25 +65,36 @@ else{
             }
             $period = new DatePeriod($begin, $interval, $end);
 
+            $not_ok = False;
+
             foreach ( $period as $dt ) {
                 $entries=$ctrl->sctrl->get_schedule_entry_by_day($dt->format("Y-m-d"));
                 foreach($entries as $entry){
-                    if(($id_trainer==$entry->id_trainer or $id_training_room==$entry->id_training_room) and
-                        (($entry->hour_start<=$hour_start and $entry->hour_finish>$hour_start)
-                            or ($entry->hour_start<$hour_finish and $entry->hour_finish>=$hour_finish))){
+                    // muie badila
+                    if(($id_trainer==$entry['id_trainer'] or $id_training_room==$entry['id_training_room']) and
+                        (($entry['hour_start']<=$hour_start and $entry['hour_finish']>$hour_start)
+                            or ($entry['hour_start']<$hour_finish and $entry['hour_finish']>=$hour_finish))){
                         $message->answer = "Error";
                         $message->reason = "Schedule entry already exists on date ".$dt->format("Y-m-d");
                         echo json_encode($message);
-                        return;
+                        $not_ok = True;
+                        break;
                     }
                 }
-            }
-            foreach ( $period as $dt ) {
-                $ctrl->sctrl->add_new_schedule_entry($dt->format("Y-m-d"), $hour_start, $hour_finish, $id_course, $id_trainer, $id_training_room);
+                if($not_ok)
+                {
+                    break;
+                }
             }
 
-            $message->answer = "Success";
-            echo json_encode($message);
+            if(!$not_ok) {
+                foreach ($period as $dt) {
+                    $ctrl->sctrl->add_new_schedule_entry($dt->format("Y-m-d"), $hour_start, $hour_finish, $id_course, $id_trainer, $id_training_room);
+                }
+
+                $message->answer = "Success";
+                echo json_encode($message);
+            }
         }
         else
         {
