@@ -11,6 +11,30 @@ class UserController
         $this->userDAO = new UserDAO();
     }
 
+    public function delete_user($id){
+        if(count($this->userDAO->getUser($id)) === 0){
+            return 1;
+        }
+        $this->userDAO->deleteUser($id);
+        return 0;
+    }
+
+    public function edit_user($id,$newname,$newphone,$newemail,$newpass){
+        if(count($this->userDAO->getUser($id)) != 0){
+            return 1;
+        }
+        if(count($this->userDAO->get_user_by_name($newname)) != 0){
+            return 2;
+        }
+        $newpasshash = hash('ripemd160',$newpass);
+        $this->userDAO->editUser($id,$newphone,$newemail,$newname,$newpasshash);
+        return 0;
+    }
+
+    public function get_users(){
+        return $this->userDAO->getUsers();
+    }
+
     public function get_user_with_password($name, $password)
     {
 		$password_hash = hash('ripemd160', $password);
