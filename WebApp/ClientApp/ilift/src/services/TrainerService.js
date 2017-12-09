@@ -71,7 +71,7 @@ export class TrainerService extends Component {
                 'Accept': 'application/json',
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: "token="+localStorage.getItem("token")+"id="+id
+            body: "token="+localStorage.getItem("token")+"&id="+id
         }).then(result => {
             return result.json();
         }).then(result => {
@@ -86,7 +86,7 @@ export class TrainerService extends Component {
                 'Accept': 'application/json',
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: "token="+localStorage.getItem("token")+"id="+id
+            body: "token="+localStorage.getItem("token")+"&id="+id
         }).then(result => {
             return result.json();
         }).then(result => {
@@ -154,7 +154,9 @@ export class TrainerService extends Component {
             if(result["answer"].localeCompare("Success") !== 0)
             {
                 alert(result["reason"]);
+                return null;
             }
+            return "Success";
         } catch(error) {
             alert("Critical error: "+ error + ", please try again later");
         }

@@ -9,6 +9,7 @@ import {_reloadJs} from '../js/reloadJs';
 import {Redirect} from 'react-router-dom';
 import $ from 'jquery';
 import {FeedbackCard} from '../components/FeedbackCard';
+import {SingletonService} from "../services/SingletonService";
 
 export class FeedbackPage extends Component {
 
@@ -17,6 +18,7 @@ export class FeedbackPage extends Component {
         this.state = {
             rating: null,
             list : [
+                /*
               {
                 author: "Anna Kendrick",
                 rating: 4,
@@ -42,7 +44,17 @@ export class FeedbackPage extends Component {
                 rating: 5,
                 description: "Great guy, but I can lift more than him!"
               }
+              */
             ]
+        };
+        let e_id = this.props.location.state.id;
+        console.log("Entity is: "+ this.props.location.state.entityType);
+        if(this.props.location.state.entityType.localeCompare("course") === 0)
+        {
+            SingletonService.FeedbackCourseService.get_all_feedbacks(e_id).then((result) => {
+                this.setState({list: result});
+                console.log(result);
+            })
         }
     }
 
@@ -79,9 +91,9 @@ export class FeedbackPage extends Component {
          <div className="col-md-8 col-md-offset-2 schedule-container">
           {this.state.list.map( x => 
 							<FeedbackCard 
-                author={x.author}
-                rating={x.rating}
-								description={x.description}
+                            author={x.author}
+                            rating={x.stars}
+                            description={x.message}
 							/>
 					)}
         </div>
@@ -107,7 +119,7 @@ export class FeedbackPage extends Component {
           </div>
             <div className="col-md-12 col-md-offset-6">
                 <div className="form-group">
-                    <textarea name="" className="form-control" id="" cols="30" rows="7" placeholder="Message"></textarea>
+                    <textarea name="" className="form-control" id="message" cols="30" rows="7" placeholder="Message"></textarea>
                 </div>
             </div>
           <div className="col-md-12 col-md-offset-6">
@@ -137,6 +149,19 @@ export class FeedbackPage extends Component {
     }
 
     _submitFeedback(){
+        let message = document.getElementById("message").value;
+        let stars = this.state.rating;
+        let e_id =  this.props.location.state.id;
+        //let router = this.context.router;
+
+        if(this.props.location.state.entityType.localeCompare("course") === 0) {
+            SingletonService.FeedbackCourseService.add_new_feedback(stars, message, e_id).then((result) => {
+                if (result !== null) {
+                    alert("Feedback added succesfully!");
+                    window.location.replace("/courses")
+                }
+            })
+        }
 
     }
 }

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import {ServiceCredentials} from './ServiceCredentials';
-import {User} from "../model/User";
+import {FeedbackCourse} from "../model/FeedbackCourse";
 
-export class UserService extends Component {
+export class FeedbackCourseService extends Component {
 
 
     constructor() {
@@ -11,74 +11,71 @@ export class UserService extends Component {
         this.server = ServiceCredentials.SERVER_PATH;
     }
 
-    login(username, password) {
-        return fetch(this.server + "/interface/login.php", {
+    add_new_feedback(stars, message, course_id) {
+        return fetch(this.server + "/interface/add_feedback.php", {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: "username="+username+"&password="+password
-        }).then(result=> {
+            body: "token="+localStorage.getItem("token")+"&stars="+stars+"&message="+message+"&course_id="+course_id
+        }).then(result => {
             return result.json();
         }).then(result => {
-            return UserService._get_token_from_result(result)
+            return FeedbackCourseService._get_result_simple(result);
         });
     }
 
-    get_current_user(token) {
-        return fetch(this.server + "/interface/get_my_user.php", {
+
+    delete_feedback(id) {
+        return fetch(this.server + "/interface/delete_feedback.php", {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: "token="+token
+            body: "token="+localStorage.getItem("token")+"&id="+id
         }).then(result => {
             return result.json();
         }).then(result => {
-            return UserService._get_user_from_result(result);
-        })
+            return FeedbackCourseService._get_result_simple(result);
+        });
     }
 
-    register(token, username, password, phone, email) {
-        return fetch(this.server + "/interface/register.php", {
+    get_all_feedbacks(id) {
+        return fetch(this.server + "/interface/get_feedbacks.php", {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: "token="+token+"&username="+username+"&password="+password+"&phone="+phone+"&email="+email
+            body: "token="+localStorage.getItem("token")+"&id="+id
         }).then(result => {
             return result.json();
         }).then(result => {
-            return UserService._get_result_simple(result);
-        })
+            return FeedbackCourseService._get_feedback_course_list_from_result(result);
+        });
     }
 
-    static _get_token_from_result(result) {
-        try {
-            if(result["answer"].localeCompare("Success") !== 0)
-            {
-                // TODO: do this preetier maybe :D
-                alert(result["reason"]);
-                return null;
-            }
-            return result["token"];
-        } catch(error) {
-            alert("Critical error: "+ error + ", please try again later");
-            return null;
-        }
-    }
 
-    static _get_user_from_result(result) {
+
+    static _get_feedback_course_list_from_result(result) {
+
         try {
             if(result["answer"].localeCompare("Success") !== 0)
             {
                 alert(result["reason"]);
                 return null;
             }
-            return new User(result["user"]["id"], result["user"]["name"], result["user"]["phone_number"], result["user"]["email"], result["user"]["user_type"], result["user"]["pass_changed"]);
+            return result["feedbacks"].map((feedback) => new FeedbackCourse(feedback["id"],
+                feedback["stars"],
+                feedback["message"],
+                feedback["course_id"],
+                feedback["user_id"],
+                feedback["username"]
+                )
+            );
+
         } catch(error) {
             alert("Critical error: "+ error + ", please try again later");
             return null;
