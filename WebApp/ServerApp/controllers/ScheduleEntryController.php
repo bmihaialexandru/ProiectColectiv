@@ -8,7 +8,7 @@
 
 require_once("../DAO/ScheduleEntryDAO.php");
 
-class ScheduleEntry
+class ScheduleEntryController
 {
     private $db;
 
@@ -32,6 +32,11 @@ class ScheduleEntry
         return $this->db->get_schedule_entry($id);
     }
 
+    public function get_schedule_entry_by_day($day)
+    {
+        return $this->db->get_schedule_entry_by_day($day);
+    }
+
     public function get_all_schedule_entries()
     {
         return $this->db->get_all_schedule_entries();
@@ -40,5 +45,10 @@ class ScheduleEntry
     public function delete_schedule_entry($id)
     {
         $this->db->delete_schedule_entry($id);
+    }
+
+    public function get_current_week()
+    {
+        return $this->db->get_current_week_schedule();
     }
 }
