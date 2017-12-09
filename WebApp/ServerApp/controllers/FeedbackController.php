@@ -18,8 +18,11 @@ class FeedbackController
     }
 
     public function AddFeedback($stars,$message,$user_id,$course_id){
-        if($this->courseDb->get_course($course_id) == null){
+        if($stars < 0 || $stars > 5){
             return 1;
+        }
+        if($this->courseDb->get_course($course_id) == null){
+            return 2;
         }
         $this->feedbackDb->GiveFeedback($stars,$message,$user_id,$course_id);
         return 0;

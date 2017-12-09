@@ -51,21 +51,29 @@ else{
             echo json_encode($message);
             exit(0);
         }
-        //TODO: validate email and phone number
-        if(!empty($stars) || !empty($course_id))
+        echo $message;
+        if(!empty($stars) && !empty($course_id) && !empty($feedback_message))
         {
 
             $res=$ctrl->fctrl->AddFeedback($stars,$feedback_message,$user['id'],$course_id);
-            if($res == 0)
+            if($res === 0)
             {
                 $message->answer = "Success";
                 echo json_encode($message);
             }
             else
             {
-                $message->answer = "Error";
-                $message->reason = "Non existent course!";
-                echo json_encode($message);
+                if($res === 1){
+                    $message->answer = "Error";
+                    $message->reason = "Invalid rating!";
+                    echo json_encode($message);
+                }
+                if($res === 2){
+                    $message->answer = "Error";
+                    $message->reason = "Invalid course id!";
+                    echo json_encode($message);
+                }
+
             }
         }
         else
