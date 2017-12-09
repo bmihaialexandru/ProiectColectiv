@@ -25,6 +25,14 @@ class ScheduleEntryDAO
         return $schedule_entry;
     }
 
+    public function get_schedule_entry_by_day($day){
+        $sql = 'SELECT * FROM schedule_entry WHERE `day` = ?';
+        $stmt=$this->db->prepare($sql);
+        $stmt->execute([$day,]);
+        $schedule_entry = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $schedule_entry;
+    }
+
     public function get_all_schedule_entries()
     {
         $sql = 'SELECT * FROM schedule_entry';

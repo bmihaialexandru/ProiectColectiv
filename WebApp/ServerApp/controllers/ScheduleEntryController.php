@@ -8,7 +8,7 @@
 
 require_once("../DAO/ScheduleEntryDAO.php");
 
-class ScheduleEntry
+class ScheduleEntryController
 {
     private $db;
 
@@ -30,6 +30,11 @@ class ScheduleEntry
     public function get_schedule_entry($id)
     {
         return $this->db->get_schedule_entry($id);
+    }
+
+    public function get_schedule_entry_by_day($day)
+    {
+        return $this->db->get_schedule_entry_by_day($day);
     }
 
     public function get_all_schedule_entries()
