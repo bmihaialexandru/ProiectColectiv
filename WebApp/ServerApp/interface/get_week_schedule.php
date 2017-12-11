@@ -11,9 +11,16 @@ if($_SERVER["REQUEST_METHOD"] != "POST")
     echo json_encode($message);
 }
 else {
+    $date = $_POST['date'];
     $ctrl = new Controller();
-    $message->answer = "Success";
-    $message->schedule = $ctrl->sctrl->get_current_week();
-    echo json_encode($message);
-
+    if(!empty($date)) {
+        $message->answer = "Success";
+        $message->schedule = $ctrl->sctrl->get_current_week($date);
+        echo json_encode($message);
+    }
+    else {
+        $message->answer = "Error";
+        $message->reason = "Please give a valid date!";
+        echo json_encode($message);
+    }
 }

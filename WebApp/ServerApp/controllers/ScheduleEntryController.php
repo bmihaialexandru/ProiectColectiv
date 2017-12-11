@@ -47,8 +47,16 @@ class ScheduleEntryController
         $this->db->delete_schedule_entry($id);
     }
 
-    public function get_current_week()
+    public function get_current_week($date)
     {
-        return $this->db->get_current_week_schedule();
+        $list = $this->db->get_current_week_schedule($date);
+        $toRet = ["sunday"=> [], "monday" => [], "tuesday" => [], "wednesday" => [], "thursday" => [], "friday" => [], "saturday" => []];
+        $nr_to_key = [0 => "sunday", 1=>"monday", 2 => "tuesday", 3=> "wednesday",4=>"thursday", 5=>"friday", 6=>"saturday"];
+        foreach($list as $d) {
+            array_push($toRet[$nr_to_key[intval(date('w', strtotime($d['day'])))]], $d);
+
+        }
+
+        return $toRet;
     }
 }

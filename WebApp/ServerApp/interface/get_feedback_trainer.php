@@ -42,7 +42,6 @@ else {
         echo json_encode($message);
     } else {
         $feedbacks = $ctrl->ftctrl->GetFeedbacks($id);
-        echo $feedbacks;
         if($feedbacks == 1){
             $message->answer = "Error";
             $message->reason = "Invalid trainer id";

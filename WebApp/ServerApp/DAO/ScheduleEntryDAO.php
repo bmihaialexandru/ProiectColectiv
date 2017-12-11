@@ -56,23 +56,16 @@ class ScheduleEntryDAO
         $stmt->execute([$id]);
     }
 
-    public function get_current_week_schedule()
+    public function get_current_week_schedule($date)
     {
-        $date = date("Y-m-d");
-        if(date('w', strtotime($date)) == 6 or date('w', strtotime($date)) == 0)
+        //$start = $date;
+        $period = ' -1 day';
+        while(date('w', strtotime($date)) != '1')
         {
-            $period = ' +1 day';
-        }
-        else
-        {
-            $period = ' -1 day';
-        }
-        while(date('w', strtotime($date)) != 1)
-        {
+            echo $date;
             $date = date('Y-m-d', strtotime($date . $period));
         }
-
-        $finish = date('Y-m-d', strtotime($date. ' +4 days'));
+        $finish = date('Y-m-d', strtotime($date. ' +6 days'));
         $sql = "SELECT * FROM schedule_entry WHERE `day` >= ? and `day` <= ?";
         $stmt = $this->db->prepare($sql);
         $stmt->execute([$date, $finish]);

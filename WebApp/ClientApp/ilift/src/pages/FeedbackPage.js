@@ -56,6 +56,13 @@ export class FeedbackPage extends Component {
                 console.log(result);
             })
         }
+        else if(this.props.location.state.entityType.localeCompare("trainer") === 0)
+        {
+            SingletonService.FeedbackTrainerService.get_all_feedbacks(e_id).then((result) => {
+                this.setState({list: result});
+                console.log(result);
+            })
+        }
     }
 
   componentWillMount(){
@@ -176,6 +183,14 @@ export class FeedbackPage extends Component {
                 if (result !== null) {
                     alert("Feedback added succesfully!");
                     window.location.replace("/courses")
+                }
+            })
+        }
+        else if(this.props.location.state.entityType.localeCompare("trainer") === 0) {
+            SingletonService.FeedbackTrainerService.add_new_feedback(stars, message, e_id).then((result) => {
+                if (result !== null) {
+                    alert("Feedback added succesfully!");
+                    window.location.replace("/trainers")
                 }
             })
         }
