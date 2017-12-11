@@ -36,6 +36,13 @@ class TrainerDAO
         return $trainer;
     }
 
+    public function getTrainerById($id){
+        $sql = 'SELECT * from trainer where id =?';
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([$id]);
+        return $stmt->fetch();
+    }
+
     public function getAllTrainersDAO()
     {
         $sql = 'SELECT trainer.*, count(feedback_trainer.id_trainer) as number_of_feedbacks
