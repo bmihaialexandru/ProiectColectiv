@@ -58,13 +58,28 @@ export class FeedbackPage extends Component {
         }
     }
 
+  componentWillMount(){
+    $('html,body').scrollTop(0);
+  }
+
   render() {
-      //$('html,body').scrollTop(0);
       _reloadJs();
       console.log(this.props.location.entityName);
       if(!this.props.location.state){
           return <Redirect to="/"/>
       }
+
+
+    const description = this.props.location.state.entityDescription ? 
+      <div>
+      <div className="col-md-11 col-md-offset-2 animate-box" style={{fontSize: "24px"}}>Course description:</div>
+      <div className="row text-center animate-box">
+        {this.props.location.state.entityDescription}
+      </div>
+      </div>
+      : null;
+
+
     return (
       <div id="fh5co-wrapper">
       <div id="fh5co-page">
@@ -85,7 +100,9 @@ export class FeedbackPage extends Component {
         </div>
       </div>
       <div style={{backgroundColor: "#fcfcfc"}}>
-      <br/><br/>
+      <br/>
+      {description}
+      <br/>
       <div className="col-md-11 col-md-offset-2 animate-box" style={{fontSize: "24px"}}>Previous feedbacks:</div>
       <div className="row text-center animate-box">
          <div className="col-md-8 col-md-offset-2 schedule-container">

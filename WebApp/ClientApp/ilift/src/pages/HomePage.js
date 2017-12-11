@@ -12,7 +12,6 @@ import {_reloadJs} from '../js/reloadJs';
 export class HomePage extends Component {
 
   componentWillReceiveProps(nextProps){
-    console.log("home");
     window.location.reload();
   }
 

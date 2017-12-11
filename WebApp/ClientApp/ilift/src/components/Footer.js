@@ -23,8 +23,8 @@ export class Footer extends Component {
 							<ul className="contact-info">
 								<li><i className="icon-map-marker"></i>198 West 21th Street, Suite 721 New York NY 10016</li>
 								<li><i className="icon-phone"></i>+ 1235 2355 98</li>
-								<li><i className="icon-envelope"></i><a href="#">info@yoursite.com</a></li>
-								<li><i className="icon-globe2"></i><a href="#">www.yoursite.com</a></li>
+								<li><i className="icon-envelope"></i><a href="#">info@oursite.com</a></li>
+								<li><i className="icon-globe2"></i><a href="#">www.oursite.com</a></li>
 							</ul>
 						</div>
 						<div className="col-md-4 animate-box">
@@ -50,13 +50,13 @@ export class Footer extends Component {
 					</div>
 					<div className="row copy-right">
 						<div className="col-md-6 col-md-offset-3 text-center">
-							<p className="fh5co-social-icons">
+							{/* <p className="fh5co-social-icons">
 								<a href="#"><i className="icon-twitter2"></i></a>
 								<a href="#"><i className="icon-facebook2"></i></a>
 								<a href="#"><i className="icon-instagram"></i></a>
 								<a href="#"><i className="icon-dribbble2"></i></a>
 								<a href="#"><i className="icon-youtube"></i></a>
-							</p>
+							</p> */}
 							<p>Copyright 2017 932/Brilliant. All Rights Reserved. <br/>Made with <i className="icon-heart3"></i> by <a href="http://freehtml5.co/" target="_blank">932/brilliant</a></p>
 						</div>
 					</div>

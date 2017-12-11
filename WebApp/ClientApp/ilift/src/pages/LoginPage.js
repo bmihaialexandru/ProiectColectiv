@@ -82,4 +82,5 @@ export class LoginPage extends Component {
           window.location.replace("/");
       });
     }
+    }
 }

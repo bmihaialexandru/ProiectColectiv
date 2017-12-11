@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Link} from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 export class ClassCard extends Component {
 
@@ -24,7 +24,6 @@ export class ClassCard extends Component {
                                 </Link>
                             </span>
                     </p>
-                    <span><a href="#" className="btn btn-default">Join Now</a></span>
                 </div>
             </div>
     );
