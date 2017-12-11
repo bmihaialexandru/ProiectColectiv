@@ -3,7 +3,6 @@ import {Header} from '../components/Header';
 import {Schedule} from '../components/Schedule';
 import {Footer} from '../components/Footer';
 import {Classes} from '../components/Classes';
-import {session} from '../Session/Session';
 import { Redirect } from 'react-router-dom';
 
 import { ScheduleCard } from '../components/ScheduleCard';

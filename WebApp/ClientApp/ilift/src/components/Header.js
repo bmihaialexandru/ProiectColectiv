@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import {session} from '../Session/Session';
 
 export class Header extends Component {
 
@@ -36,7 +35,7 @@ export class Header extends Component {
                         <li className="ilift-account">
                             <Link to={'/profile'}>
                                 <div className="ilift-account-image"></div>
-                                <div className="ilift-account-name">{session.username}Sabina</div>
+                                <div className="ilift-account-name">Sabina</div>
                             </Link>
                         </li>
                     </ul>
