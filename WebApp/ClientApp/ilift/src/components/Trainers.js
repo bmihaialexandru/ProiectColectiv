@@ -33,7 +33,7 @@ export class Trainers extends Component {
 				{
                     imageUrl : require("./images/trainer-4.jpg"),
 					name : "Carausu Catrinel",
-					domain : "TRX instructor",
+					domain : "TRX, Yoga instructor",
 					numberOfFeedbacks: 23,
                     description : "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. "
 				},
@@ -55,13 +55,13 @@ export class Trainers extends Component {
                     imageUrl : require("./images/trainer-7.jpg"),
 					name : "Bodea Nicolae",
 					domain : "Strongman instructor",
-					numberOfFeedbacks: 23,
+					numberOfFeedbacks: 14,
                     description : "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. "
 				},
 				{
                     imageUrl : require("./images/trainer-8.jpg"),
 					name : "Baciu Cristian",
-					domain : "Yoga instructor",
+					domain : "HIIT, Swimming instructor",
 					numberOfFeedbacks: 5,
                     description : "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. "
                 }

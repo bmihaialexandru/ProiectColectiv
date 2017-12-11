@@ -70,20 +70,20 @@ export class LoginPage extends Component {
   }
 
   _loginUser(username, password){
-    //const response = login(username, password)
-     // .then(result => {
+    const response = login(username, password)
+     .then(result => {
         session.email = "tipitza@gmail.com";
         session.username = username;
         session.token = "token";
         // document.getElementsByClassName("ilift-account")[0].style.display = "inline";
         document.getElementsByClassName("ilift-account-name")[0].innerHTML = username;
 
-        window.location.replace("/");
-    
-      //  return result;
-      // })
-      // .catch(error => {
-      //     alert(error);
-      // });
+        //window.location.replace("/");
+       console.log(result);
+       return result;
+      })
+      .catch(error => {
+          alert(error);
+      });
     }
 }

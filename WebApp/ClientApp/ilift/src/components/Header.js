@@ -36,7 +36,7 @@ export class Header extends Component {
                         <li className="ilift-account">
                             <Link to={'/profile'}>
                                 <div className="ilift-account-image"></div>
-                                <div className="ilift-account-name">{session.username}</div>
+                                <div className="ilift-account-name">{session.username}Sabina</div>
                             </Link>
                         </li>
                     </ul>

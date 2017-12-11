@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 export class ClassCard extends Component {
 
@@ -13,7 +14,11 @@ export class ClassCard extends Component {
                     <img src={image} alt=""/>
                     <h3>{courseName}</h3>
                     <p>{description}</p>
-                    <span><a href="#" className="btn btn-default">Join Now</a></span>
+                    <span><a href="#" className="btn btn-default">
+                        <Link to={{ pathname: '/feedback', state: {entityName: courseName, entityType: "course", entityDescription: description} }}>
+                            Learn more
+                        </Link>
+                        </a></span>
                 </div>
             </div>
     );
