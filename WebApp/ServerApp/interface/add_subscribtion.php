@@ -17,6 +17,8 @@ else{
     $jwt_service = new JWTService();
     $token_ok = true;
     $user = null;
+    $should_decrement = false;
+    $package_id = null;
 
     try
     {
@@ -36,15 +38,36 @@ else{
     }
     else
     {
-        //TODO: validate email and phone number
         if(!empty($sc_entry))
         {
+
+            $entry = $ctrl->sctrl->get_schedule_entry($sc_entry);
+
+            $paid = $ctrl->pctrl->get_paid_packages($user["id"]);
+
+            foreach($paid as $package) {
+                if($package['id_course'] == $entry['id_course'] && $package['nr_courses'] > 0 && strtotime($package['due_date']) >= strtotime(date("Y-m-d")))
+                {
+                    $should_decrement = true;
+                    $package_id = $package['id'];
+                    break;
+                }
+            }
 
             $res=$ctrl->subctrl->add_subscribtion($user["id"], $sc_entry);
             if($res == 0)
             {
-                $message->answer = "Success";
-                echo json_encode($message);
+                if($should_decrement) {
+                    $ctrl->pctrl->decrement_subscribtion_for_user($package_id);
+                    $message->answer = "Success";
+                    echo json_encode($message);
+                }
+                else
+                {
+                    $message->answer = "Warning";
+                    $message->reason = "This course is not included in your paid packages and you will have to pay at the gym for this!";
+                    echo json_encode($message);
+                }
             }
             else if($res == 1)
             {

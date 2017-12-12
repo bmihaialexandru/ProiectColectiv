@@ -48,7 +48,7 @@ class SubscribtionsDAO
 
     public function verify_slots($id_schentry)
     {
-        $sql = "SELECT COUNT(*) as occupied FROM schedule_entry INNER JOIN subscribtion on schedule_entry.id = ?";
+        $sql = "SELECT COUNT(*) as occupied FROM schedule_entry INNER JOIN subscribtion on subscribtion.id_schentry = ?";
         $stmt = $this->db->prepare($sql);
         $stmt->execute([$id_schentry]);
         $occupied = $stmt->fetch()['occupied'];

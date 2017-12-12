@@ -19,13 +19,11 @@ if($_SERVER["REQUEST_METHOD"] != "POST")
 else{
     $ctrl = new Controller();
     $tokenService = new JWTService();
-    $name = $_POST["package_name"];
-    $description = $_POST["package_description"];
-    $pricing = $_POST["pricing"];
-    $days = $_POST["days"];
-    $courses = $_POST['courses'];
 
     $token = $_POST["token"];
+    $user_id = $_POST['user_id'];
+    $package_id = $_POST['package_id'];
+    $unpaid_id = $_POST['id'];
     $token_ok = true;
     $data = null;
 
@@ -37,9 +35,9 @@ else{
         {
             throw new Exception("Mismatch user role");
         }
-        if($user["user_type"] != 1)
+        if($user['user_type'] != '1')
         {
-            throw new Exception("User role not administrator!");
+            throw new Exception("Only administrators should be able to validate payments");
         }
     }
     catch(Exception $e)
@@ -55,39 +53,21 @@ else{
     }
     else
     {
-        if(empty($name) or empty($description) or empty($pricing) or empty($days) or empty($courses))
-        {
+        if(empty($user_id) or empty($package_id) or empty($unpaid_id)) {
             $message->answer = "Error";
-            $message->reason = "Empty fields...";
+            $message->reason = "Incomplete fields";
             echo json_encode($message);
             exit(0);
         }
-
-        if($ctrl->pctrl->get_package_by_name($name) != null)
-        {
-            $message->answer = "Error";
-            $message->reason = "Can't have packages with the same name!";
-            echo json_encode($message);
-            exit(0);
-        }
-
         try {
-            $ctrl->pctrl->add_new_package($name, $description, $pricing, $days);
-
-            $id = $ctrl->pctrl->get_package_by_name($name)['id'];
-
-            for ($i = 0; $i < count($courses); $i++) {
-                $course = json_decode($courses[$i], true);
-                $ctrl->pctrl->add_package_course($id, $course['id'], $course['number']);
-            }
-
+            $ctrl->pctrl->make_payment($user_id, $package_id, $unpaid_id);
             $message->answer = "Success";
             echo json_encode($message);
         }
         catch(Exception $e)
         {
             $message->answer = "Error";
-            $message->reason = "Can't have the same course twice in a package";
+            $message->reason = "You already have a paid package exactly like this!";
             echo json_encode($message);
         }
     }
