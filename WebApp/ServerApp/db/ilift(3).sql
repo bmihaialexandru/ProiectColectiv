@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 23, 2017 at 01:51 PM
+-- Generation Time: Dec 04, 2017 at 10:47 PM
 -- Server version: 10.1.28-MariaDB
 -- PHP Version: 7.0.25
 
@@ -31,7 +31,8 @@ SET time_zone = "+00:00";
 CREATE TABLE `course` (
   `id` int(10) NOT NULL,
   `name` varchar(100) NOT NULL,
-  `description` varchar(500) NOT NULL
+  `description` varchar(500) NOT NULL,
+  `url_photo` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -46,6 +47,20 @@ CREATE TABLE `feedback` (
   `message` varchar(500) NOT NULL,
   `user_id` int(10) NOT NULL,
   `course_id` int(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `feedback_trainer`
+--
+
+CREATE TABLE `feedback_trainer` (
+  `id` int(11) NOT NULL,
+  `stars` int(11) NOT NULL,
+  `message` varchar(500) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `id_trainer` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -93,7 +108,8 @@ CREATE TABLE `trainer` (
 --
 
 INSERT INTO `trainer` (`id`, `name`, `url_photo`, `description`) VALUES
-(1, 'Gica Ionica', '../uploads/php7571png', '');
+(1, 'Gica Ionica', '../uploads/php7571png', ''),
+(2, 'banel', '../uploads/phpB0A3.png', 'nicolita');
 
 -- --------------------------------------------------------
 
@@ -149,6 +165,14 @@ ALTER TABLE `feedback`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_feedback_course` (`course_id`),
   ADD KEY `fk_feedback_user` (`user_id`);
+
+--
+-- Indexes for table `feedback_trainer`
+--
+ALTER TABLE `feedback_trainer`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_fdbkt_user` (`id_user`),
+  ADD KEY `fk_fdbkt_trainer` (`id_trainer`);
 
 --
 -- Indexes for table `schedule_entry`
@@ -237,19 +261,26 @@ ALTER TABLE `feedback`
   ADD CONSTRAINT `fk_feedback_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Constraints for table `feedback_trainer`
+--
+ALTER TABLE `feedback_trainer`
+  ADD CONSTRAINT `fk_fdbkt_trainer` FOREIGN KEY (`id_trainer`) REFERENCES `trainer` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_fdbkt_user` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Constraints for table `schedule_entry`
 --
 ALTER TABLE `schedule_entry`
-  ADD CONSTRAINT `fk_schentry_course` FOREIGN KEY (`id_course`) REFERENCES `course` (`id`),
-  ADD CONSTRAINT `fk_schentry_room` FOREIGN KEY (`id_training_room`) REFERENCES `training_room` (`id_training_room`),
-  ADD CONSTRAINT `fk_schentry_trainer` FOREIGN KEY (`id_trainer`) REFERENCES `trainer` (`id`);
+  ADD CONSTRAINT `fk_schentry_course` FOREIGN KEY (`id_course`) REFERENCES `course` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_schentry_room` FOREIGN KEY (`id_training_room`) REFERENCES `training_room` (`id_training_room`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_schentry_trainer` FOREIGN KEY (`id_trainer`) REFERENCES `trainer` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `subscribtion`
 --
 ALTER TABLE `subscribtion`
-  ADD CONSTRAINT `fk_subscription_schentry` FOREIGN KEY (`id_schentry`) REFERENCES `schedule_entry` (`id`),
-  ADD CONSTRAINT `fk_user_subscription` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`);
+  ADD CONSTRAINT `fk_subscription_schentry` FOREIGN KEY (`id_schentry`) REFERENCES `schedule_entry` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_user_subscription` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

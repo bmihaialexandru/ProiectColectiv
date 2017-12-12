@@ -8,7 +8,7 @@
 
 require_once("../DAO/ScheduleEntryDAO.php");
 
-class ScheduleEntry
+class ScheduleEntryController
 {
     private $db;
 
@@ -32,6 +32,11 @@ class ScheduleEntry
         return $this->db->get_schedule_entry($id);
     }
 
+    public function get_schedule_entry_by_day($day)
+    {
+        return $this->db->get_schedule_entry_by_day($day);
+    }
+
     public function get_all_schedule_entries()
     {
         return $this->db->get_all_schedule_entries();
@@ -40,5 +45,18 @@ class ScheduleEntry
     public function delete_schedule_entry($id)
     {
         $this->db->delete_schedule_entry($id);
+    }
+
+    public function get_current_week($date)
+    {
+        $list = $this->db->get_current_week_schedule($date);
+        $toRet = ["sunday"=> [], "monday" => [], "tuesday" => [], "wednesday" => [], "thursday" => [], "friday" => [], "saturday" => []];
+        $nr_to_key = [0 => "sunday", 1=>"monday", 2 => "tuesday", 3=> "wednesday",4=>"thursday", 5=>"friday", 6=>"saturday"];
+        foreach($list as $d) {
+            array_push($toRet[$nr_to_key[intval(date('w', strtotime($d['day'])))]], $d);
+
+        }
+
+        return $toRet;
     }
 }

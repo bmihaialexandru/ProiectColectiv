@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import {HeaderAdmin} from '../components/HeaderAdmin';
 import {FooterAdmin} from '../components/FooterAdmin';
+import '../template/css/inputBox.css';
+import {SingletonService} from '../services/SingletonService'
 
 export class UsersPageAdmin extends Component {
   componentWillReceiveProps(nextProps){
@@ -32,21 +34,62 @@ export class UsersPageAdmin extends Component {
          
           <div className="row about">
             <div className="col-md-7 col-md-offset-0 animate-box">
-              <p>ListView cu Userii </p>
+              <form method="get" action="/search" id="search">
+                 <input name="q" type="text" size="40" placeholder="Search..." />
+              </form>
             </div>
 
             <div className="col-md-5 col-md-offset-0 animate-box">
-              <p> COmponenta de register  user vine aici </p>
-            </div>
+              
+
+                <div class="container">
+      
+                    <div class="">
+                  
+                      
+                        <h1 class="text-centter">Register new user</h1>
+                        
+                        <input type="text" name="username" id="username" placeholder="Name" />
+                        <input type="text" name="phone" id="phone" placeholder="Phone" />
+                        <input type="text" name="email" id="email" placeholder="E-mail" />
+                        <input type="password" name="password" id="password" placeholder="Password" />
+                        
+                        <input type="submit" name="signup_submit" value="Sign up" onClick={() => this.register()} />
+                      
+
+                    </div>
+
+              </div>
+
 
           </div>
+
         </div>
       </div>
+  
+    </div>
     
 
         <FooterAdmin/>
         </div>
         </div>
       );
+  }
+
+  register() {
+    let username = document.getElementById("username").value;
+    let phone = document.getElementById("phone").value;
+    let email = document.getElementById("email").value;
+    let password = document.getElementById("password").value;
+    let token = localStorage.getItem("token");
+
+    console.log(username);
+
+    SingletonService.UserService.register(token, username, password, phone, email).then((result) => {
+      console.log(result);
+      if(result != null) {
+        alert("Cel mai bun user sa inregistrat c suckes");
+      }
+    });
   }
 }
