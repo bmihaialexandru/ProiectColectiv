@@ -1,9 +1,25 @@
 import React, { Component } from 'react';
+import Modal from 'react-modal'; 
+import Rodal from 'rodal';
+//import 'rodal/lib/rodal.css';//imi anuleaza stilizarile din oarecare motiv ??
+//
+
+const customStyles = {
+  content : {
+    top                   : '50%',
+    left                  : '50%',
+    right                 : 'auto',
+    bottom                : 'auto',
+    marginRight           : '-50%',
+    transform             : 'translate(-50%, -50%)'
+  }
+};
+
+
 export class TrainersList extends React.Component {
 
   constructor(props) {
     super(props);
-
     this.state = {};
     this.state.filterText = "";
     const trainers=[
@@ -17,16 +33,35 @@ export class TrainersList extends React.Component {
     {id:8,name:'Cristian Baciu',category:'Yoga Instructor'}
     ]
     this.state.trainers = trainers;
-
+    this.state.visible= false;
+    this.state.currentTrainer={id:0,name:'',category:''};
   }
+
+   show(trainer) {
+        this.setState({ visible: true , currentTrainer:trainer});
+    }
+
+    hide() {
+        this.setState({ visible: false });
+    }
+
   handleUserInput(filterText) {
     this.setState({filterText: filterText});
   };
+
   handleRowDel(trainer) {
-    var index = this.state.trainers.indexOf(trainer);
-    this.state.trainers.splice(index, 1);
-    this.setState(this.state.trainers);
+    this.show(trainer);
   };
+
+  onOkClick()
+    {
+      //aici facem call la server sa salveze modificarile dupa delete 
+      this.hide();
+      //var index = this.state.trainers.indexOf(this.state.trainer);
+      //this.state.trainers.splice(index, 1);
+      //this.setState(this.state.trainers);
+      //aici se face delete pe frontend-ii apare userurlui ca s-a sters ceva din lista
+    }
 
   handleAddEvent(evt) {
     var id = (+ new Date() + Math.floor(Math.random() * 999999)).toString(36);
@@ -71,6 +106,17 @@ export class TrainersList extends React.Component {
 
     return (
       <div>
+
+      <Rodal visible={this.state.visible}
+                       onClose={this.hide.bind(this)}
+                       animation={this.state.animation}>
+                    <div className="rodalheader">Delete trainer</div>
+                    <div className="rodalbody"><h4>Are you sure you want to delete trainer :</h4>
+                      <h4>{this.state.currentTrainer.name} ? </h4>
+                    </div>
+                    <button className="rodal-confirm-btn" onClick={this.onOkClick.bind(this)}>ok</button>
+                    <button className="rodal-cancel-btn" onClick={this.hide.bind(this)}>close</button>
+                </Rodal>
         <SearchBar filterText={this.state.filterText} onUserInput={this.handleUserInput.bind(this)}/>
         <TrainerTable onTrainerTableUpdate={this.handleTrainerTable.bind(this)} onRowAdd={this.handleAddEvent.bind(this)} onRowDel={this.handleRowDel.bind(this)} trainers={this.state.trainers} filterText={this.state.filterText}/>
       </div>
