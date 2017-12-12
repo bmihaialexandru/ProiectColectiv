@@ -6,6 +6,7 @@
  * Time: 9:27 AM
  */
 
+require_once("../db/db_manager.php");
 class FeedbackTrainerDAO
 {
     private $db;
