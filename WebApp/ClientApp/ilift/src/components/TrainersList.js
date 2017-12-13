@@ -94,6 +94,7 @@ export class TrainersList extends React.Component {
 
     for (var key in trainer) {
       if (key == item.name && trainer.id == item.id) {
+        console.log(item.name);
         trainer[key] = item.value;
 
       }

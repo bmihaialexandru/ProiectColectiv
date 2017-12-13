@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import {HeaderAdmin} from '../components/HeaderAdmin';
 import {FooterAdmin} from '../components/FooterAdmin';
+import {ScheduleList} from '../components/ScheduleList';
+import {_reloadJs} from '../js/reloadJs';
 
 export class SchedulePageAdmin extends Component {
   componentWillReceiveProps(nextProps){
     window.location.reload();
   }
   render() {
+    _reloadJs();
       return (
         <div id="fh5co-wrapper">
         <div id="fh5co-page">
@@ -28,17 +31,13 @@ export class SchedulePageAdmin extends Component {
         </div>
 
       <div id="fh5co-team-section">
-        <div className="container">
-         
+        <div className="container">   
           <div className="row about">
-            <div className="col-md-7 col-md-offset-0 animate-box">
-              <p>Oarrul curent e afisat aici </p>
+            <div className="col-md-12 col-md-offset-0 animate-box">
+              <ScheduleList/>
             </div>
 
-            <div className="col-md-5 col-md-offset-0 animate-box">
-              <p>Textfielduri pt adaugare de noi ore etc ...</p>
-            </div>
-
+           
           </div>
         </div>
       </div>
