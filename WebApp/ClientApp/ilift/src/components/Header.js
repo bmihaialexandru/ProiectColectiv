@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import {session} from '../Session/Session';
 
 export class Header extends Component {
 
@@ -19,13 +18,13 @@ export class Header extends Component {
                         </li>
                         <li>
                             <Link className="fh5co-sub-ddown" to={'/courses'}>Courses</Link>
-                            <ul className="fh5co-sub-menu">
+                            {/* <ul className="fh5co-sub-menu">
                                 <li><Link to={'/'}>Yoga</Link></li>
                                 <li><Link to={'/'}>TRX</Link></li>
                                 <li><Link to={'/'}>Tae-Bo</Link></li>
                                 <li><Link to={'/'}>Pilates</Link></li>
                                 <li><Link to={'/'}>Boxing</Link></li>
-                            </ul>
+                            </ul> */}
                         </li>
                         <li>
                             <Link to={'/trainers'}>Trainers</Link>
@@ -36,7 +35,7 @@ export class Header extends Component {
                         <li className="ilift-account">
                             <Link to={'/profile'}>
                                 <div className="ilift-account-image"></div>
-                                <div className="ilift-account-name">{session.username}</div>
+                                <div className="ilift-account-name">{localStorage.username}</div>
                             </Link>
                         </li>
                     </ul>

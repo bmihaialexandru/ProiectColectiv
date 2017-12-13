@@ -3,7 +3,6 @@ import {Header} from '../components/Header';
 import {Schedule} from '../components/Schedule';
 import {Footer} from '../components/Footer';
 import {Classes} from '../components/Classes';
-import {session} from '../Session/Session';
 import { Redirect } from 'react-router-dom';
 
 import { ScheduleCard } from '../components/ScheduleCard';
@@ -54,7 +53,7 @@ export class ProfilePage extends Component {
 
     render() {
         _reloadJs();
-        if(session.token === ""){
+        if(localStorage.token === ""){
             return <Redirect to='/'/>;
         }
 
@@ -72,7 +71,7 @@ export class ProfilePage extends Component {
             <div className="row">
                 <div className="col-md-8 col-md-offset-2 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0 text-center fh5co-table">
                 <div className="fh5co-intro fh5co-table-cell animate-box">
-                    <h1 className="text-center">Hello, {session.username}</h1>
+                    <h1 className="text-center">Hello, {localStorage.username}</h1>
                     <p>Manage you gym program</p>
                 </div>
                 </div>
@@ -208,13 +207,12 @@ export class ProfilePage extends Component {
               </div>
             </div>
           </div>
-          <div className="row">
+          <div className="row"  style={{marginLeft: '36%'}}>
             <div className="pricing">
-                
                   <SubscriptionCard
                       subscriptionName={"Cardio Burst"}
                       price={"100"}
-                      description={"Burn that fat away"}
+                      description={"Burn it down!"}
                       startDate={"17.11.2017"}
                       endDate={"17.12.2017"}
                   />

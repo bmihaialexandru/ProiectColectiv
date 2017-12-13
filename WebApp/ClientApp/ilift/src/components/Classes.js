@@ -51,19 +51,17 @@ export class Classes extends Component {
 
     render() {
         return (
-          <div id="fh5co-programs-section">
-            <div className="container">
+            <div className="container animate-box">
                 {this.state.list.map( x => 
                         <ClassCard
                             id = {x.id}
-                            image={x.image}
+                            image={require("./images/fit-swimming.svg")}
                             courseName={x.courseName}
                             description={x.description}
                             numberOfFeedbacks = {x.numberOfFeedbacks}
                         />
                 )}
             </div>
-        </div>
         );
     };
 }

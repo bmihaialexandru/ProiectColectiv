@@ -2362,6 +2362,10 @@ execa@^0.7.0:
     signal-exit "^3.0.0"
     strip-eof "^1.0.0"
 
+exenv@^1.2.0:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/exenv/-/exenv-1.2.2.tgz#2ae78e85d9894158670b03d47bec1f03bd91bb9d"
+
 expand-brackets@^0.1.4:
   version "0.1.5"
   resolved "https://registry.yarnpkg.com/expand-brackets/-/expand-brackets-0.1.5.tgz#df07284e342a807cd733ac5af72411e581d1177b"
@@ -4191,9 +4195,9 @@ mobx-react@^4.3.5:
   dependencies:
     hoist-non-react-statics "^2.3.1"
 
-mobx@^3.3.2:
-  version "3.3.2"
-  resolved "https://registry.yarnpkg.com/mobx/-/mobx-3.3.2.tgz#e912a9f7c82b2df69f1abe6515ecaa551828a024"
+mobx@^3.4.1:
+  version "3.4.1"
+  resolved "https://registry.yarnpkg.com/mobx/-/mobx-3.4.1.tgz#37abe5ee882d401828d9f26c6c1a2f47614bbbef"
 
 ms@2.0.0:
   version "2.0.0"
@@ -5180,6 +5184,14 @@ react-error-overlay@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-3.0.0.tgz#c2bc8f4d91f1375b3dad6d75265d51cd5eeaf655"
 
+react-modal@^3.1.7:
+  version "3.1.8"
+  resolved "https://registry.yarnpkg.com/react-modal/-/react-modal-3.1.8.tgz#7d6b1958f44828babd2a1ce826c28fa40d026b0f"
+  dependencies:
+    exenv "^1.2.0"
+    prop-types "^15.5.10"
+    warning "^3.0.0"
+
 react-router-dom@^4.2.2:
   version "4.2.2"
   resolved "https://registry.yarnpkg.com/react-router-dom/-/react-router-dom-4.2.2.tgz#c8a81df3adc58bba8a76782e946cbd4eae649b8d"
@@ -5597,6 +5609,10 @@ ripemd160@^2.0.0, ripemd160@^2.0.1:
   dependencies:
     hash-base "^2.0.0"
     inherits "^2.0.1"
+
+rodal@^1.6.3:
+  version "1.6.3"
+  resolved "https://registry.yarnpkg.com/rodal/-/rodal-1.6.3.tgz#27c4810ca2d34fd6aedcbdbf7721a06c78a5b9a8"
 
 run-async@^2.2.0:
   version "2.3.0"
@@ -6481,9 +6497,36 @@ webpack-sources@^1.0.1:
     source-list-map "^2.0.0"
     source-map "~0.6.1"
 
-webpack@3.8.1, webpack@^3.8.1:
+webpack@3.8.1:
   version "3.8.1"
   resolved "https://registry.yarnpkg.com/webpack/-/webpack-3.8.1.tgz#b16968a81100abe61608b0153c9159ef8bb2bd83"
+  dependencies:
+    acorn "^5.0.0"
+    acorn-dynamic-import "^2.0.0"
+    ajv "^5.1.5"
+    ajv-keywords "^2.0.0"
+    async "^2.1.2"
+    enhanced-resolve "^3.4.0"
+    escope "^3.6.0"
+    interpret "^1.0.0"
+    json-loader "^0.5.4"
+    json5 "^0.5.1"
+    loader-runner "^2.3.0"
+    loader-utils "^1.1.0"
+    memory-fs "~0.4.1"
+    mkdirp "~0.5.0"
+    node-libs-browser "^2.0.0"
+    source-map "^0.5.3"
+    supports-color "^4.2.1"
+    tapable "^0.2.7"
+    uglifyjs-webpack-plugin "^0.4.6"
+    watchpack "^1.4.0"
+    webpack-sources "^1.0.1"
+    yargs "^8.0.2"
+
+webpack@^3.10.0:
+  version "3.10.0"
+  resolved "https://registry.yarnpkg.com/webpack/-/webpack-3.10.0.tgz#5291b875078cf2abf42bdd23afe3f8f96c17d725"
   dependencies:
     acorn "^5.0.0"
     acorn-dynamic-import "^2.0.0"

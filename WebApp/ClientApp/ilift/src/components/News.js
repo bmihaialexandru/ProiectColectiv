@@ -16,7 +16,7 @@ export class News extends Component {
                         <div className="col-md-12 col-md-offset-0">
                             <div className="fh5co-blog animate-box">
                                 <div className="inner-post">
-                                    <a href="#"><img className="img-responsive" src="images/blog-1.jpg" alt=""/></a>
+                                    <a href="#"><img className="img-responsive" src={require("./images/blog-1.jpg")} alt=""/></a>
                                 </div>
                                 <div className="desc">
                                     <h3><a href="">Starting new session of body building this summer</a></h3>
@@ -30,7 +30,7 @@ export class News extends Component {
                         <div className="col-md-12 col-md-offset-0">
                             <div className="fh5co-blog animate-box">
                                 <div className="inner-post">
-                                    <a href="#"><img className="img-responsive" src="images/blog-1.jpg" alt=""/></a>
+                                    <a href="#"><img className="img-responsive" src={require("./images/blog-1.jpg")} alt=""/></a>
                                 </div>
                                 <div className="desc">
                                     <h3><a href="">Starting new session of body building this summer</a></h3>

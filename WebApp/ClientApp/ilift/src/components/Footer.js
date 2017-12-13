@@ -43,7 +43,7 @@ export class Footer extends Component {
 									<textarea className="form-control" id="message" rows="7" placeholder="Message"></textarea>
 								</div>
 								<div className="form-group">
-									<input type="submit" id="btn-submit" className="btn btn-send-message btn-md" value="Send Message"/>
+									<a href="#" className="btn btn-primary">Send Message</a>
 								</div>
 							</form>
 						</div>

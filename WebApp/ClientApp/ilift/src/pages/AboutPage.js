@@ -33,9 +33,6 @@ export class AboutPage extends Component {
         <div id="fh5co-team-section">
         <div className="container">
           <div className="row about">
-            <div className="col-md-12 col-md-offset-0">
-              <img className="img-responsive animate-box" src="images/home-image-3.jpg" alt="About"/>
-            </div>
             <div className="col-md-12 col-md-offset-0 animate-box">
               <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar. The Big Oxmox advised her not to do so, because there were thousands of bad Commas, wild Question Marks and devious Semikoli, but the Little Blind Text didn’t listen.</p>
               <blockquote>

@@ -30,7 +30,20 @@ export class CoursesPage extends Component {
         </div>
       </div>
 
+      <div id="fh5co-schedule-section" className="fh5co-lightgray-section">
+      <div className="container">
+      <div className="row">
+        <div className="col-md-8 col-md-offset-2">
+          <div className="heading-section text-center animate-box">
+            <h2>Our programs</h2>
+          </div>
+        </div>
+      </div>
+
       <Classes/>
+
+      </div>
+      </div>
 
       <Footer/>
   

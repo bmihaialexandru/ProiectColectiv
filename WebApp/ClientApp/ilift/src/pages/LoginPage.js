@@ -5,7 +5,6 @@ import {Footer} from '../components/Footer';
 import {Classes} from '../components/Classes';
 import {SingletonService} from "../services/SingletonService";
 import {login} from '../WebApis/LoginWebApi';
-import {session} from '../Session/Session';
 import { Redirect } from 'react-router-dom';
 
 import {_reloadJs} from '../js/reloadJs';
@@ -44,7 +43,7 @@ export class LoginPage extends Component {
               <input type="text" className="form-control" placeholder="Username" id="username"/>
             </div>
           </div>
-          <div className="col-md-6 col-md-offset-9">
+          <div className="col-md-6 col-md-offset-9" style={{heigth: '50px !important'}}>
             <div className="form-group">
               <input type="password" className="form-control" placeholder="Password" id="password"/>
             </div>
@@ -77,6 +76,7 @@ export class LoginPage extends Component {
             return;
           }
 
+          localStorage.setItem("username", username);
           localStorage.setItem("token", result);
 
           window.location.replace("/");

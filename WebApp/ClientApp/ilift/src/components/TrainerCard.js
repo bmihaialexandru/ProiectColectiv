@@ -23,7 +23,7 @@ export class TrainerCard extends Component {
                             <span className="comment">
                                 <Link to={{ pathname: '/feedback', state: {id: id, entityName: name, entityType: "trainer"} }}>
                                 <i className="icon-bubble22"></i>
-                                {numberOfFeedbacks}
+                                    {numberOfFeedbacks}
                                 </Link>
                             </span>
                         </p>

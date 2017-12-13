@@ -65,7 +65,7 @@ export class ContactPage extends Component {
 								</div>
 								<div className="col-md-12">
 									<div className="form-group">
-										<input type="submit" value="Send Message" className="btn btn-primary"/>
+									<a href="#" className="btn btn-primary">Send Message</a>
 									</div>
 								</div>
 							</div>

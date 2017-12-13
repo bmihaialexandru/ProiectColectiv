@@ -15,7 +15,7 @@ export class SubscriptionCard extends Component {
 
     render() {
         return (
-            <div className="col-lg-15 animate-box">
+            <div className="col-lg-12 animate-box" >
             <div className="price-box animate-box">
                 <h2 className="pricing-plan">{this.state.subscriptionName}</h2>
                 <div className="price"><sup className="currency">$</sup>{this.state.price}<small>/month</small></div>
