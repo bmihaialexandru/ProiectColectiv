@@ -80,7 +80,7 @@ class PackageDAO
         $stmt->execute([$package_id]);
     }
 
-    public function make_payment_do_paid($user_id, $package_id) {
+    public function make_payment_do_paid($user_id, $package_id, $uid) {
         $sql = "SELECT * FROM subscribtion_package WHERE id = ?";
         $stmt = $this->db->prepare($sql);
         $stmt->execute([$package_id]);

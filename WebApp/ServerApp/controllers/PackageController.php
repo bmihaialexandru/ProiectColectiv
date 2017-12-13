@@ -60,7 +60,7 @@ class PackageController
 
     public function make_payment($user_id, $package_id, $uid) {
         $this->dao->make_payment_delete_unpaid($uid);
-        $this->dao->make_payment_do_paid($user_id, $package_id);
+        $this->dao->make_payment_do_paid($user_id, $package_id, $uid);
 
     }
 

@@ -49,6 +49,7 @@ else{
     }
     else
     {
+        $message->answer = "Success";
         $message->rooms = $ctrl->rctrl->GetRooms();
         echo json_encode($message);
     }

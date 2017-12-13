@@ -66,7 +66,11 @@ class ScheduleEntryDAO
             $date = date('Y-m-d', strtotime($date . $period));
         }
         $finish = date('Y-m-d', strtotime($date. ' +6 days'));
-        $sql = "SELECT * FROM schedule_entry WHERE `day` >= ? and `day` <= ?";
+        $sql = "SELECT schedule_entry.*, course.name as course_name, trainer.name as trainer_name, training_room.name as room_name FROM schedule_entry
+        INNER JOIN course on course.id = schedule_entry.id_course
+        INNER JOIN trainer on trainer.id = schedule_entry.id_trainer
+        INNER JOIN training_room on training_room.id_training_room = schedule_entry.id_training_room
+        WHERE `day` >= ? and `day` <= ?";
         $stmt = $this->db->prepare($sql);
         $stmt->execute([$date, $finish]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
