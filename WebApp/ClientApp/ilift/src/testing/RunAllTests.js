@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {Test} from "./Test";
 import {CoursesTests} from "./CoursesTests";
 import {ServiceCredentials} from "../services/ServiceCredentials";
+import {ScheduleTests} from "./ScheduleTests";
 
 
 export class RunAllTests extends Component {
@@ -19,6 +20,12 @@ export class RunAllTests extends Component {
             console.log(course_test.result_list);
             this.setState({integration_tests: this.state.integration_tests.concat(course_test.result_list) });
             console.log(this.state.integration_tests);
+        });
+
+        let schedule_test = new ScheduleTests();
+        schedule_test.run_all().then((result) => {
+            this.setState({integration_tests: this.state.integration_tests.concat(schedule_test.result_list) });
+
         });
 
         //add more integration tests above this
