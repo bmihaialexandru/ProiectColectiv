@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {Test} from "./Test";
 import {CoursesTests} from "./CoursesTests";
+import {FeedbackCourseTests} from "./FeedbackCourseTests";
 import {ServiceCredentials} from "../services/ServiceCredentials";
 
 
@@ -18,6 +19,13 @@ export class RunAllTests extends Component {
         course_test.run_all().then((result) => {
             console.log(course_test.result_list);
             this.setState({integration_tests: this.state.integration_tests.concat(course_test.result_list) });
+            console.log(this.state.integration_tests);
+        });
+
+        let feedbackCourse_test = new FeedbackCourseTests();
+        feedbackCourse_test.run_all().then((result) => {
+            console.log(course_test.result_list);
+            this.setState({integration_tests: this.state.integration_tests.concat(feedbackCourse_test.result_list) });
             console.log(this.state.integration_tests);
         });
 
