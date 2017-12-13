@@ -32,7 +32,7 @@ export class ScheduleTests {
     }
 
     async run_add_schedule() {
-        await SingletonService.ScheduleService.add_schedule_entry(localStorage.getItem("token"), "monthly", "2020-10-08", "2020-10-09", "15:00", "18:00", 2, 1, 1).then((result) => {
+        await SingletonService.ScheduleService.add_schedule_entry(localStorage.getItem("token"), "monthly", "2020-10-08", "2020-10-09", "15:00", "18:00", 8888888, 8888888, 8888888).then((result) => {
             if(result !== null)
             {
                 console.log("Get schedule for week integration test returned: " + result);
@@ -49,6 +49,7 @@ export class ScheduleTests {
         //token, id, day, hour_start, hour_finish, id_course, id_trainer, id_training_room
         await SingletonService.ScheduleService.get_schedule_for_week("2020-10-08").then(async (result) => {
             let id = -1;
+            console.log(result);
             for(let key in result) {
                 for(let key2 in result[key]) {
                     if (result[key].hasOwnProperty(key2) && result[key][key2][0] !== undefined) {
@@ -61,7 +62,7 @@ export class ScheduleTests {
                 this.result_list.push(new Test("Edit schedule integration test", "failed"));
                 return;
             }
-            await SingletonService.ScheduleService.edit_schedule_entry(localStorage.getItem("token"), id, "2020-10-08", "19:00", "20:00", 2, 1, 1).then((result) => {
+            await SingletonService.ScheduleService.edit_schedule_entry(localStorage.getItem("token"), id, "2020-10-08", "19:00", "20:00", 8888888, 8888888, 8888888).then((result) => {
                 if(result !== null)
                 {
                     this.result_list.push(new Test("Edit schedule integration test", "passed"));

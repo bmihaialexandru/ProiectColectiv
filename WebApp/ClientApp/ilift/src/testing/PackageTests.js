@@ -18,14 +18,14 @@ export class CoursesTests {
     }
 
     async run_get_all() {
-        await SingletonService.CourseService.get_all_courses().then((result) => {
+        await SingletonService.PackageService.get_all_packages().then((result) => {
             if(result !== null)
             {
-                this.result_list.push(new Test("Get all courses integration test", "passed"));
+                this.result_list.push(new Test("Get all packages", "passed"));
             }
             else
             {
-                this.result_list.push(new Test("Get all courses integration test", "failed"));
+                this.result_list.push(new Test("Get all packages", "failed"));
             }
         })
     }
