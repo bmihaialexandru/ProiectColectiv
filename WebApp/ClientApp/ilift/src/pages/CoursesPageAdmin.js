@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import {HeaderAdmin} from '../components/HeaderAdmin';
 import {FooterAdmin} from '../components/FooterAdmin';
+import {SingletonService} from "../services/SingletonService";
+import {_reloadJs} from '../js/reloadJs';
+import {CoursesList} from "../components/CoursesList";
 
 export class CoursesPageAdmin extends Component {
   render() {
+      _reloadJs();
       return (
         <div id="fh5co-wrapper">
         <div id="fh5co-page">
@@ -24,26 +28,25 @@ export class CoursesPageAdmin extends Component {
           </div>
         </div>
 
-      <div id="fh5co-team-section">
-        <div className="container">
-         
-          <div className="row about">
-            <div className="col-md-7 col-md-offset-0 animate-box">
-              <p>ListView cursuri </p>
-            </div>
+            <div id="fh5co-team-section">
+                <div className="container">
+                    <div className="row about">
+                        <div className="col-md-12 col-md-offset-0 animate-box">
+                            <CoursesList/>
+                        </div>
 
-            <div className="col-md-5 col-md-offset-0 animate-box">
-              <p>Input pt add cursuri </p>
-            </div>
+                    </div>
 
-          </div>
-        </div>
-      </div>
-    
+
+
+                </div>
+            </div>
 
         <FooterAdmin/>
         </div>
         </div>
       );
   }
+
+
 }

@@ -64,7 +64,7 @@ export class CourseService extends Component {
         });
     }
 
-    delete_trainer(id) {
+    delete_course(id) {
         return fetch(this.server + "/interface/delete_course.php", {
             method: 'POST',
             headers: {
@@ -126,6 +126,7 @@ export class CourseService extends Component {
             alert("Critical error: "+ error + ", please try again later");
             return null;
         }
+
     }
 
     static _get_course_list_from_result(result) {
@@ -154,7 +155,10 @@ export class CourseService extends Component {
             if(result["answer"].localeCompare("Success") !== 0)
             {
                 alert(result["reason"]);
+                return null;
             }
+           return "Success";
+
         } catch(error) {
             alert("Critical error: "+ error + ", please try again later");
         }

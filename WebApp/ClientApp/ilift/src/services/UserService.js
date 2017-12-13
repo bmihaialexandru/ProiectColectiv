@@ -41,6 +41,21 @@ export class UserService extends Component {
         })
     }
 
+      get_all_users() {
+        return fetch(this.server + "/interface/get_users.php", {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: "token="+localStorage.getItem("token")
+        }).then(result => {
+            return result.json();
+        }).then(result => {
+            return UserService._get_user_list_from_result(result);
+        });
+    }
+
     register(token, username, password, phone, email) {
         return fetch(this.server + "/interface/register.php", {
             method: 'POST',
@@ -54,6 +69,25 @@ export class UserService extends Component {
         }).then(result => {
             return UserService._get_result_simple(result);
         })
+    }
+
+    delete_user(id) {
+        return fetch(this.server + "/interface/delete_user.php", {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: "token="+localStorage.getItem("token")+"&id="+id
+        }).then(result => {
+            return result.json();
+        }).then(result => {
+            return UserService._get_result_simple(result);
+        });
+    }
+
+    edit_user(id, name, phone, email, password){
+
     }
 
     static _get_token_from_result(result) {
@@ -95,6 +129,26 @@ export class UserService extends Component {
             return "Success";
         } catch(error) {
             alert("Critical error: "+ error + ", please try again later");
+        }
+    }
+
+    static _get_user_list_from_result(result){
+        
+        try {
+            if(result["answer"].localeCompare("Success") !== 0)
+            {
+                alert(result["reason"]);
+                return null;
+            }
+            return result["users"].map((user) => new User(user["id"],
+                user["name"],
+                user["phone_number"],
+                user["email"],
+            ));
+
+        } catch(error) {
+            alert("Critical error: "+ error + ", please try again later");
+            return null;
         }
     }
 

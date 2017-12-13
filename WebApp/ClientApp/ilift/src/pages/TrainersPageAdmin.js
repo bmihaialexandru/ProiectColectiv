@@ -1,12 +1,30 @@
 import React, { Component } from 'react';
 import {HeaderAdmin} from '../components/HeaderAdmin';
 import {FooterAdmin} from '../components/FooterAdmin';
+import {TrainersList} from '../components/TrainersList';
+import {_reloadJs} from '../js/reloadJs';
+
+
+const trainers=[
+{id:1,name: 'Mihai Alexandru Badila',position:'Body Trainer'},
+{id:2,name:'Catrinel Carausu',position:'TRX,Swimming Instructor'},
+{id:3,name:'Denisa Bica',position:'Boxing trainer'},
+{id:4,name:'Codrin Strambei',position:'HIIT Instructor'},
+{id:5,name:'Sabina Alexa',position:'Zumba Instructor'},
+{id:6,name:'Bocioc Titus',position:'Crossfit Instructor'},
+{id:7,name:'Nicu Bodea',position:'Bodybuilding Trainer'},
+{id:8,name:'Cristian Baciu',position:'Yoga Instructor'}
+]
+
+
+
 
 export class TrainersPageAdmin extends Component {
   componentWillReceiveProps(nextProps){
     window.location.reload();
   }
   render() {
+      _reloadJs();
       return (
         <div id="fh5co-wrapper">
         <div id="fh5co-page">
@@ -29,11 +47,11 @@ export class TrainersPageAdmin extends Component {
 
         <div id="fh5co-team-section">
         <div className="container">
-          <div>Punem toate inputurile pt traineri</div>
           <div className="row about">
             <div className="col-md-12 col-md-offset-0 animate-box">
-              <p>ListView cu trainerii </p>
+              <TrainersList/>
             </div>
+
           </div>
 
           

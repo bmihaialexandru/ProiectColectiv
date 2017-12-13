@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import {HeaderAdmin} from '../components/HeaderAdmin';
 import {FooterAdmin} from '../components/FooterAdmin';
+import {_reloadJs} from "../js/reloadJs";
 
 export class SchedulePageAdmin extends Component {
   componentWillReceiveProps(nextProps){
     window.location.reload();
   }
   render() {
+      _reloadJs();
       return (
         <div id="fh5co-wrapper">
         <div id="fh5co-page">
