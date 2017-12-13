@@ -106,7 +106,8 @@ export class ScheduleService extends Component {
             }
             let arr = [];
             for(let key in result["schedule"]) {
-                arr.push({key: result["schedule"][key].map((sched) => new ScheduleEntry(key,
+                var dict = {};
+                dict[key] = result["schedule"][key].map((sched) => new ScheduleEntry(key,
                     sched["id"],
                     sched["day"],
                     sched["hour_start"],
@@ -117,7 +118,8 @@ export class ScheduleService extends Component {
                     sched["course_name"],
                     sched["trainer_name"],
                     sched["room_name"]
-                ))});
+                ));
+                arr.push(dict);
             }
 
             return arr;
