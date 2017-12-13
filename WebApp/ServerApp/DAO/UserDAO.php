@@ -70,6 +70,12 @@ class UserDAO
         $stmt->execute([$newname,$newphone,$newemail,$newpasshash,$id]);
     }
 
+    public function editUserNoPassword($id,$newphone,$newemail,$newname){
+        $sql = 'UPDATE user set `name` = ?,phone_number =?,email =? where id = ?';
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([$newname,$newphone,$newemail,$id]);
+    }
+
     public function update_password($id, $pass_hash)
     {
         $sql = "UPDATE user SET passwordhash = ?, pass_changed = 1 WHERE id = ?";

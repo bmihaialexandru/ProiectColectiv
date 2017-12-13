@@ -19,9 +19,12 @@ if($_SERVER["REQUEST_METHOD"] != "POST")
 else{
     $ctrl = new Controller();
     $tokenService = new JWTService();
+
     $token = $_POST["token"];
+    $package_id = $_POST['package_id'];
     $token_ok = true;
     $data = null;
+    $user_id = null;
 
     try
     {
@@ -31,10 +34,7 @@ else{
         {
             throw new Exception("Mismatch user role");
         }
-        if($user["user_type"] != 1)
-        {
-            throw new Exception("User role not administrator!");
-        }
+        $user_id = $user['id'];
     }
     catch(Exception $e)
     {
@@ -49,8 +49,8 @@ else{
     }
     else
     {
+        $ctrl->pctrl->get_new_package($user_id, $package_id);
         $message->answer = "Success";
-        $message->rooms = $ctrl->rctrl->GetRooms();
         echo json_encode($message);
     }
 

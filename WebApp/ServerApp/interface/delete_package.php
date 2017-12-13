@@ -19,6 +19,8 @@ if($_SERVER["REQUEST_METHOD"] != "POST")
 else{
     $ctrl = new Controller();
     $tokenService = new JWTService();
+    $pid = $_POST['id'];
+
     $token = $_POST["token"];
     $token_ok = true;
     $data = null;
@@ -49,8 +51,17 @@ else{
     }
     else
     {
+        if(empty($pid))
+        {
+            $message->answer = "Error";
+            $message->reason = "Empty fields...";
+            echo json_encode($message);
+            exit(0);
+        }
+
+        $ctrl->pctrl->delete_package($pid);
+
         $message->answer = "Success";
-        $message->rooms = $ctrl->rctrl->GetRooms();
         echo json_encode($message);
     }
 
