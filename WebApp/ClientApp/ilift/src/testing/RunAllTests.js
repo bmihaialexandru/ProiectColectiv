@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import {Test} from "./Test";
 import {CoursesTests} from "./CoursesTests";
+import {ServiceCredentials} from "../services/ServiceCredentials";
 
 
 export class RunAllTests extends Component {
     constructor(props) {
         super(props);
 
+        this.server = ServiceCredentials.SERVER_PATH;
         this.state = {
             integration_tests : [],
             unit_tests: []
@@ -18,6 +20,25 @@ export class RunAllTests extends Component {
             this.setState({integration_tests: this.state.integration_tests.concat(course_test.result_list) });
             console.log(this.state.integration_tests);
         });
+
+        //add more integration tests above this
+
+
+        // get unit tests result
+
+        fetch(this.server + "/testing/run_all_tests.php", {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/x-www-form-urlencoded',
+            }
+        }).then(result => {
+            return result.json();
+        }).then(result => {
+            this.setState({unit_tests: result.map((element) => new Test(element["name"], element["result"]))});
+        });
+
+
     }
 
     render() {
