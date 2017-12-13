@@ -62,7 +62,6 @@ class ScheduleEntryDAO
         $period = ' -1 day';
         while(date('w', strtotime($date)) != '1')
         {
-            echo $date;
             $date = date('Y-m-d', strtotime($date . $period));
         }
         $finish = date('Y-m-d', strtotime($date. ' +6 days'));
