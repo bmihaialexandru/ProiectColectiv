@@ -50,7 +50,7 @@ else{
         echo json_encode($message);
         exit(0);
     }
-    if (empty($id) || empty($newname) || empty($newphone) || empty($newemail) || empty($newpass))
+    if (empty($id) || empty($newname) || empty($newphone) || empty($newemail))
     {
         $message->answer = "Error";
         $message->reason = "Incomplete fields";
@@ -59,7 +59,14 @@ else{
     else
     {
 
-        $res = $ctrl->uctrl->edit_user($id,$newname,$newphone,$newemail,$newpass);
+        if(empty($newpass))
+        {
+            $res = $ctrl->uctrl->edit_user_no_password($id,$newname,$newphone,$newemail);
+        }
+        else
+        {
+            $res = $ctrl->uctrl->edit_user($id,$newname,$newphone,$newemail,$newpass);
+        }
         if($res === 0 ){
             $message->answer = "Success";
         }

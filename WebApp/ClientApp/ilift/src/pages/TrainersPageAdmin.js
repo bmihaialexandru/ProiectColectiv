@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {HeaderAdmin} from '../components/HeaderAdmin';
 import {FooterAdmin} from '../components/FooterAdmin';
 import {TrainersList} from '../components/TrainersList';
-
+import {_reloadJs} from '../js/reloadJs';
 
 
 const trainers=[
@@ -24,6 +24,7 @@ export class TrainersPageAdmin extends Component {
     window.location.reload();
   }
   render() {
+      _reloadJs();
       return (
         <div id="fh5co-wrapper">
         <div id="fh5co-page">

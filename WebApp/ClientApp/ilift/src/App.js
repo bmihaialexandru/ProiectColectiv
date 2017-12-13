@@ -15,6 +15,7 @@ import {UsersPageAdmin} from './pages/UsersPageAdmin';
 import {AdminHome} from './pages/AdminHome';
 import {ProfilePage} from './pages/ProfilePage';
 import {FeedbackPage} from './pages/FeedbackPage';
+import {RunAllTests} from "./testing/RunAllTests";
 
 class App extends Component {
   render() {
@@ -36,6 +37,7 @@ class App extends Component {
             <Route exact path='/manageusers' component={UsersPageAdmin}/>
             <Route exact path='/profile' component={ProfilePage} />
             <Route exact path='/feedback' component={FeedbackPage} />
+             <Route exact path={'/testing'} component={RunAllTests}/>
 
          </Switch>
       </div>

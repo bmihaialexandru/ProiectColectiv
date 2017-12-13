@@ -1,17 +1,15 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: Nicu
- * Date: 21-Nov-17
- * Time: 11:41 PM
+ * User: Titus
+ * Date: 12/8/2017
+ * Time: 5:28 PM
  */
-
 
 error_reporting(E_ERROR | E_PARSE);
 
 require_once("../controllers/controller.php");
 require_once("../services/JWTService.php");
-include("./headers.php");
 
 if($_SERVER["REQUEST_METHOD"] != "POST")
 {
@@ -21,15 +19,14 @@ if($_SERVER["REQUEST_METHOD"] != "POST")
 else{
     $ctrl = new Controller();
     $tokenService = new JWTService();
-    $token = $_POST["token"];
-    $token_ok = true;
-    $data = null;
 
+    // no token validation should be needed for seeing all packages!
     $message->answer = "Success";
-    $message->trainers = $ctrl->tctrl->getAllTrainers();
+    $packages = $ctrl->pctrl->get_packages();
+    for($i=0; $i<count($packages); $i++){
+        $packages[$i]["courses"] = $ctrl->pctrl->get_course_packages($packages[$i]['id']);
+    }
+    $message->packages = $packages;
     echo json_encode($message);
 
 }
-
-
-?>

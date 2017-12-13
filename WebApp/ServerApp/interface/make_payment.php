@@ -19,7 +19,11 @@ if($_SERVER["REQUEST_METHOD"] != "POST")
 else{
     $ctrl = new Controller();
     $tokenService = new JWTService();
+
     $token = $_POST["token"];
+    $user_id = $_POST['user_id'];
+    $package_id = $_POST['package_id'];
+    $unpaid_id = $_POST['id'];
     $token_ok = true;
     $data = null;
 
@@ -31,9 +35,9 @@ else{
         {
             throw new Exception("Mismatch user role");
         }
-        if($user["user_type"] != 1)
+        if($user['user_type'] != '1')
         {
-            throw new Exception("User role not administrator!");
+            throw new Exception("Only administrators should be able to validate payments");
         }
     }
     catch(Exception $e)
@@ -49,9 +53,23 @@ else{
     }
     else
     {
-        $message->answer = "Success";
-        $message->rooms = $ctrl->rctrl->GetRooms();
-        echo json_encode($message);
+        if(empty($user_id) or empty($package_id) or empty($unpaid_id)) {
+            $message->answer = "Error";
+            $message->reason = "Incomplete fields";
+            echo json_encode($message);
+            exit(0);
+        }
+        try {
+            $ctrl->pctrl->make_payment($user_id, $package_id, $unpaid_id);
+            $message->answer = "Success";
+            echo json_encode($message);
+        }
+        catch(Exception $e)
+        {
+            $message->answer = "Error";
+            $message->reason = "You already have a paid package exactly like this!";
+            echo json_encode($message);
+        }
     }
 
 }

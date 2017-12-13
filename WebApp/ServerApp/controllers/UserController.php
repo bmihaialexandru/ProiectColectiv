@@ -31,6 +31,17 @@ class UserController
         return 0;
     }
 
+    public function edit_user_no_password($id,$newname,$newphone,$newemail){
+        if(count($this->userDAO->getUser($id)) != 0){
+            return 1;
+        }
+        if(count($this->userDAO->get_user_by_name($newname)) != 0){
+            return 2;
+        }
+        $this->userDAO->editUserNoPassword($id,$newphone,$newemail,$newname);
+        return 0;
+    }
+
     public function get_users(){
         return $this->userDAO->getUsers();
     }
