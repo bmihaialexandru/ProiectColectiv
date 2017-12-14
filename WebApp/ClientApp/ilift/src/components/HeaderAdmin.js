@@ -25,7 +25,7 @@ export class HeaderAdmin extends Component {
                         </li>
                         <li><Link to={'/manageschedules'}>Schedule</Link></li>
                         <li><Link to={'/manageusers'}>Users</Link></li>
-                        <li><Link to={'/managesubscpritions'}>Subscriptions</Link></li>
+                        <li><Link to={'/managefeedback'}>Feedbacks</Link></li>
                     </ul>
                 </nav>
             </div>

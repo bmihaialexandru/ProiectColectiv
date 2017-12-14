@@ -194,7 +194,8 @@ class UserRow extends React.Component {
             phone: this.props.user.phone,
             email: this.props.user.email,
             password: '',
-            disabled: true
+            disabled: true,
+            changePass: false
             }
 
     }
@@ -204,6 +205,7 @@ class UserRow extends React.Component {
 
     handleCheck(){
         this.setState( {disabled: !this.state.disabled} )
+        this.setState({changePass: !this.state.changePass})
     }
 
     render() {
@@ -238,7 +240,7 @@ class UserRow extends React.Component {
 
                 <td className="del-cell">
                     <input type="button" style={{alignSelf:'center'}} onClick={this.onDelEvent.bind(this)} value="X" className="btn btn-danger btn-xs"/><t> </t>
-                    <input type="button"onClick={this.updateRow.bind(this)} value="Save" className="btn btn-success btn-xs"/>
+                    <input type="button" onClick={this.updateRow.bind(this)} value="Save" className="btn btn-success btn-xs"/>
                 </td>
             </tr>
         );
@@ -248,14 +250,23 @@ class UserRow extends React.Component {
 
     updateRow(){
 
-        console.log(this.props.user.id);
-        SingletonService.UserService.edit_user(this.props.user.id, this.state.name, this.state.phone, this.state.email, this.state.password).then((result) => {
-            if (result != null) {
-                console.log(result);
-                this.props.update();
-                alert("User changed.")
-            }
-        });
+        let pass = this.state.password;
+        if (this.state.changePass === false) {
+            pass = '';
+        }
+
+        if (this.state.changePass === true && this.state.password === '') {
+            alert("Password can not be empty!");
+        }
+        else {
+            SingletonService.UserService.edit_user(this.props.user.id, this.state.name, this.state.phone, this.state.email, pass).then((result) => {
+                if (result != null) {
+                    console.log(result);
+                    this.props.update();
+                    alert("User changed.")
+                }
+            });
+        }
 
 
     }

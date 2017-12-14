@@ -45,4 +45,13 @@ class FeedbackTrainerDAO
         $stmt = $this->db->prepare($sql);
         $stmt->execute([$id]);
     }
+	
+	 public function GetAllFeedbacks()
+    {
+        $sql = 'SELECT feedback_trainer.*, `user`.name as username from feedback_trainer inner join `user` on feedback_trainer.id_user = `user`.id ORDER BY id DESC';
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        $feedback = $stmt->fetchAll();
+        return $feedback;
+    }
 }
