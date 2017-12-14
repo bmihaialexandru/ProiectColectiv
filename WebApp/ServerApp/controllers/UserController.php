@@ -20,7 +20,7 @@ class UserController
     }
 
     public function edit_user($id,$newname,$newphone,$newemail,$newpass){
-        if(count($this->userDAO->getUser($id)) != 1){
+        if(count($this->userDAO->getUser($id)) === 0){
             return 1;
         }
         if(count($this->userDAO->get_user_by_name($newname)) != 0 and strcmp($this->userDAO->getUser($id)[0]['name'], $newname) != 0)
