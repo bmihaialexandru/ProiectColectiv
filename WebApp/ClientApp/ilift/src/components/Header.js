@@ -1,9 +1,28 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import {
+    Persona,
+    PersonaInitialsColor,
+  } from 'office-ui-fabric-react/lib/Persona';
 
 export class Header extends Component {
 
   render() {
+        const account = localStorage.username && 
+        <li>
+            <Link to={'/profile'}>
+                <Persona
+                    primaryText={localStorage.username}
+                    initialsColor={PersonaInitialsColor.red}
+                />
+            </Link>
+        </li>;
+        
+        const logoutButton = localStorage.username && 
+        <li onClick={() => localStorage.clear()} id="sign-out-btn">
+            <Link to={'/'} id="sign-out-link">Sign out</Link>
+        </li>;
+
         return (
         <div id="fh5co-header">
         <header id="fh5co-header-section">
@@ -18,13 +37,6 @@ export class Header extends Component {
                         </li>
                         <li>
                             <Link className="fh5co-sub-ddown" to={'/courses'}>Courses</Link>
-                            {/* <ul className="fh5co-sub-menu">
-                                <li><Link to={'/'}>Yoga</Link></li>
-                                <li><Link to={'/'}>TRX</Link></li>
-                                <li><Link to={'/'}>Tae-Bo</Link></li>
-                                <li><Link to={'/'}>Pilates</Link></li>
-                                <li><Link to={'/'}>Boxing</Link></li>
-                            </ul> */}
                         </li>
                         <li>
                             <Link to={'/trainers'}>Trainers</Link>
@@ -32,12 +44,8 @@ export class Header extends Component {
                         <li><Link to={'/schedule'}>Schedule</Link></li>
                         <li><Link to={'/about'}>About</Link></li>
                         <li><Link to={'/contact'}>Contact</Link></li>
-                        <li className="ilift-account">
-                            <Link to={'/profile'}>
-                                <div className="ilift-account-image"></div>
-                                <div className="ilift-account-name">{localStorage.username}</div>
-                            </Link>
-                        </li>
+                        {account}
+                        {logoutButton}
                     </ul>
                 </nav>
             </div>

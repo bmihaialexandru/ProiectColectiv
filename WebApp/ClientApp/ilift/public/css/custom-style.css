@@ -5,3 +5,30 @@
     background: url("../images/logo.png") no-repeat;
     background-size: contain;
 }
+
+.ms-TooltipHost {
+    color: white !important;   
+    padding-left: 5px !important;
+}
+
+.ms-Persona {
+    top: -10px !important;
+}
+
+.ms-Persona-details {
+    padding-top: 20px !important;
+}
+
+#sign-out-link {
+    border: 0.5px solid white !important;
+    border-radius: 50px;
+    background-color: #111;
+    color: white;
+}
+
+ #sign-out-link:hover {
+    border: 1px solid #111 !important;
+    border-radius: 50px;
+    background-color: #fefefe !important;
+    color: #111 !important;
+}
