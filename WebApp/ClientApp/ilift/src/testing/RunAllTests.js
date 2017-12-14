@@ -5,7 +5,7 @@ import {FeedbackCourseTests} from "./FeedbackCourseTests";
 import {FeedbackTrainerTests} from "./FeedbackTrainerTests";
 import {ServiceCredentials} from "../services/ServiceCredentials";
 import {ScheduleTests} from "./ScheduleTests";
-
+import {PackageTests} from "./PackageTests";
 
 export class RunAllTests extends Component {
     constructor(props) {
@@ -35,6 +35,13 @@ export class RunAllTests extends Component {
         feedbackTrainer_test.run_all().then((result) => {
         console.log(feedbackTrainer_test.result_list);
         this.setState({integration_tests: this.state.integration_tests.concat(feedbackTrainer_test.result_list) });
+        console.log(this.state.integration_tests);
+        });
+
+        let package_test = new PackageTests();
+        package_test.run_all().then((result) => {
+        console.log(package_test.result_list);
+        this.setState({integration_tests: this.state.integration_tests.concat(package_test.result_list) });
         console.log(this.state.integration_tests);
         });
 

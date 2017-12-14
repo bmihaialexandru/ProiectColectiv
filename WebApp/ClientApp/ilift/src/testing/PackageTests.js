@@ -1,7 +1,7 @@
 import {SingletonService} from "../services/SingletonService";
 import {Test} from "./Test";
 
-export class CoursesTests {
+export class PackageTests {
 
     constructor() {
         this.id = 8888888;
@@ -12,9 +12,6 @@ export class CoursesTests {
 
     async run_all() {
         await this.run_get_all();
-        await this.run_get();
-        await this.run_edit();
-        await this.run_delete();
     }
 
     async run_get_all() {
@@ -29,24 +26,4 @@ export class CoursesTests {
             }
         })
     }
-
-    async run_get(){
-        await SingletonService.CourseService.get_course(this.id).then((result) => {
-            if(result !== null) this.result_list.push(new Test("Get one course", "passed"));
-            else this.result_list.push(new Test("Get one course", "failed"));
-        })
-    }
-
-    async run_edit() {
-        await SingletonService.CourseService.edit_course(this.id, "test.jpeg", "test", "test").then((result) => {
-                    if(result.localeCompare("Success")===0)  this.result_list.push(new Test("Edit course", "passed"));
-                    else this.result_list.push(new Test("Edit course", "failed"));
-                })        
-            }
-    async run_delete(){
-         await SingletonService.CourseService.delete_trainer(this.deleteId).then((result) => {
-                if(result.localeCompare("Success")===0) this.result_list.push(new Test("Delete course", "passed"));
-                else this.result_list.push(new Test("Delete course", "failed"));
-            }) 
-        }
     }
