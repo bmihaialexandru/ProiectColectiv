@@ -15,15 +15,15 @@ export class SubscriptionCard extends Component {
 
     render() {
         return (
-            <div className="col-lg-12 animate-box" >
+            <div className="col-lg-6 animate-box col-lg-offset-3" >
             <div className="price-box animate-box">
                 <h2 className="pricing-plan">{this.state.subscriptionName}</h2>
-                <div className="price"><sup className="currency">$</sup>{this.state.price}<small>/month</small></div>
+                <div className="price"><sup className="currency">RON</sup>{this.state.price}<small>/month</small></div>
                 <p>{this.state.startDate} - {this.state.endDate}</p>
                 <p>{this.state.description}</p>
                 <ul className="classes">
                     <li>15 Cardio Classes</li>
-                    <li className="color">10 Swimming Lesson</li>
+                    <li className="color">10 Swimming Lessons</li>
                     <li>10 Yoga Classes</li>
                     <li className="color">20 Aerobics</li>
                     <li>10 Zumba Classes</li>

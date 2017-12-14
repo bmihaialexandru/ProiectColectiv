@@ -12,6 +12,16 @@ export class TrainerCard extends Component {
         const description = this.props.description;
         const numberOfFeedbacks = this.props.numberOfFeedbacks;
 
+        const feedbackBtn = localStorage.username && 
+            <p className="fh5co-social-icons">
+                <span className="comment">
+                    <Link to={{ pathname: '/feedback', state: {id: id, entityName: name, entityType: "trainer"} }}>
+                    <i className="icon-bubble22"></i>
+                        {numberOfFeedbacks}
+                    </Link>
+                </span>
+            </p>;
+
         return (
         <div className="col-md-4 col-sm-6">
             <div className="team-section-grid animate-box" style={{backgroundImage: 'url(' + imageUrl + ')'}}>
@@ -19,14 +29,7 @@ export class TrainerCard extends Component {
                     <div className="desc">
                         <h3>{name}</h3>
                         <p>{description}</p>
-                        <p className="fh5co-social-icons">
-                            <span className="comment">
-                                <Link to={{ pathname: '/feedback', state: {id: id, entityName: name, entityType: "trainer"} }}>
-                                <i className="icon-bubble22"></i>
-                                    {numberOfFeedbacks}
-                                </Link>
-                            </span>
-                        </p>
+                        {feedbackBtn}
                     </div>
                 </div>
             </div>

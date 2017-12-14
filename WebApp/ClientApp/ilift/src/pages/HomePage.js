@@ -7,12 +7,13 @@ import {News} from '../components/News';
 import {Footer} from '../components/Footer';
 import { Link } from 'react-router-dom';
 
+import $ from 'jquery';
 import {_reloadJs} from '../js/reloadJs';
 
 export class HomePage extends Component {
 
-  componentWillReceiveProps(nextProps){
-    window.location.reload();
+  componentWillMount(){
+    $('html,body').scrollTop(0);
   }
 
   render() {
@@ -73,7 +74,7 @@ export class HomePage extends Component {
                 <div className="animate-box">
                   <h1>Fitness Classes this winter</h1>
                   <p>So you'll be proud this summer!</p>
-                  <a href="#" className="btn btn-primary">Subscribe to a class!</a>
+                  <Link to={'/schedule'} className="btn btn-primary">Subscribe to a class!</Link>
                 </div>
               </div>
             </div>

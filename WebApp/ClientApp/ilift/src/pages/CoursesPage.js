@@ -8,6 +8,11 @@ import $ from 'jquery';
 import {_reloadJs} from '../js/reloadJs';
 
 export class CoursesPage extends Component {
+
+  componentWillMount(){
+    $('html,body').scrollTop(0);
+  }
+  
   render() {
     _reloadJs();
     return (

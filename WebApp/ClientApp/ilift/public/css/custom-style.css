@@ -32,3 +32,18 @@
     background-color: #fefefe !important;
     color: #111 !important;
 }
+
+#personalized-schedule {
+    height: 500px !important;
+}
+
+.btn-off-custom.active, .btn-on-custom.active {
+    background-color: #4CB648 !important;
+    color: white !important;
+} 
+
+.btn-off-custom, .btn-on-custom {
+    color: #333 !important;
+    background-color: #e6e6e6 !important;
+    border-color: #adadad !important;
+}

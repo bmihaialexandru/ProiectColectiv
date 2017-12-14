@@ -5,6 +5,7 @@ import {Footer} from '../components/Footer';
 import {Classes} from '../components/Classes';
 import { Redirect } from 'react-router-dom';
 
+import $ from 'jquery';
 import { ScheduleCard } from '../components/ScheduleCard';
 import { SubscriptionCard } from '../components/SubscriptionCard';
 
@@ -12,52 +13,51 @@ import {_reloadJs} from '../js/reloadJs';
 
 export class ProfilePage extends Component {
 
-    needSpacing  = false;
+  constructor(props){
+    super(props);
+    this.state = {
+        list : [
+            {
+                image : require("../components/images/fit-dumbell.svg"),
+                courseName : "Body Combat",
+                instructorName: 'Bodea Nicolae',
+                time: '06AM-7AM',
+                isSubscribed: true
 
-    constructor(props){
-        super(props);
-        this.state = {
-            list : [
-                {
-                    image : require("../components/images/fit-dumbell.svg"),
-                    courseName : "Body Combat",
-                    instructorName: 'Bodea Nicolae',
-                    time: '06AM-7AM',
-                    isSubscribed: true
-    
-                },
-                {
-                    image : require("../components/images/fit-cycling.svg"),
-                    courseName : "Cycling program",
-                    instructorName: 'Sabina Alexa',
-                    time: '06AM-7AM',
-                    isSubscribed: true
-                },
-                {
-                    image : require("../components/images/fit-yoga.svg"),
-                    courseName : "Yoga programs",
-                    instructorName: 'Catrinel Carausu',
-                    time: '06AM-7AM',
-                    isSubscribed: true
-                },
-                {
-                    image : require("../components/images/fit-boxing.svg"),
-                    courseName : "Boxing fitness",
-                    instructorName: 'Bica Denisa',
-                    time: '06AM-7AM',
-                    isSubscribed: true
-                }
-          ]}
-        }
+            },
+            {
+                image : require("../components/images/fit-cycling.svg"),
+                courseName : "Cycling program",
+                instructorName: 'Sabina Alexa',
+                time: '06AM-7AM',
+                isSubscribed: true
+            },
+            {
+                image : require("../components/images/fit-yoga.svg"),
+                courseName : "Yoga programs",
+                instructorName: 'Catrinel Carausu',
+                time: '06AM-7AM',
+                isSubscribed: true
+            },
+            {
+                image : require("../components/images/fit-boxing.svg"),
+                courseName : "Boxing fitness",
+                instructorName: 'Bica Denisa',
+                time: '06AM-7AM',
+                isSubscribed: true
+            }
+      ]}
+    }
 
+    componentWillMount(){
+      $('html,body').scrollTop(0);
+    }
 
     render() {
         _reloadJs();
         if(localStorage.token === ""){
             return <Redirect to='/'/>;
         }
-
-      const spaces = this.needSpacing && <div><br/><br/><br/><br/><br/><br/><br/></div>
 
         return (
         <div id="fh5co-wrapper">
@@ -79,7 +79,6 @@ export class ProfilePage extends Component {
             </div>
         </div>
 
-
         <div id="fh5co-contact">
           <div className="container">
             <div className="row">
@@ -89,7 +88,7 @@ export class ProfilePage extends Component {
                 </div>
                 </div>
                 
-            <div className="row animate-box">
+            <div className="row animate-box" id="personalized-schedule">
             <div className="col-md-10 col-md-offset-1 text-center">
               <ul className="schedule">
                 <li><a href="#" className="active" data-sched="monday">Monday</a></li>
@@ -106,7 +105,7 @@ export class ProfilePage extends Component {
   
                 <div className="schedule-content active" data-day="monday">
                 {
-                  this._getRandomSchedule().map( x => 
+                  this._getRandomSchedule(0).map( x => 
                     <ScheduleCard 
                       image={x.image}
                       name={x.courseName}
@@ -120,7 +119,7 @@ export class ProfilePage extends Component {
   
                 <div className="schedule-content" data-day="tuesday">
                 {
-                  this._getRandomSchedule().map( x => 
+                  this._getRandomSchedule(1).map( x => 
                     <ScheduleCard 
                       image={x.image}
                       name={x.courseName}
@@ -134,7 +133,7 @@ export class ProfilePage extends Component {
   
                 <div className="schedule-content" data-day="wednesday">
                 {
-                  this._getRandomSchedule().map( x => 
+                  this._getRandomSchedule(2).map( x => 
                     <ScheduleCard 
                       image={x.image}
                       name={x.courseName}
@@ -148,7 +147,7 @@ export class ProfilePage extends Component {
   
                 <div className="schedule-content" data-day="thursday">
                   {
-                    this._getRandomSchedule().map( x => 
+                    this._getRandomSchedule(3).map( x => 
                       <ScheduleCard 
                         image={x.image}
                         name={x.courseName}
@@ -162,7 +161,7 @@ export class ProfilePage extends Component {
   
                 <div className="schedule-content" data-day="friday">
                   {
-                    this._getRandomSchedule().map( x => 
+                    this._getRandomSchedule(4).map( x => 
                       <ScheduleCard 
                         image={x.image}
                         name={x.courseName}
@@ -176,7 +175,7 @@ export class ProfilePage extends Component {
   
                 <div className="schedule-content" data-day="saturday">
                   {
-                    this._getRandomSchedule().map( x => 
+                    this._getRandomSchedule(5).map( x => 
                       <ScheduleCard 
                         image={x.image}
                         name={x.courseName}
@@ -189,16 +188,12 @@ export class ProfilePage extends Component {
                 </div>
               </div>
             </div>
-		    </div>
-              
-            {spaces}
+		       </div>
             </div>
           </div>
         </div>
 
-
-
-        <div id="fh5co-pricing-section" className="fh5co-pricing fh5co-lightgray-section">
+        <div className="fh5co-pricing fh5co-lightgray-section">
         <div className="container">
           <div className="row">
             <div className="className=">
@@ -207,8 +202,7 @@ export class ProfilePage extends Component {
               </div>
             </div>
           </div>
-          <div className="row"  style={{marginLeft: '36%'}}>
-            <div className="pricing">
+          <div className="row">
                   <SubscriptionCard
                       subscriptionName={"Cardio Burst"}
                       price={"100"}
@@ -216,7 +210,6 @@ export class ProfilePage extends Component {
                       startDate={"17.11.2017"}
                       endDate={"17.12.2017"}
                   />
-            </div> 
             </div>
           </div>
           </div>
@@ -227,14 +220,11 @@ export class ProfilePage extends Component {
         );
     }
 
-    _getRandomSchedule() {
+    _getRandomSchedule(index) {
         const array = [];
         const max = Math.floor(Math.random()*4);
         for(let i=0; i < max; i++){
           array.push(this.state.list[Math.floor(Math.random()*this.state.list.length)]);
-        }
-        if(array.length === 0 && this.needSpacing === false){
-          this.needSpacing = true;
         }
         return array;
     }

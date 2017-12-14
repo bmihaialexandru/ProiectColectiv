@@ -7,9 +7,15 @@ import {SingletonService} from "../services/SingletonService";
 import {login} from '../WebApis/LoginWebApi';
 import { Redirect } from 'react-router-dom';
 
+import $ from 'jquery';
 import {_reloadJs} from '../js/reloadJs';
 
 export class LoginPage extends Component {
+
+  componentWillMount(){
+    $('html,body').scrollTop(0);
+  }
+
   render() {
     _reloadJs();
     return (

@@ -5,9 +5,15 @@ import {Footer} from '../components/Footer';
 import {Trainers} from '../components/Trainers';
 import {Classes} from '../components/Classes';
 
+import $ from 'jquery';
 import {_reloadJs} from '../js/reloadJs';
 
 export class TrainersPage extends Component {
+
+  componentWillMount(){
+    $('html,body').scrollTop(0);
+  }
+
   render() {
     _reloadJs();
     return (

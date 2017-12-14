@@ -40,7 +40,7 @@ export class ContactPage extends Component {
 							<h3 className="section-title">Our Address</h3>
 							<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
 							<ul className="contact-info">
-								<li><i className="icon-location-pin"></i>198 West 21th Street, Suite 721 New York NY 10016</li>
+								<li><i className="icon-location-pin"></i>Teodor Mihali 58-60, Cluj-Napoca 400591</li>
 								<li><i className="icon-phone2"></i>+ 1235 2355 98</li>
 								<li><i className="icon-mail"></i><a href="#">info@yoursite.com</a></li>
 								<li><i className="icon-globe2"></i><a href="#">www.yoursite.com</a></li>

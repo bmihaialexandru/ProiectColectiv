@@ -6,9 +6,15 @@ import {SubscriptionTypes} from '../components/SubscriptionTypes';
 import {News} from '../components/News';
 import {Footer} from '../components/Footer';
 
+import $ from 'jquery';
 import {_reloadJs} from '../js/reloadJs';
 
 export class SchedulePage extends Component {
+
+  componentWillMount(){
+    $('html,body').scrollTop(0);
+  }
+
   render() {
     _reloadJs();
     return (

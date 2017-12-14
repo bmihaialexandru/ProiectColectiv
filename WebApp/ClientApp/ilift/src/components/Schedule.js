@@ -6,6 +6,7 @@ export class Schedule extends Component {
   constructor(props){
     super(props);
     this.state = {
+        selectedWeek: "Current week",
         list : [
             {
                 image : require("./images/fit-dumbell.svg"),
@@ -68,6 +69,9 @@ export class Schedule extends Component {
   };
 
   render() {
+        const dropdownText = this.state.selectedWeek === "" ? "Select week" : this.state.selectedWeek;
+        const dropdownOptions = ["Current week", "Next week"].filter(x => x !== dropdownText);
+
         return (
         <div id="fh5co-schedule-section" className="fh5co-lightgray-section">
         <div className="container">
@@ -75,9 +79,22 @@ export class Schedule extends Component {
             <div className="col-md-8 col-md-offset-2">
               <div className="heading-section text-center animate-box">
                 <h2>Class Schedule</h2>
+                <br/>
+
+                <div class="btn-group" id="status" data-toggle="buttons">
+                  <label class={"btn btn-default btn-md " + this._getCssClasses("Current week")} onClick={() => this.setState({selectedWeek: "Current week"})}>
+                    <input type="radio" value="1" checked="checked"/>Current week
+                  </label>
+                  <label class={"btn btn-default btn-md " + this._getCssClasses("Next week")} onClick={() => this.setState({selectedWeek: "Next week"})}>
+                    <input type="radio" value="0"/>Next week
+                  </label>
+                </div>
+
+
               </div>
             </div>
           </div>
+
           <div className="row animate-box">
             <div className="col-md-10 col-md-offset-1 text-center">
               <ul className="schedule">
@@ -190,5 +207,9 @@ export class Schedule extends Component {
       array.push(this.state.list[Math.floor(Math.random()*this.state.list.length)]);
     }
     return array;
+  }
+
+  _getCssClasses(option){
+    return option === this.state.selectedWeek ? " btn-on active btn-on-custom" : " btn-off-custom";
   }
 }

@@ -10,20 +10,23 @@ export class ClassCard extends Component {
         const numberOfFeedbacks = this.props.numberOfFeedbacks;
         const id = this.props.id;
 
+        const feedbackBtn = localStorage.username && 
+            <p className="fh5co-social-icons">
+                <span className="comment">
+                    <Link to={{ pathname: '/feedback', state: {id: id, entityName: courseName, entityType: "course"} }}>
+                    <i className="icon-bubble22"></i>
+                        {numberOfFeedbacks}
+                    </Link>
+                </span>
+            </p>;
+
         return (
             <div className="col-md-4 col-sm-6">
                 <div className="program program-schedule">
                     <img src={image} alt=""/>
                     <h3>{courseName}</h3>
                     <p>{description}</p>
-                    <p className="fh5co-social-icons">
-                    <span className="comment">
-                        <Link to={{ pathname: '/feedback', state: {id: id, entityName: courseName, entityType: "course"} }}>
-                        <i className="icon-bubble22"></i>
-                            {numberOfFeedbacks}
-                        </Link>
-                    </span>
-                </p>
+                    {feedbackBtn}
                 </div>
             </div>
     );
