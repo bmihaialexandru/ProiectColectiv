@@ -87,7 +87,27 @@ export class UserService extends Component {
     }
 
     edit_user(id, name, phone, email, password){
+        let data = new FormData();
 
+        console.log(id);
+        data.append("name", name);
+        data.append("phone", phone);
+        data.append("id", id);
+        data.append("email", email);
+        data.append("password", password);
+        data.append("token", localStorage.getItem("token"));
+
+        return fetch(this.server + "/interface/edit_user.php", {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+            },
+            body: data
+        }).then(result=> {
+            return result.json();
+        }).then(result => {
+            return UserService._get_result_simple(result)
+        });
     }
 
     static _get_token_from_result(result) {

@@ -261,4 +261,4 @@ __pycache__/
 *.pyc
 /Lateral.WebApp/Views/Awards/Test.cshtml
 WebApp/ClientApp/ilift/src/services/ServiceCredentials.js
-WebApp/ServerApp/db/credentials.php
+WebApp/ServerApp/db/*.php
