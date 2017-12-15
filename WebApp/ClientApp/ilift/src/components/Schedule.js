@@ -79,7 +79,7 @@ export class Schedule extends Component {
             <div className="col-md-8 col-md-offset-2">
               <div className="heading-section text-center animate-box">
                 <h2>Class Schedule</h2>
-                <br/>
+                
 
                 <div class="btn-group" id="status" data-toggle="buttons">
                   <label class={"btn btn-default btn-md " + this._getCssClasses("Current week")} onClick={() => this.setState({selectedWeek: "Current week"})}>

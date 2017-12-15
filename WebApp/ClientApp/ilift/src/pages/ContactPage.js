@@ -24,7 +24,7 @@ export class ContactPage extends Component {
 					<div className="col-md-8 col-md-offset-2 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0 text-center fh5co-table">
 						<div className="fh5co-intro fh5co-table-cell animate-box">
 							<h1 className="text-center">Contact Us</h1>
-							<p>And some other message</p>
+							<p>But probably we won't reply</p>
 						</div>
 					</div>
 				</div>

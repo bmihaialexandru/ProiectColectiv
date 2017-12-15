@@ -55,7 +55,7 @@ export class Classes extends Component {
                 {this.state.list.map( x => 
                         <ClassCard
                             id = {x.id}
-                            image={require("./images/fit-swimming.svg")}
+                            image={x.image}
                             courseName={x.courseName}
                             description={x.description}
                             numberOfFeedbacks = {x.numberOfFeedbacks}
