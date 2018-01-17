@@ -29,13 +29,11 @@ export class TrainersList extends React.Component {
     this.state.visible= false;
     this.state.currentTrainer={id:0,name:'',category:''};
 
-      this.update();
+    this.update();
 
   }
 
   update(){
-
-
       SingletonService.TrainerService.get_all_trainers().then((result) => {
           if(result === null)
           {
