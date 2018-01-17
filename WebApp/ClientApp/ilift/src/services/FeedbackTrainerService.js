@@ -57,6 +57,21 @@ export class FeedbackTrainerService extends Component {
         });
     }
 
+    get_actualy_all_feedbacks(){
+        return fetch(this.server + "/interface/get_all_trainers_feedback.php", {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: "token="+localStorage.getItem("token")
+        }).then(result => {
+            return result.json();
+        }).then(result => {
+            return FeedbackTrainerService._get_feedback_course_list_from_result(result);
+        });
+    }
+
 
 
     static _get_feedback_course_list_from_result(result) {
@@ -70,8 +85,8 @@ export class FeedbackTrainerService extends Component {
             return result["feedbacks"].map((feedback) => new FeedbackCourse(feedback["id"],
                 feedback["stars"],
                 feedback["message"],
-                feedback["course_id"],
                 feedback["user_id"],
+                feedback["id_trainer"],
                 feedback["username"]
                 )
             );

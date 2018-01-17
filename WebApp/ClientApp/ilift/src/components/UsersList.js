@@ -133,7 +133,7 @@ class UserTable extends React.Component {
         return (
             <div className="row">
                 <div className="row"></div>
-                <div className="col-xs-10" id="container" ref="container" >
+                <div className="col-xs-12" id="container" ref="container" >
                     <table className="table table-bordered">
                         <thead>
                         <tr>
@@ -193,7 +193,9 @@ class UserRow extends React.Component {
         this.state= {name : this.props.user.name,
             phone: this.props.user.phone,
             email: this.props.user.email,
-            password: ''
+            password: '',
+            disabled: true,
+            changePass: false
             }
 
     }
@@ -201,18 +203,24 @@ class UserRow extends React.Component {
         this.props.onDelEvent(this.props.user);
     }
 
-
+    handleCheck(){
+        this.setState( {disabled: !this.state.disabled} )
+        this.setState({changePass: !this.state.changePass})
+    }
 
     render() {
 
         var styles = {
-            color:'red',
+            color:'red' ,
             backgroundColor:'black',
             fontWeight:'bold',
             fontColor:'red'
         };
+
+
         return (
-            <tr className="eachRow">
+
+        <tr className="eachRow">
                 <td className="del-cell">
                     <input  type="text" placeholder="UserName" defaultValue={this.props.user.name} onChange={(e) =>  this.setState({name : e.target.value})}/>
                 </td>
@@ -223,12 +231,16 @@ class UserRow extends React.Component {
                     <input  type="text" placeholder="Email" defaultValue={this.props.user.email} onChange={(e) =>  this.setState({email : e.target.value})}/>
                 </td>
                 <td className="del-cell">
-                    <input  type="text" style={{styles}} placeholder="!!Change Password!!" onChange={(e) =>  this.setState({password : e.target.value})}/>
+                    <input  type="text" style={{styles}} disabled = {(this.state.disabled)? "disabled" : ""} defaultValue='' onChange={(e) =>  this.setState({password : e.target.value})}/>
+                    <input type="checkbox" onChange={this.handleCheck.bind(this)}/>
+
+                        <label >  Change password!</label>
+
                 </td>
 
                 <td className="del-cell">
                     <input type="button" style={{alignSelf:'center'}} onClick={this.onDelEvent.bind(this)} value="X" className="btn btn-danger btn-xs"/><t> </t>
-                    <input type="button"onClick={this.updateRow.bind(this)} value="Save" className="btn btn-success btn-xs"/>
+                    <input type="button" onClick={this.updateRow.bind(this)} value="Save" className="btn btn-success btn-xs"/>
                 </td>
             </tr>
         );
@@ -238,14 +250,23 @@ class UserRow extends React.Component {
 
     updateRow(){
 
-        SingletonService.UserService.edit_user(this.props.user.id, this.state.name, this.state.phone, this.state.email, this.state.password).then((result) => {
-            if (result != null) {
-                console.log(result);
-                this.props.update();
+        let pass = this.state.password;
+        if (this.state.changePass === false) {
+            pass = '';
+        }
 
-
-            }
-        });
+        if (this.state.changePass === true && this.state.password === '') {
+            alert("Password can not be empty!");
+        }
+        else {
+            SingletonService.UserService.edit_user(this.props.user.id, this.state.name, this.state.phone, this.state.email, pass).then((result) => {
+                if (result != null) {
+                    console.log(result);
+                    this.props.update();
+                    alert("User changed.")
+                }
+            });
+        }
 
 
     }
