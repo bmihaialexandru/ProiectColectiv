@@ -64,8 +64,8 @@ else{
                 }
                 else
                 {
-                    $message->answer = "Warning";
-                    $message->reason = "This course is not included in your paid packages and you will have to pay at the gym for this!";
+                    $message->answer = "Error";
+                    $message->reason = "This course is not included in your paid packages. You should buy a package which includes this course.";
                     echo json_encode($message);
                 }
             }
