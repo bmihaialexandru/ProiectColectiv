@@ -17,9 +17,9 @@ class ScheduleEntryController
         $this->db = new ScheduleEntryDAO();
     }
 
-    public function add_new_schedule_entry($day, $hour_start, $hour_finish, $id_course, $id_trainer, $id_training_room)
+    public function add_new_schedule_entry($day, $hour_start, $hour_finish, $id_course, $id_trainer, $id_training_room, $id_icon)
     {
-        $this->db->add_schedule_entry($day, $hour_start, $hour_finish, $id_course, $id_trainer, $id_training_room);
+        $this->db->add_schedule_entry($day, $hour_start, $hour_finish, $id_course, $id_trainer, $id_training_room, $id_icon);
     }
 
     public function update_schedule_entry($id, $day, $hour_start, $hour_finish, $id_course, $id_trainer, $id_training_room)
@@ -58,5 +58,9 @@ class ScheduleEntryController
         }
 
         return $toRet;
+    }
+
+    public function get_icons() {
+        return $this->db->get_icons();
     }
 }

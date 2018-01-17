@@ -65,10 +65,11 @@ class ScheduleEntryDAO
             $date = date('Y-m-d', strtotime($date . $period));
         }
         $finish = date('Y-m-d', strtotime($date. ' +6 days'));
-        $sql = "SELECT schedule_entry.*, course.name as course_name, trainer.name as trainer_name, training_room.name as room_name FROM schedule_entry
+        $sql = "SELECT schedule_entry.*, course.name as course_name, trainer.name as trainer_name, training_room.name as room_name, icons.icon_path as icon_path FROM schedule_entry
         INNER JOIN course on course.id = schedule_entry.id_course
         INNER JOIN trainer on trainer.id = schedule_entry.id_trainer
         INNER JOIN training_room on training_room.id_training_room = schedule_entry.id_training_room
+        INNER JOIN icons on icons.id_icon = schedule_entry.id_icon
         WHERE `day` >= ? and `day` <= ?";
         $stmt = $this->db->prepare($sql);
         $stmt->execute([$date, $finish]);
@@ -76,9 +77,16 @@ class ScheduleEntryDAO
 
     }
 
-    public function add_schedule_entry($day, $hour_start, $hour_finish, $id_course, $id_trainer, $id_training_room)
+    public function get_icons() {
+        $sql = "SELECT * FROM icons";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function add_schedule_entry($day, $hour_start, $hour_finish, $id_course, $id_trainer, $id_training_room, $id_icon)
     {
-        $sql = 'INSERT INTO schedule_entry(`day`, hour_start, hour_finish,id_course, id_trainer, id_training_room) VALUES(?,?,?,?,?,?)';
+        $sql = 'INSERT INTO schedule_entry(`day`, hour_start, hour_finish,id_course, id_trainer, id_training_room, id_icon) VALUES(?,?,?,?,?,?,?)';
         $stmt = $this->db->prepare($sql);
         $stmt->execute([$day, $hour_start, $hour_finish, $id_course, $id_trainer, $id_training_room]);
     }
