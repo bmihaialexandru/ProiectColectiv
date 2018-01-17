@@ -19,20 +19,64 @@ export class ScheduleList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentSchedule : {dateStart:'',dateEnd:'',hourStart:'',hourFinish:'',course:'',trainer:'',room:'',type:'weekly'},
-      scheduleToUpdate :{day:'',hourStart:'',hourEnd:'',course:'',trainer:'',room:'',id:0},
-      type : [{value:'weekly',label:'weekly'},{value:'monthly',label:'monthly'},{value:'bi-monthly',label:'bi-monthly'}],
-      courses :[],
-      trainers : [],
-      rooms : [],
-      schedules :[],
-      visible :false,
-      scheduleToDelete :0,
+        currentSchedule : {dateStart:'',dateEnd:'',hourStart:'00:00:00',hourFinish:'00:00:00',course:'',trainer:'',room:'',type:'weekly'},
+        scheduleToUpdate :{day:'',hourStart:'',hourEnd:'',course:'',trainer:'',room:'',id:0},
+        type : [{value:'weekly',label:'weekly'},{value:'monthly',label:'monthly'},{value:'bi-monthly',label:'bi-monthly'}],
+        courses :[],
+        trainers : [],
+        rooms : [],
+        schedules :[],
+        icons: [],
+        visible :false,
+        scheduleToDelete :0,
+        icon_id: 0,
+        icon_path: "",
+        selected_week: "",
+        weeks: []
     };
+    this.load_dem_weeks();
     this.loadData();
     this.load();
     }
 
+    load_dem_weeks() {
+        Date.prototype.addDays = function(days) {
+            var date = new Date(this.valueOf());
+            date.setDate(date.getDate() + days);
+            return date;
+        };
+
+        let today = new Date();
+        let dd = today.getDate();
+        let mm = today.getMonth()+1; //January is 0!
+        let yyyy = today.getFullYear();
+
+        if(dd<10) {
+            dd = '0'+dd
+        }
+
+        if(mm<10) {
+            mm = '0'+mm
+        }
+
+        let wkdy = yyyy + '-' + mm + '-' + dd;
+        this.state.selected_week = wkdy;
+        this.setState({selected_week: this.state.selected_week});
+
+        let dateArray = [];
+        let currentDate = today;
+        // 10 weeks will do...
+        while (currentDate <= today.addDays(10*7)) {
+            let dd = currentDate.getDate();
+            let mm = currentDate.getMonth() + 1;
+            let yyyy = today.getFullYear();
+            let wkdy = yyyy + '-' + mm + '-' + dd;
+            dateArray.push(wkdy);
+            currentDate = currentDate.addDays(7);
+        }
+        this.state.weeks = dateArray;
+        this.setState({weeks: this.state.weeks});
+    }
 
     load()
     {
@@ -52,7 +96,7 @@ export class ScheduleList extends React.Component {
           if(result === null){return; }
           var list = [];
           for (var index = 0; index < result.length; index++){
-              var newRoom = {value: result[index].id, label : result[index].name};
+              var newRoom = {value: result[index].id_training_room, label : result[index].name};
               list.push(newRoom);
           }
 
@@ -72,11 +116,34 @@ export class ScheduleList extends React.Component {
           this.setState(this.state.courses);
 
       });
+
+      SingletonService.ScheduleService.get_icons().then((result) => {
+          if (result === null) {
+              return;
+          }
+          let list = [];
+          console.log(result);
+          for (let i = 0; i < result.length; i++) {
+              let newIcon = {value: result[i].id_icon, label: result[i].path_to_icon};
+              list.push(newIcon);
+          }
+          this.state.icons = list;
+          this.setState({icons: this.state.icons});
+          if (list.length > 0) {
+            this.state.icon_id = list[0].id_icon;
+            this.state.icon_path = list[0].path_to_icon;
+            this.setState({icon_id: this.state.icon_id});
+            this.setState({icon_path: this.state.path_to_icon});
+          }
+
+
+
+    });
     }
 
     loadData()
     {
-      SingletonService.ScheduleService.get_schedule_for_week('2017-12-14').then((result) => {
+        SingletonService.ScheduleService.get_schedule_for_week(this.state.selected_week).then((result) => {
           if(result === null)
           {return;}
           var days=['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
@@ -150,6 +217,7 @@ export class ScheduleList extends React.Component {
           break;
         }
       }
+      console.log("ROOM: " +this.state.currentSchedule.room);
        for(var i=0;i<this.state.rooms.length;i++)
       {
         if(this.state.currentSchedule.room==this.state.rooms[i].label)
@@ -160,7 +228,7 @@ export class ScheduleList extends React.Component {
       }
       console.log(room_id,course_id,trainer_id);
       var schedule=this.state.currentSchedule;
-      SingletonService.ScheduleService.add_schedule_entry(localStorage.getItem("token"),schedule.type,schedule.dateStart,schedule.dateEnd,schedule.hourStart,schedule.hourFinish,course_id,trainer_id,room_id).then((result) => {
+      SingletonService.ScheduleService.add_schedule_entry(localStorage.getItem("token"),schedule.type,schedule.dateStart,schedule.dateEnd,schedule.hourStart,schedule.hourFinish,course_id,trainer_id,room_id, this.state.id_icon).then((result) => {
             console.log(result);
             this.loadData();
 
@@ -231,9 +299,34 @@ export class ScheduleList extends React.Component {
         console.log(this.state.currentSchedule);
     }
 
+
+    updateIcon(name, value) {
+      if(value === null) {
+          return;
+      }
+      for(let i = 0; i<this.state.icons.length; i++) {
+        if(this.state.icons[i].label.localeCompare(value.label) === 0) {
+          this.state.id_icon = this.state.icons[i].value;
+          this.setState({id_icon: this.state.id_icon});
+          this.state.icon_path = this.state.icons[i].label;
+          this.setState({icon_path: this.state.icon_path});
+        }
+      }
+
+    }
+
+    updateCurrentWeek(name, value) {
+      this.state.selected_week = value.label;
+      this.setState({selected_week:this.state.selected_week});
+      this.loadData();
+    }
+
   render() {
     return (
       <div>
+        <div>
+          <Dropdown options={this.state.weeks.map((x) => {return {value: x, label: x} })} selectedOption={this.state.selected_week} onUpdate={this.updateCurrentWeek.bind(this)} nameTag = {'week'}/>
+        </div>
         <div >
           <ScheduleTable types={this.state.type} schedules={this.state.schedules} courses={this.state.courses} trainers={this.state.trainers} rooms={this.state.rooms} onScheduleTableUpdate={this.handleScheduleTable.bind(this)} onBeginDateUpdate={this.handleStartDateUpdate.bind(this)} onRowAdd={this.handleAddEvent.bind(this)} onRowDel={this.handleRowDel.bind(this)}  />
         </div>
@@ -285,6 +378,9 @@ export class ScheduleList extends React.Component {
               <div className="col-xs-2"><Dropdown options={this.state.rooms} selectedOption={''} onUpdate={this.updateValue.bind(this)} nameTag={'room'}/></div>
               <div className="col-xs-1">Type </div>
               <div className="col-xs-2"><Dropdown options={this.state.type} selectedOption={this.state.type[0].label} onUpdate={this.updateValue.bind(this)} nameTag={'type'}/></div>
+              <div className="col-xs-1">Icon</div>
+              <div className="col-xs-2"><Dropdown options={this.state.icons} selectedOption={this.state.icon_path} onUpdate={this.updateIcon.bind(this)} nameTag={'icon'}/></div>
+              <div className="col-xs-2"><img src={this.state.icon_path} width={100} height={100}/></div>
             </div>
             <div>
               <button className="rodal-confirm-btn" onClick={this.handleAddEvent.bind(this)}>Add</button>

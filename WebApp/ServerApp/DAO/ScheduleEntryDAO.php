@@ -65,7 +65,7 @@ class ScheduleEntryDAO
             $date = date('Y-m-d', strtotime($date . $period));
         }
         $finish = date('Y-m-d', strtotime($date. ' +6 days'));
-        $sql = "SELECT schedule_entry.*, course.name as course_name, trainer.name as trainer_name, training_room.name as room_name, icons.icon_path as icon_path FROM schedule_entry
+        $sql = "SELECT schedule_entry.*, course.name as course_name, trainer.name as trainer_name, training_room.name as room_name, icons.path_to_icon as path_to_icon FROM schedule_entry
         INNER JOIN course on course.id = schedule_entry.id_course
         INNER JOIN trainer on trainer.id = schedule_entry.id_trainer
         INNER JOIN training_room on training_room.id_training_room = schedule_entry.id_training_room
@@ -88,6 +88,6 @@ class ScheduleEntryDAO
     {
         $sql = 'INSERT INTO schedule_entry(`day`, hour_start, hour_finish,id_course, id_trainer, id_training_room, id_icon) VALUES(?,?,?,?,?,?,?)';
         $stmt = $this->db->prepare($sql);
-        $stmt->execute([$day, $hour_start, $hour_finish, $id_course, $id_trainer, $id_training_room]);
+        $stmt->execute([$day, $hour_start, $hour_finish, $id_course, $id_trainer, $id_training_room, $id_icon]);
     }
 }

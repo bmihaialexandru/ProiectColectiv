@@ -26,7 +26,7 @@ else{
     $data = null;
 
     $message->answer = "Success";
-    $message->trainers = $ctrl->sctrl->get_icons();
+    $message->icons = $ctrl->sctrl->get_icons();
     echo json_encode($message);
 }
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 17, 2018 at 05:20 PM
+-- Generation Time: Jan 17, 2018 at 06:47 PM
 -- Server version: 10.1.28-MariaDB
 -- PHP Version: 7.0.25
 
@@ -106,6 +106,14 @@ CREATE TABLE `icons` (
   `path_to_icon` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `icons`
+--
+
+INSERT INTO `icons` (`id_icon`, `path_to_icon`) VALUES
+(1, '/icons/fit-boxing.svg'),
+(2, '/icons/fit-cycling.svg');
+
 -- --------------------------------------------------------
 
 --
@@ -165,6 +173,24 @@ CREATE TABLE `schedule_entry` (
   `id_training_room` int(11) NOT NULL,
   `id_icon` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `schedule_entry`
+--
+
+INSERT INTO `schedule_entry` (`id`, `day`, `hour_start`, `hour_finish`, `id_course`, `id_trainer`, `id_training_room`, `id_icon`) VALUES
+(61, '2018-01-18', '00:00:00', '02:30:00', 2, 1, 1, 1),
+(62, '2018-01-25', '00:00:00', '02:30:00', 2, 1, 1, 1),
+(63, '2018-02-01', '00:00:00', '02:30:00', 2, 1, 1, 1),
+(64, '2018-02-08', '00:00:00', '02:30:00', 2, 1, 1, 1),
+(65, '2018-02-15', '00:00:00', '02:30:00', 2, 1, 1, 1),
+(66, '2018-02-22', '00:00:00', '02:30:00', 2, 1, 1, 1),
+(67, '2018-03-01', '00:00:00', '02:30:00', 2, 1, 1, 1),
+(68, '2018-03-08', '00:00:00', '02:30:00', 2, 1, 1, 1),
+(69, '2018-04-14', '00:00:00', '00:00:00', 3, 2, 1, 2),
+(70, '2018-04-21', '00:00:00', '00:00:00', 3, 2, 1, 2),
+(71, '2018-04-28', '00:00:00', '00:00:00', 3, 2, 1, 2),
+(72, '2018-05-05', '00:00:00', '00:00:00', 3, 2, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -422,7 +448,7 @@ ALTER TABLE `feedback_trainer`
 -- AUTO_INCREMENT for table `icons`
 --
 ALTER TABLE `icons`
-  MODIFY `id_icon` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_icon` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `paid_subscribtions`
@@ -434,7 +460,7 @@ ALTER TABLE `paid_subscribtions`
 -- AUTO_INCREMENT for table `schedule_entry`
 --
 ALTER TABLE `schedule_entry`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
 --
 -- AUTO_INCREMENT for table `subscribtion_package`
