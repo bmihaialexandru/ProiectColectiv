@@ -44,11 +44,13 @@ export class ScheduleService extends Component {
                 'Accept': 'application/json',
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: "token="+token+"&type="+type+"&start_day="+start_day+"&end_day="+end_day+"&hour_start="+hour_start+"&hour_finish="+hour_finish+"&id_course="+id_course+"&id_trainer="+id_trainer
+            body: "token="+localStorage.getItem("token")+"&type="+type+"&start_day="+start_day+"&end_day="+end_day+"&hour_start="+hour_start+"&hour_finish="+hour_finish+"&id_course="+id_course+"&id_trainer="+id_trainer
             +"&id_training_room="+id_training_room
         }).then(result => {
+            console.log('yas',result);
             return result.json();
         }).then(result => {
+            console.log('got here');
             return ScheduleService._get_result_simple(result);
         })
     }
@@ -85,7 +87,7 @@ export class ScheduleService extends Component {
                 'Accept': 'application/json',
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: "token="+token+"&id="+id+"&day="+day+"&hour_start="+hour_start+"&hour_finish="+hour_finish+"&id_course="+id_course+"&id_trainer="+id_trainer+"&id_training_room="+id_training_room
+            body: "token="+localStorage.getItem("token")+"&id="+id+"&day="+day+"&hour_start="+hour_start+"&hour_finish="+hour_finish+"&id_course="+id_course+"&id_trainer="+id_trainer+"&id_training_room="+id_training_room
         }).then(result => {
             return result.json();
         }).then(result => {
