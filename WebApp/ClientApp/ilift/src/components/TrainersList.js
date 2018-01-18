@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Rodal from 'rodal';
 import {SingletonService} from "../services/SingletonService";
-import 'rodal/lib/rodal.css';//imi anuleaza stilizarile din oarecare motiv ??
+import 'rodal/lib/rodal.css';
 import '../template/css/style.css';
 
 
@@ -18,11 +18,10 @@ export class TrainersList extends React.Component {
       this.state.isAddButtonClicked = false;
       this.update();
 
+
   }
 
   update(){
-
-
       SingletonService.TrainerService.get_all_trainers().then((result) => {
           if(result === null)
           {
