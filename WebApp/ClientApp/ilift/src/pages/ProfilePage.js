@@ -193,6 +193,48 @@ export class ProfilePage extends Component {
           </div>
         </div>
 
+
+      <div id="fh5co-contact">
+			<div className="container">
+      <div className="row">
+      <div className="col-md-8 col-md-offset-2">
+      <div className="heading-section text-center animate-box">
+          <h2>Change password</h2>
+      </div>
+      </div>
+      <div className="col-md-6 animate-box">
+        <div className="row">
+          <div className="col-md-6 col-md-offset-9" style={{heigth: '50px !important'}}>
+          <div className="form-group">
+            <input type="password" className="form-control" placeholder="Old Password" id="password"/>
+          </div>
+        </div>
+          <div className="col-md-6 col-md-offset-9" style={{heigth: '50px !important'}}>
+            <div className="form-group">
+              <input type="password" className="form-control" placeholder="New Password" id="password"/>
+            </div>
+          </div>
+          <div className="col-md-6 col-md-offset-9" style={{heigth: '50px !important'}}>
+            <div className="form-group">
+              <input type="password" className="form-control" placeholder="Confirm Password" id="password"/>
+            </div>
+          </div>
+          <div className="col-md-12 col-md-offset-9">
+            <div className="form-group">
+              <button type="submit" value="Sign in" className="btn btn-primary" onClick={() => {
+                        // change pass
+              }}>
+               Change password
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+      </div>
+      </div>
+
+
         <div className="fh5co-pricing fh5co-lightgray-section">
         <div className="container">
           <div className="row">
