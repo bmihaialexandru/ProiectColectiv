@@ -16,46 +16,43 @@ export class PackageService extends Component {
     }
 
     get_all_packages() {
+
         return fetch(this.server + "/interface/get_all_packages.php", {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: ""
-        }).then(result => {
+            body: "token="+localStorage.getItem("token")
+        } ).then(result => {
             return result.json();
         }).then(result => {
             return PackageService._get_package_list_for_result(result);
         });
     }
 
-    add_new_package(token, name, description, pricing, days, courses) {
-        /*
-        $name = $_POST["package_name"];
-        $description = $_POST["package_description"];
-        $pricing = $_POST["pricing"];
-        $days = $_POST["days"];
-        $courses = $_POST['courses'];
-        $token = $_POST["token"];
-         */
+    add_new_package(name, description, pricing, days, courses) {
 
+        console.log(courses);
         let my_courses = courses.map((course) => {
-           return "{\"id\":"+course['id']+", \"number\":"+course['number']+"}";
+           return "{\"id\":"+course.id+", \"number\":"+course.number+"}";
         });
 
+        console.log(my_courses);
         let course_final = "";
         for(let course in my_courses) {
-            course_final += "&courses[]=" + course;
+            course_final += "&courses[]=" +  my_courses[course];
         }
 
-        return fetch(this.server + "/interface/add_schedule_entry.php", {
+        console.log(course_final);
+        console.log("token="+localStorage.getItem("token")+"&package_name="+name+"&package_description="+description+"&pricing="+pricing+"&days="+days+course_final);
+        return fetch(this.server + "/interface/add_package.php", {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: "token="+token+"&package_name="+name+"&package_description="+description+"&pricing="+pricing+"&days="+days+course_final
+            body: "token="+localStorage.getItem("token")+"&package_name="+name+"&package_description="+description+"&pricing="+pricing+"&days="+days+course_final
         }).then(result => {
             return result.json();
         }).then(result => {
@@ -63,14 +60,14 @@ export class PackageService extends Component {
         })
     }
 
-    delete_package(token, id) {
+    delete_package(id) {
         return fetch(this.server + "/interface/delete_package.php", {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: "token="+token+"&id="+id
+            body: "token="+localStorage.getItem("token")+"&id="+id
         }).then(result => {
             return result.json();
         }).then(result => {
@@ -78,14 +75,14 @@ export class PackageService extends Component {
         })
     }
 
-    subscribe_for_new_package(token, package_id) {
+    subscribe_for_new_package(package_id) {
         return fetch(this.server + "/interface/get_new_package.php", {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: "token="+token+"&package_id="+package_id
+            body: "token="+localStorage.getItem("token")+"&package_id="+package_id
         }).then(result => {
             return result.json();
         }).then(result => {
@@ -93,8 +90,8 @@ export class PackageService extends Component {
         })
     }
 
-    get_paid_packages_for_me(token) {
-        SingletonService.UserService.get_current_user(token).then((result) => {
+    get_paid_packages_for_me() {
+        SingletonService.UserService.get_current_user(localStorage.getItem("token")).then((result) => {
 
             let user_id = result.id;
             return fetch(this.server + "/interface/get_paid_packages_for_user.php", {
@@ -103,7 +100,7 @@ export class PackageService extends Component {
                     'Accept': 'application/json',
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                body: "token="+token+"&user_id="+user_id
+                body: "token="+localStorage.getItem("token")+"&user_id="+user_id
             }).then(result => {
                 return result.json();
             }).then(result => {
@@ -113,14 +110,14 @@ export class PackageService extends Component {
         });
     }
 
-    get_paid_packages_for_user(token, user_id) {
+    get_paid_packages_for_user(user_id) {
         return fetch(this.server + "/interface/get_paid_packages_for_user.php", {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: "token="+token+"&user_id="+user_id
+            body: "token="+localStorage.getItem("token")+"&user_id="+user_id
         }).then(result => {
             return result.json();
         }).then(result => {
@@ -128,8 +125,8 @@ export class PackageService extends Component {
         });
     }
 
-    get_unpaid_packages_for_me(token) {
-        SingletonService.UserService.get_current_user(token).then((result) => {
+    get_unpaid_packages_for_me() {
+        SingletonService.UserService.get_current_user(localStorage.getItem("token")).then((result) => {
 
             let user_id = result.id;
             return fetch(this.server + "/interface/get_unpaid_packages_for_user.php", {
@@ -138,7 +135,7 @@ export class PackageService extends Component {
                     'Accept': 'application/json',
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                body: "token="+token+"&user_id="+user_id
+                body: "token="+localStorage.getItem("token")+"&user_id="+user_id
             }).then(result => {
                 return result.json();
             }).then(result => {
@@ -148,23 +145,23 @@ export class PackageService extends Component {
         });
     }
 
-    get_unpaid_packages_for_user(token, user_id) {
+    get_unpaid_packages_for_user(user_id) {
         return fetch(this.server + "/interface/get_unpaid_packages_for_user.php", {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: "token="+token+"&user_id="+user_id
+            body: "token="+localStorage.getItem("token")+"&user_id="+user_id
         }).then(result => {
             return result.json();
         }).then(result => {
-            return PackageService._get_paid_packages_list(result);
+            return PackageService._get_unpaid_packages_list(result);
         });
     }
 
     make_payment(user_id, package_id, unpaid_id) {
-        return fetch(this.server + "/interface/get_unpaid_packages_for_user.php", {
+        return fetch(this.server + "/interface/make_payment.php", {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -228,6 +225,7 @@ export class PackageService extends Component {
 
     static _get_package_list_for_result(result) {
 
+
         try {
             if(result["answer"].localeCompare("Success") !== 0)
             {
@@ -242,14 +240,18 @@ export class PackageService extends Component {
            this.name = name;
              */
 
+
             return result["packages"].map((pack) => {
             let courses = pack["courses"].map((cpack) => {
-                new PackageCourse(cpack['id_package'],
+
+                return new PackageCourse(cpack['id_package'],
                     cpack['id_course'],
-                    cpack['number_scribtions'],
+                    cpack['number_subscribtions'],
                     cpack['name']
                 )
+
                 });
+
                 return new Package(pack["id"], pack["package_name"], pack["description"], pack["pricing"], pack["days"], courses);
             });
         } catch(error) {

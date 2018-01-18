@@ -45,4 +45,9 @@ class FeedbackTrainersController
 
         return $this->feedbackDb->GetFeedbacksForTrainer($id);
     }
+	
+	  public function get_all_trainers_feedback()
+    {
+        return $this->feedbackDb->GetAllFeedbacks();
+    }
 }

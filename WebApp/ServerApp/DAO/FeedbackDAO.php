@@ -44,4 +44,13 @@ class FeedbackDAO
         $stmt = $this->db->prepare($sql);
         $stmt->execute([$id]);
     }
+	
+	 public function GetAllFeedbacks()
+    {
+        $sql = 'SELECT feedback.*, `user`.name as username from feedback inner join `user` on feedback.user_id = `user`.id ORDER BY id DESC';
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        $feedback = $stmt->fetchAll();
+        return $feedback;
+    }
 }

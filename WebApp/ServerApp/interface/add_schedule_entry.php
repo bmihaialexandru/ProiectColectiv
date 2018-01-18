@@ -20,6 +20,7 @@ else{
     $id_course=$_POST['id_course'];
     $id_trainer=$_POST['id_trainer'];
     $id_training_room=$_POST['id_training_room'];
+    $id_icon = $_POST['id_icon'];
 
     $security_token = $_POST['token'];
     $jwt_service = new JWTService();
@@ -47,7 +48,7 @@ else{
     else
     {
         if(!empty($type) and !empty($start_day) and !empty($end_day) and !empty($hour_start) and !empty($hour_finish)
-            and !empty($id_course) and !empty($id_trainer) and !empty($id_training_room))
+            and !empty($id_course) and !empty($id_trainer) and !empty($id_training_room) and !empty($id_icon))
         {
 
             $begin = new DateTime( $start_day );
@@ -89,7 +90,7 @@ else{
 
             if(!$not_ok) {
                 foreach ($period as $dt) {
-                    $ctrl->sctrl->add_new_schedule_entry($dt->format("Y-m-d"), $hour_start, $hour_finish, $id_course, $id_trainer, $id_training_room);
+                    $ctrl->sctrl->add_new_schedule_entry($dt->format("Y-m-d"), $hour_start, $hour_finish, $id_course, $id_trainer, $id_training_room, $id_icon);
                 }
 
                 $message->answer = "Success";

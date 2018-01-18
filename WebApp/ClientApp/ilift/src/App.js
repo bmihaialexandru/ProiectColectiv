@@ -15,7 +15,10 @@ import {UsersPageAdmin} from './pages/UsersPageAdmin';
 import {AdminHome} from './pages/AdminHome';
 import {ProfilePage} from './pages/ProfilePage';
 import {FeedbackPage} from './pages/FeedbackPage';
+import {FeedbackPageAdmin} from './pages/FeedbackPageAdmin';
 import {RunAllTests} from "./testing/RunAllTests";
+import {PackagePageAdmin} from "./pages/PackagesPageAdmin";
+import {PaymentPageAdmin} from "./pages/PaymentPageAdmin";
 
 class App extends Component {
   render() {
@@ -35,8 +38,10 @@ class App extends Component {
             <Route exact path='/managetrainers' component={TrainersPageAdmin}/>
             <Route exact path='/manageschedules' component={SchedulePageAdmin}/>
             <Route exact path='/manageusers' component={UsersPageAdmin}/>
+            <Route exact path='/managefeedback' component={FeedbackPageAdmin}/>
             <Route exact path='/profile' component={ProfilePage} />
-            <Route exact path='/feedback' component={FeedbackPage} />
+            <Route exact path='/managepackage' component={PackagePageAdmin} />
+             <Route exact path='/managepayments' component={PaymentPageAdmin} />
              <Route exact path={'/testing'} component={RunAllTests}/>
 
          </Switch>

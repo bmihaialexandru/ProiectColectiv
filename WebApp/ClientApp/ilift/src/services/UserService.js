@@ -86,6 +86,21 @@ export class UserService extends Component {
         });
     }
 
+    get_user_byId(id) {
+        return fetch(this.server + "/interface/get_user_byId.php", {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: "token="+localStorage.getItem("token")+"&id="+id
+        }).then(result => {
+            return result.json();
+        }).then(result => {
+            return UserService._get_user_from_result(result);
+        });
+    }
+
     edit_user(id, name, phone, email, password){
         let data = new FormData();
 

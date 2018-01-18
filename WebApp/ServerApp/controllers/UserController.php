@@ -18,6 +18,11 @@ class UserController
         $this->userDAO->deleteUser($id);
         return 0;
     }
+	
+	public function get_user_byid($id)
+    {
+        return $this->db->getUser($id);
+    }
 
     public function edit_user($id,$newname,$newphone,$newemail,$newpass){
         if(count($this->userDAO->getUser($id)) != 1){

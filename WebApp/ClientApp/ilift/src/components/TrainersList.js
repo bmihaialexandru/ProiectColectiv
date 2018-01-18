@@ -1,21 +1,8 @@
 import React, { Component } from 'react';
 import Rodal from 'rodal';
 import {SingletonService} from "../services/SingletonService";
-import 'rodal/lib/rodal.css';//imi anuleaza stilizarile din oarecare motiv ??
-import '../template/css/inputBox.css';
+import 'rodal/lib/rodal.css';
 import '../template/css/style.css';
-
-
-const customStyles = {
-  content : {
-    top                   : '50%',
-    left                  : '50%',
-    right                 : 'auto',
-    bottom                : 'auto',
-    marginRight           : '-50%',
-    transform             : 'translate(-50%, -50%)'
-  }
-};
 
 
 export class TrainersList extends React.Component {
@@ -28,14 +15,13 @@ export class TrainersList extends React.Component {
     this.state.trainers = [];
     this.state.visible= false;
     this.state.currentTrainer={id:0,name:'',category:''};
-
+      this.state.isAddButtonClicked = false;
       this.update();
+
 
   }
 
   update(){
-
-
       SingletonService.TrainerService.get_all_trainers().then((result) => {
           if(result === null)
           {
@@ -48,6 +34,7 @@ export class TrainersList extends React.Component {
               list.push(newTrainer);
           }
 
+          this.setState({isAddButtonClicked: false});
           this.state.trainers = list;
           console.log(list);
           this.setState(this.state.trainers );
@@ -86,22 +73,30 @@ export class TrainersList extends React.Component {
 
   }
 
+    reRender(){
+
+        this.setState({isAddButtonClicked: true}, function () {
+            this.render();
+        });
+
+    }
+
   render() {
 
     return (
       <div>
 
-      <Rodal visible={this.state.visible}
+                 <Rodal visible={this.state.visible}
                        onClose={this.hide.bind(this)}
                        animation={this.state.animation}>
                     <div className="rodalheader">Delete trainer</div>
                     <div className="rodalbody"><h4>Are you sure you want to delete trainer {this.state.currentTrainer.name} ? </h4>
                     </div>
-          <button className="btn " onClick={this.deleteAccepted.bind(this)}>ok</button> <t>   </t>
+                    <button className="btn " onClick={this.deleteAccepted.bind(this)}>ok</button> <t>   </t>
                     <button className="btn " onClick={this.hide.bind(this)}>close</button>
                 </Rodal>
-        <SearchBar filterText={this.state.filterText} onUserInput={this.handleUserInput.bind(this)}/>
-        <TrainerTable  update={this.update.bind(this)} onRowDel={this.handleRowDel.bind(this)} trainers={this.state.trainers} filterText={this.state.filterText}/>
+                <SearchBar filterText={this.state.filterText} onUserInput={this.handleUserInput.bind(this)} onButtonPressed={this.reRender.bind(this)}/>
+                <TrainerTable  update={this.update.bind(this)} isButtonPressed={this.state.isAddButtonClicked} onRowDel={this.handleRowDel.bind(this)} trainers={this.state.trainers} filterText={this.state.filterText}/>
       </div>
     );
 
@@ -114,11 +109,16 @@ class SearchBar extends React.Component {
   }
   render() {
     return (
-      <div>
+        <div className="row">
 
-        <input type="text" placeholder="Search..." value={this.props.filterText} ref="filterTextInput" onChange={this.handleChange.bind(this)}/>
+            <div className="col-xs-8" id="container" >
+                <input type="text" className="form-control" style={{width: 350}} placeholder="Search..." value={this.props.filterText} ref="filterTextInput" onChange={this.handleChange.bind(this)}/>
+            </div>
+            <div className="col-xs-2" id="container" >
+                <button className="btn btn-default" style={{marginLeft:30}} onClick={this.props.onButtonPressed}>Add course</button>
 
-      </div>
+            </div>
+        </div>
 
     );
   }
@@ -127,14 +127,37 @@ class SearchBar extends React.Component {
 
 class TrainerTable extends React.Component {
 
+    renderRowAdd()
+    {
+        if (this.props.isButtonPressed) {
+            return (
+                <div>
+                    <div>
+                        <br />
+                        <input className="form-control"   type="text" placeholder="Trainer Name" id="nameT"/>
+                        <p style={{display: 'inline'}}> </p>
+                        <br/>
+                        <textarea className="form-control" placeholder="Trainer Description" cols="25"  id="description"/>
+                        <p style={{display: 'inline'}}> </p>
+                        <br/>
+                        <input type="file"  name="photo" style={{width: 200}} id="photo" placeholder="Photo" onChange={(e) => this.photo = e.target.files[0]} />
+                        <p style={{display: 'inline'}}> </p>
+                        <br />
+                        <button type="submit" className="btn btn-success" name="add_submit" value="Add trainer" onClick={() => this.addTrainer()}>Add trainer</button>
+
+                    </div>
+                    <br/>
+                </div>
+            );
+        }
+    }
   render() {
     var rowDel = this.props.onRowDel;
     var update = this.props.update;
     var filterText = this.props.filterText;
     var bodystyle = {
-      height: 250,
-       overflow: 'scroll',
-       display:'block'
+        height: 200,
+        display:'relative'
     };
 
     var trainer = this.props.trainers.map(function(trainer) {
@@ -143,38 +166,32 @@ class TrainerTable extends React.Component {
       }
       return (<TrainerRow update={update} trainer={trainer} onDelEvent={rowDel.bind(this)} key={trainer.id}/>)
     });
+
     return (
-      <div className="row">
-      <div className="row"></div>
-        <div className="col-xs-12" id="container" ref="container" >
-            <table className="table table-bordered">
-              <thead>
-                <tr>
-                </tr>
-              </thead>
+        <div className="row">
+            <div className="col-xs-4" id="container" >
+                {this.renderRowAdd()}
 
-              <tbody style={bodystyle}>
-                {trainer}
-              </tbody>
-            </table>
+            </div>
+
+            <div className="row">
+
+                <div className="col-xs-10" id="container" ref="container" >
+                    <br />
+                    <table className="table ">
+                        <thead>
+                        <tr>
+                        </tr>
+                        </thead>
+
+                        <tbody style={bodystyle}>
+                        {trainer}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
-        <div className="col-xs-1">
-        </div>
-        <div className="col-xs-4" id="container" >
-          <div className="form-group">
-            <h3>Add a new trainer </h3>
-          </div>
-
-            <input  type="text" placeholder="Trainer Name" id="nameT"/>
-            <input  type="text" placeholder="Trainer Description" id="description"/>
-            <input type="file"  name="photo" id="photo" placeholder="Photo" onChange={(e) => this.photo = e.target.files[0]} />
-
-            <input type="submit" name="add_submit" value="Add trainer" onClick={() => this.addTrainer()} />
-
-        </div>
-  </div>
     );
-
   }
 
     addTrainer() {
@@ -214,20 +231,22 @@ class TrainerRow extends React.Component {
     return (
       <tr className="eachRow">
           <td className="del-cell">
-              <input  type="text" placeholder="Trainer Name" defaultValue={this.props.trainer.name} onChange={(e) =>  this.setState({nameTrainer : e.target.value})}  id="name"/>
+              <input className="form-control" type="text" placeholder="Trainer Name" defaultValue={this.props.trainer.name} onChange={(e) =>  this.setState({nameTrainer : e.target.value})}  id="name"/>
           </td>
           <td className="del-cell">
               <textarea defaultValue={this.props.trainer.category} onChange={(e) => this.setState({description : e.target.value})} rows={6}/>
           </td>
           <td className="del-cell">
-              <img src={ this.state.photoForShow } style={{width: 100, height: 150,display: "inline", paddingTop: 10, paddingLeft:10}} id="imgStyle"/>
-              <input type="file" style={{display: "inline", paddingLeft: 10}}  name="photo" id="photo" placeholder="Photo" defaultValue={this.props.trainer.photo}
+              <img src={ this.state.photoForShow } style={{width: 100, height: 140}} id="imgStyle"/>
+          </td>
+          <td>
+              <input type="file" style={{marginTop:50, paddingLeft: 10, display:'inline'}}  name="photo" id="photo" placeholder="Photo" defaultValue={this.props.trainer.photo}
                      onChange={(e) => {var fileName = 'require(\'' + e.target.value + '\')'; this.setState({photoForUpdate : e.target.files[0]})}} />
           </td>
 
         <td className="del-cell">
-            <input type="button" style={{alignSelf:'center'}} onClick={this.onDelEvent.bind(this)} value="X" className="btn btn-danger btn-xs"/><t> </t>
-            <input type="button"onClick={this.updateRow.bind(this)} value="Save" className="btn btn-success btn-xs"/>
+            <input  type="button" style={{marginTop:50}} onClick={this.onDelEvent.bind(this)} value="X" className="btn btn-danger btn-sm"/><t> </t>
+            <input type="button" style={{marginTop:50}} onClick={this.updateRow.bind(this)} value="Save" className="btn btn-success btn-sm"/>
         </td>
       </tr>
     );
