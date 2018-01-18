@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import {HeaderAdmin} from '../components/HeaderAdmin';
 import {FooterAdmin} from '../components/FooterAdmin';
-import '../template/css/inputBox.css';
-import {SingletonService} from '../services/SingletonService'
 import {_reloadJs} from '../js/reloadJs';
 import {UsersList} from "../components/UsersList";
 

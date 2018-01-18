@@ -2,8 +2,14 @@ import React, { Component } from 'react';
 import Rodal from 'rodal';
 import {SingletonService} from "../services/SingletonService";
 import 'rodal/lib/rodal.css';
-import '../template/css/inputBox.css';
 import '../template/css/style.css';
+import Dialog, {
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+} from 'material-ui/Dialog';
+import Button from "react-bootstrap/es/Button";
 
 
 export class FeedbackCourseList extends React.Component {
@@ -41,12 +47,11 @@ export class FeedbackCourseList extends React.Component {
                             id: result[feedback].id, stars: result[feedback].stars, message: result[feedback].message,
                             userName: result[feedback].author, courseName: cName
                         };
-             
+
                         list.push(newFeedback);
                         var sortedList = list;
                         sortedList.sort((a,b) => b.id - a.id);
                         this.state.feedbacks = sortedList;
-                        console.log(sortedList);
                         this.setState(this.state.feedbacks);
                 });
             }
@@ -90,13 +95,14 @@ export class FeedbackCourseList extends React.Component {
     render() {
 
         return (
+
             <div>
 
                 <Rodal visible={this.state.visible}
                        onClose={this.hide.bind(this)}
                        animation={this.state.animation}>
                     <div className="rodalheader">Delete feedback</div>
-                    <div className="rodalbody"><h4>Are you sure you want to delete this feedback ? </h4>
+                    <div className="rodalbody"><h4>Are you sure you want to delete this feedback? </h4>
                     </div>
                     <button className="btn " onClick={this.deleteAccepted.bind(this)}>ok</button> <t>   </t>
                     <button className="btn " onClick={this.hide.bind(this)}>close</button>
@@ -117,8 +123,8 @@ class SearchBar extends React.Component {
         return (
             <div>
 
-                <input type="text" placeholder="Search with course name" value={this.props.filterText} ref="filterTextInput" onChange={this.handleChange.bind(this)}/>
-
+                <input type="text" placeholder="Search with course name"  style={{width: 250}}  className="form-control"  value={this.props.filterText} ref="filterTextInput" onChange={this.handleChange.bind(this)}/>
+                <br />
             </div>
 
         );
@@ -134,8 +140,8 @@ class FeedbackTable extends React.Component {
         var filterText = this.props.filterText;
         var bodystyle = {
             height: 250,
-            overflow: 'scroll',
-            display:'block'
+
+            display:'auto'
         };
 
         var feedback = this.props.feedbacks.map(function(feedback) {
@@ -146,19 +152,19 @@ class FeedbackTable extends React.Component {
         });
         return (
             <div className="row">
-                <div className="row"></div>
                 <div className="col-xs-12" id="container" ref="container" >
-                    <table className="table table-bordered">
+                    <table className="table ">
                         <thead>
 
                         </thead>
 
                         <tbody style={bodystyle}>
                         <tr>
-                            <td>Course</td>
-                            <td>Author</td>
-                            <td>Stars</td>
-                            <td>Message</td>
+                            <td style={{textAlign:'center', opacity:.7}}>Course</td>
+                            <td style={{textAlign:'center', opacity:.7}}>Author</td>
+                            <td style={{textAlign:'center', opacity:.7}}>Stars</td>
+                            <td style={{textAlign:'center', opacity:.7}}>Message</td>
+                            <td> </td>
 
                         </tr>
                         {feedback}
@@ -191,17 +197,17 @@ class FeedbackRow extends React.Component {
 
 
             <tr className="eachRow">
-                <td className="del-cell">
-                    <label> {this.props.feedback.courseName} </label>
+                <td style={{textAlign:'center'}}>
+                    {this.props.feedback.courseName}
                 </td>
-                <td className="del-cell">
-                    <label> {this.props.feedback.userName} </label>
+                <td style={{textAlign:'center'}}>
+                     {this.props.feedback.userName}
                 </td>
-                <td className="del-cell">
-                    <label> {this.props.feedback.stars} </label>
+                <td style={{textAlign:'center'}}>
+                     {this.props.feedback.stars}
                 </td>
-                <td className="del-cell">
-                    <label> {this.props.feedback.message} </label>
+                <td style={{textAlign:'center'}}>
+                    {this.props.feedback.message}
                 </td>
                 <td className="del-cell">
                     <input type="button" style={{alignSelf:'center'}} onClick={this.onDelEvent.bind(this)} value="X" className="btn btn-danger btn-xs"/>

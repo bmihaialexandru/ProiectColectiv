@@ -2,8 +2,17 @@ import React, { Component } from 'react';
 import Rodal from 'rodal';
 import {SingletonService} from "../services/SingletonService";
 import 'rodal/lib/rodal.css';
-import '../template/css/inputBox.css';
 import '../template/css/style.css';
+import {
+    Table,
+    TableBody,
+    TableHeader,
+    td,
+    TableRow,
+    TableRowColumn,
+} from 'material-ui/Table';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+
 
 
 export class FeedbackTrainersList extends React.Component {
@@ -24,7 +33,7 @@ export class FeedbackTrainersList extends React.Component {
     update(){
 
 
-        SingletonService.FeedbackTrainerService. get_actualy_all_feedbacks().then((result) => {
+        SingletonService.FeedbackTrainerService.get_actualy_all_feedbacks().then((result) => {
             if(result === null)
             {
 
@@ -46,7 +55,6 @@ export class FeedbackTrainersList extends React.Component {
                     var sortedList = list;
                     sortedList.sort((a,b) => b.id - a.id);
                     this.state.feedbacks = sortedList;
-                    console.log(sortedList);
                     this.setState(this.state.feedbacks);
                 });
             }
@@ -117,8 +125,8 @@ class SearchBar extends React.Component {
         return (
             <div>
 
-                <input type="text" placeholder="Search with trainer name" value={this.props.filterText} ref="filterTextInput" onChange={this.handleChange.bind(this)}/>
-
+                <input type="text" placeholder="Search with trainer name"  style={{width: 250}}  className="form-control" value={this.props.filterText} ref="filterTextInput" onChange={this.handleChange.bind(this)}/>
+                <br />
             </div>
 
         );
@@ -134,8 +142,8 @@ class FeedbackTable extends React.Component {
         var filterText = this.props.filterText;
         var bodystyle = {
             height: 250,
-            overflow: 'scroll',
-            display:'block'
+
+            display:'relative'
         };
 
         var feedback = this.props.feedbacks.map(function(feedback) {
@@ -146,19 +154,19 @@ class FeedbackTable extends React.Component {
         });
         return (
             <div className="row">
-                <div className="row"></div>
                 <div className="col-xs-12" id="container" ref="container" >
-                    <table className="table table-bordered">
+                    <table className="table ">
                         <thead>
 
                         </thead>
 
                         <tbody style={bodystyle}>
                         <tr>
-                            <td>Trainer</td>
-                            <td>Author</td>
-                            <td>Stars</td>
-                            <td>Message</td>
+                            <td style={{textAlign:'center', opacity:.7}}>Trainer</td>
+                            <td style={{textAlign:'center', opacity:.7}}>Author</td>
+                            <td style={{textAlign:'center', opacity:.7}}>Stars</td>
+                            <td style={{textAlign:'center', opacity:.7}}>Message</td>
+                            <td> </td>
 
                         </tr>
                         {feedback}
@@ -191,19 +199,19 @@ class FeedbackRow extends React.Component {
 
 
             <tr className="eachRow">
-                <td className="del-cell">
-                    <label> {this.props.feedback.trainerName} </label>
+                <td style={{textAlign:'center',opacity:1}}>
+                    {this.props.feedback.trainerName}
                 </td>
-                <td className="del-cell">
-                    <label> {this.props.feedback.userName} </label>
+                <td style={{textAlign:'center'}}>
+                    {this.props.feedback.userName}
                 </td>
-                <td className="del-cell">
-                    <label> {this.props.feedback.stars} </label>
+                <td style={{textAlign:'center'}}>
+                    {this.props.feedback.stars}
                 </td>
-                <td className="del-cell">
-                    <label> {this.props.feedback.message} </label>
-                </td>
-                <td className="del-cell">
+                <td style={{textAlign:'center'}}>
+                    {this.props.feedback.message}
+                </td >
+                <td style={{textAlign:'center'}}>
                     <input type="button" style={{alignSelf:'center'}} onClick={this.onDelEvent.bind(this)} value="X" className="btn btn-danger btn-xs"/>
                 </td>
             </tr>
