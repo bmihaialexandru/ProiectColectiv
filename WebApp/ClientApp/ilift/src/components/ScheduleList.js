@@ -36,9 +36,14 @@ export class ScheduleList extends React.Component {
             courses: [],
             trainers: [],
             rooms: [],
+            icons:[],
             schedules: [],
             visible: false,
             scheduleToDelete: 0,
+            icon_id: 0,
+            icon_path: "",
+            selected_week: "",
+            weeks: []
         };
         this.loadData();
     }
