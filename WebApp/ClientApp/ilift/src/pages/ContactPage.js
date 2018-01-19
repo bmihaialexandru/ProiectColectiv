@@ -6,8 +6,11 @@ import {SubscriptionTypes} from '../components/SubscriptionTypes';
 import {News} from '../components/News';
 import {Footer} from '../components/Footer';
 
+import {_reloadJs} from '../js/reloadJs';
+
 export class ContactPage extends Component {
   render() {
+		_reloadJs();
     return (
       <div id="fh5co-wrapper">
       <div id="fh5co-page">
@@ -21,7 +24,7 @@ export class ContactPage extends Component {
 					<div className="col-md-8 col-md-offset-2 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0 text-center fh5co-table">
 						<div className="fh5co-intro fh5co-table-cell animate-box">
 							<h1 className="text-center">Contact Us</h1>
-							<p>And some other message</p>
+							<p>But probably we won't reply</p>
 						</div>
 					</div>
 				</div>
@@ -37,7 +40,7 @@ export class ContactPage extends Component {
 							<h3 className="section-title">Our Address</h3>
 							<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
 							<ul className="contact-info">
-								<li><i className="icon-location-pin"></i>198 West 21th Street, Suite 721 New York NY 10016</li>
+								<li><i className="icon-location-pin"></i>Teodor Mihali 58-60, Cluj-Napoca 400591</li>
 								<li><i className="icon-phone2"></i>+ 1235 2355 98</li>
 								<li><i className="icon-mail"></i><a href="#">info@yoursite.com</a></li>
 								<li><i className="icon-globe2"></i><a href="#">www.yoursite.com</a></li>
@@ -62,7 +65,7 @@ export class ContactPage extends Component {
 								</div>
 								<div className="col-md-12">
 									<div className="form-group">
-										<input type="submit" value="Send Message" className="btn btn-primary"/>
+									<a href="#" className="btn btn-primary">Send Message</a>
 									</div>
 								</div>
 							</div>

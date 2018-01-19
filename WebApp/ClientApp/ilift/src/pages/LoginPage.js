@@ -3,9 +3,21 @@ import {Header} from '../components/Header';
 import {Schedule} from '../components/Schedule';
 import {Footer} from '../components/Footer';
 import {Classes} from '../components/Classes';
+import {SingletonService} from "../services/SingletonService";
+import {login} from '../WebApis/LoginWebApi';
+import { Redirect } from 'react-router-dom';
+
+import $ from 'jquery';
+import {_reloadJs} from '../js/reloadJs';
 
 export class LoginPage extends Component {
+
+  componentWillMount(){
+    $('html,body').scrollTop(0);
+  }
+
   render() {
+    _reloadJs();
     return (
       <div id="fh5co-wrapper">
       <div id="fh5co-page">
@@ -37,7 +49,7 @@ export class LoginPage extends Component {
               <input type="text" className="form-control" placeholder="Username" id="username"/>
             </div>
           </div>
-          <div className="col-md-6 col-md-offset-9">
+          <div className="col-md-6 col-md-offset-9" style={{heigth: '50px !important'}}>
             <div className="form-group">
               <input type="password" className="form-control" placeholder="Password" id="password"/>
             </div>
@@ -45,7 +57,7 @@ export class LoginPage extends Component {
           <div className="col-md-12 col-md-offset-9">
             <div className="form-group">
               <button type="submit" value="Sign in" className="btn btn-primary" onClick={() => {
-                        alert(document.getElementById("username").value + " " + document.getElementById("password").value);
+                        this._loginUser(document.getElementById("username").value, document.getElementById("password").value);
               }}>
                Sign in 
               </button>
@@ -61,5 +73,19 @@ export class LoginPage extends Component {
     </div>
     </div>
     );
+  }
+
+  _loginUser(username, password){
+
+      SingletonService.UserService.login(username, password).then(result => {
+          if(result === null) {
+            return;
+          }
+
+          localStorage.setItem("username", username);
+          localStorage.setItem("token", result);
+
+          window.location.replace("/");
+      });
   }
 }

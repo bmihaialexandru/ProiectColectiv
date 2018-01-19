@@ -25,6 +25,14 @@ class ScheduleEntryDAO
         return $schedule_entry;
     }
 
+    public function get_schedule_entry_by_day($day){
+        $sql = 'SELECT * FROM schedule_entry WHERE `day` = ?';
+        $stmt=$this->db->prepare($sql);
+        $stmt->execute([$day,]);
+        $schedule_entry = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $schedule_entry;
+    }
+
     public function get_all_schedule_entries()
     {
         $sql = 'SELECT * FROM schedule_entry';
@@ -48,10 +56,38 @@ class ScheduleEntryDAO
         $stmt->execute([$id]);
     }
 
-    public function add_schedule_entry($day, $hour_start, $hour_finish, $id_course, $id_trainer, $id_training_room)
+    public function get_current_week_schedule($date)
     {
-        $sql = 'INSERT INTO schedule_entry(`day`, hour_start, hour_finish,id_course, id_trainer, id_training_room) VALUES(?,?,?,?,?,?)';
+        //$start = $date;
+        $period = ' -1 day';
+        while(date('w', strtotime($date)) != '1')
+        {
+            $date = date('Y-m-d', strtotime($date . $period));
+        }
+        $finish = date('Y-m-d', strtotime($date. ' +6 days'));
+        $sql = "SELECT schedule_entry.*, course.name as course_name, trainer.name as trainer_name, training_room.name as room_name, icons.path_to_icon as path_to_icon FROM schedule_entry
+        INNER JOIN course on course.id = schedule_entry.id_course
+        INNER JOIN trainer on trainer.id = schedule_entry.id_trainer
+        INNER JOIN training_room on training_room.id_training_room = schedule_entry.id_training_room
+        INNER JOIN icons on icons.id_icon = schedule_entry.id_icon
+        WHERE `day` >= ? and `day` <= ?";
         $stmt = $this->db->prepare($sql);
-        $stmt->execute([$day, $hour_start, $hour_finish, $id_course, $id_trainer, $id_training_room]);
+        $stmt->execute([$date, $finish]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    }
+
+    public function get_icons() {
+        $sql = "SELECT * FROM icons";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function add_schedule_entry($day, $hour_start, $hour_finish, $id_course, $id_trainer, $id_training_room, $id_icon)
+    {
+        $sql = 'INSERT INTO schedule_entry(`day`, hour_start, hour_finish,id_course, id_trainer, id_training_room, id_icon) VALUES(?,?,?,?,?,?,?)';
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([$day, $hour_start, $hour_finish, $id_course, $id_trainer, $id_training_room, $id_icon]);
     }
 }

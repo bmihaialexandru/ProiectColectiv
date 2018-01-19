@@ -44,6 +44,38 @@ class UserDAO
         return $user;
     }
 
+    public function deleteUser($id){
+        $sql = 'DELETE FROM `user` WHERE id = ?';
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([$id]);
+    }
+
+    public function getUser($id){
+        $sql = 'SELECT * FROM user WHERE id = ?';
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([$id]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getUsers(){
+        $sql = 'SELECT * from user';
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
+    public function editUser($id,$newphone,$newemail,$newname,$newpasshash){
+        $sql = 'UPDATE user set `name` = ?,phone_number =?,email =?,passwordhash = ? where id = ?';
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([$newname,$newphone,$newemail,$newpasshash,$id]);
+    }
+
+    public function editUserNoPassword($id,$newphone,$newemail,$newname){
+        $sql = 'UPDATE user set `name` = ?,phone_number =?,email =? where id = ?';
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([$newname,$newphone,$newemail,$id]);
+    }
+
     public function update_password($id, $pass_hash)
     {
         $sql = "UPDATE user SET passwordhash = ?, pass_changed = 1 WHERE id = ?";

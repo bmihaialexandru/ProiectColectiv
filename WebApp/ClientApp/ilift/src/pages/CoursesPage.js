@@ -5,8 +5,16 @@ import {Footer} from '../components/Footer';
 import {Classes} from '../components/Classes';
 import $ from 'jquery'; 
 
+import {_reloadJs} from '../js/reloadJs';
+
 export class CoursesPage extends Component {
+
+  componentWillMount(){
+    $('html,body').scrollTop(0);
+  }
+  
   render() {
+    _reloadJs();
     return (
       <div id="fh5co-wrapper">
       <div id="fh5co-page">
@@ -27,7 +35,20 @@ export class CoursesPage extends Component {
         </div>
       </div>
 
+      <div id="fh5co-schedule-section" className="fh5co-lightgray-section">
+      <div className="container">
+      <div className="row">
+        <div className="col-md-8 col-md-offset-2">
+          <div className="heading-section text-center animate-box">
+            <h2>Our programs</h2>
+          </div>
+        </div>
+      </div>
+
       <Classes/>
+
+      </div>
+      </div>
 
       <Footer/>
   
