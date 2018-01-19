@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 12, 2017 at 04:45 PM
--- Server version: 10.1.28-MariaDB
--- PHP Version: 7.0.25
+-- Generation Time: Jan 19, 2018 at 03:37 AM
+-- Server version: 10.1.29-MariaDB
+-- PHP Version: 7.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -40,7 +40,8 @@ CREATE TABLE `course` (
 --
 
 INSERT INTO `course` (`id`, `name`, `description`, `url_photo`) VALUES
-(2, 'muie steaua', 'am venit aicisa sa predam strigate de galerie augh augh augh hei hei hei forta steaua', '../uploads/phpE817.png');
+(4, 'Boxing course', 'Do you want to learn boxing? Now we have the real way!', '../uploads/trainer-1.jpg'),
+(5, 'Running course', 'If you feel like you want to run, this is an excellent way to start', '../uploads/trainer-2.jpg');
 
 -- --------------------------------------------------------
 
@@ -61,15 +62,7 @@ CREATE TABLE `feedback` (
 --
 
 INSERT INTO `feedback` (`id`, `stars`, `message`, `user_id`, `course_id`) VALUES
-(1, 4, 'ii rau rau', 1, 2),
-(3, 5, '[object HTMLTextAreaElement]', 1, 2),
-(4, 3, 'ii ok cred', 1, 2),
-(5, 5, 'lol cemi plake', 1, 2),
-(6, 3, 'ii fainut', 1, 2),
-(7, 5, 'super super', 1, 2),
-(8, 4, 'asdasdasd', 1, 2),
-(9, 2, 'asfasfaf', 1, 2),
-(10, 4, 'salut', 1, 2);
+(12, 5, 'Very good on training. I have learnt the most essentials things in this course.', 1, 4);
 
 -- --------------------------------------------------------
 
@@ -90,9 +83,26 @@ CREATE TABLE `feedback_trainer` (
 --
 
 INSERT INTO `feedback_trainer` (`id`, `stars`, `message`, `id_user`, `id_trainer`) VALUES
-(1, 4, 'imi plake', 1, 2),
-(2, 1, 'ii cretin la kap', 1, 2),
-(3, 2, 'pute urat', 1, 2);
+(4, 5, 'One of the best antrenors I have ever met. He inspires me.', 1, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `icons`
+--
+
+CREATE TABLE `icons` (
+  `id_icon` int(11) NOT NULL,
+  `path_to_icon` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `icons`
+--
+
+INSERT INTO `icons` (`id_icon`, `path_to_icon`) VALUES
+(1, '/icons/fit-boxing.svg'),
+(2, '/icons/fit-cycling.svg');
 
 -- --------------------------------------------------------
 
@@ -117,7 +127,8 @@ CREATE TABLE `paid_subscribtions` (
   `id_course` int(11) NOT NULL,
   `nr_courses` int(11) NOT NULL,
   `due_date` date NOT NULL,
-  `id_user` int(11) NOT NULL
+  `id_user` int(11) NOT NULL,
+  `id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -133,70 +144,9 @@ CREATE TABLE `schedule_entry` (
   `hour_finish` time NOT NULL,
   `id_course` int(11) NOT NULL,
   `id_trainer` int(11) NOT NULL,
-  `id_training_room` int(11) NOT NULL
+  `id_training_room` int(11) NOT NULL,
+  `id_icon` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `schedule_entry`
---
-
-INSERT INTO `schedule_entry` (`id`, `day`, `hour_start`, `hour_finish`, `id_course`, `id_trainer`, `id_training_room`) VALUES
-(1, '2017-12-11', '18:00:00', '20:00:00', 2, 1, 1),
-(2, '2017-12-09', '18:00:00', '20:00:00', 2, 1, 1),
-(3, '2017-12-16', '18:00:00', '20:00:00', 2, 1, 1),
-(4, '2017-12-23', '18:00:00', '20:00:00', 2, 1, 1),
-(5, '2017-12-30', '18:00:00', '20:00:00', 2, 1, 1),
-(6, '2018-01-06', '18:00:00', '20:00:00', 2, 1, 1),
-(7, '2018-01-13', '18:00:00', '20:00:00', 2, 1, 1),
-(8, '2018-01-20', '18:00:00', '20:00:00', 2, 1, 1),
-(9, '2018-01-27', '18:00:00', '20:00:00', 2, 1, 1),
-(10, '2018-02-03', '18:00:00', '20:00:00', 2, 1, 1),
-(11, '2018-02-10', '18:00:00', '20:00:00', 2, 1, 1),
-(12, '2018-02-17', '18:00:00', '20:00:00', 2, 1, 1),
-(13, '2018-02-24', '18:00:00', '20:00:00', 2, 1, 1),
-(14, '2018-03-03', '18:00:00', '20:00:00', 2, 1, 1),
-(15, '2018-03-10', '18:00:00', '20:00:00', 2, 1, 1),
-(16, '2018-03-17', '18:00:00', '20:00:00', 2, 1, 1),
-(17, '2018-03-24', '18:00:00', '20:00:00', 2, 1, 1),
-(18, '2018-03-31', '18:00:00', '20:00:00', 2, 1, 1),
-(19, '2018-04-07', '18:00:00', '20:00:00', 2, 1, 1),
-(20, '2018-04-14', '18:00:00', '20:00:00', 2, 1, 1),
-(21, '2018-04-21', '18:00:00', '20:00:00', 2, 1, 1),
-(22, '2018-04-28', '18:00:00', '20:00:00', 2, 1, 1),
-(23, '2018-05-05', '18:00:00', '20:00:00', 2, 1, 1),
-(24, '2018-05-12', '18:00:00', '20:00:00', 2, 1, 1),
-(25, '2018-05-19', '18:00:00', '20:00:00', 2, 1, 1),
-(26, '2018-05-26', '18:00:00', '20:00:00', 2, 1, 1),
-(27, '2018-06-02', '18:00:00', '20:00:00', 2, 1, 1),
-(28, '2018-06-09', '18:00:00', '20:00:00', 2, 1, 1),
-(29, '2018-06-16', '18:00:00', '20:00:00', 2, 1, 1),
-(30, '2018-06-23', '18:00:00', '20:00:00', 2, 1, 1),
-(31, '2018-06-30', '18:00:00', '20:00:00', 2, 1, 1),
-(32, '2018-07-07', '18:00:00', '20:00:00', 2, 1, 1),
-(33, '2018-07-14', '18:00:00', '20:00:00', 2, 1, 1),
-(34, '2018-07-21', '18:00:00', '20:00:00', 2, 1, 1),
-(35, '2018-07-28', '18:00:00', '20:00:00', 2, 1, 1),
-(36, '2018-08-04', '18:00:00', '20:00:00', 2, 1, 1),
-(37, '2018-08-11', '18:00:00', '20:00:00', 2, 1, 1),
-(38, '2018-08-18', '18:00:00', '20:00:00', 2, 1, 1),
-(39, '2018-08-25', '18:00:00', '20:00:00', 2, 1, 1),
-(40, '2018-09-01', '18:00:00', '20:00:00', 2, 1, 1),
-(41, '2018-09-08', '18:00:00', '20:00:00', 2, 1, 1),
-(42, '2018-09-15', '18:00:00', '20:00:00', 2, 1, 1),
-(43, '2018-09-22', '18:00:00', '20:00:00', 2, 1, 1),
-(44, '2018-09-29', '18:00:00', '20:00:00', 2, 1, 1),
-(45, '2018-10-06', '18:00:00', '20:00:00', 2, 1, 1),
-(46, '2018-10-13', '18:00:00', '20:00:00', 2, 1, 1),
-(47, '2018-10-20', '18:00:00', '20:00:00', 2, 1, 1),
-(49, '2018-11-03', '18:00:00', '20:00:00', 2, 1, 1),
-(50, '2018-11-10', '18:00:00', '20:00:00', 2, 1, 1),
-(51, '2018-11-17', '18:00:00', '20:00:00', 2, 1, 1),
-(52, '2018-11-24', '18:00:00', '20:00:00', 2, 1, 1),
-(53, '2018-12-01', '18:00:00', '20:00:00', 2, 1, 1),
-(54, '2018-12-08', '18:00:00', '20:00:00', 2, 1, 1),
-(55, '2017-12-10', '18:00:00', '20:00:00', 2, 1, 1),
-(56, '2017-12-24', '18:00:00', '20:00:00', 2, 1, 1),
-(57, '2018-01-07', '19:00:00', '20:00:00', 2, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -241,8 +191,8 @@ CREATE TABLE `trainer` (
 --
 
 INSERT INTO `trainer` (`id`, `name`, `url_photo`, `description`) VALUES
-(1, 'Gica Ionica', '../uploads/php7571png', ''),
-(2, 'banel', '../uploads/phpB0A3.png', 'nicolita');
+(1, 'Ion Oncescu', '../uploads/trainer-3.jpg', 'He is very good on making the whole course more interesting'),
+(2, 'Popescu Vasile', '../uploads/trainer-4.jpg', 'One of our professionals. He makes the course as you think you are in the olympiads');
 
 -- --------------------------------------------------------
 
@@ -261,7 +211,7 @@ CREATE TABLE `training_room` (
 --
 
 INSERT INTO `training_room` (`id_training_room`, `max_capacity`, `name`) VALUES
-(1, 1, 'pula me');
+(1, 1, 'The gym main room');
 
 -- --------------------------------------------------------
 
@@ -271,7 +221,8 @@ INSERT INTO `training_room` (`id_training_room`, `max_capacity`, `name`) VALUES
 
 CREATE TABLE `unpaid_subscribtions` (
   `id_user` int(11) NOT NULL,
-  `id_package` int(11) NOT NULL
+  `id_package` int(11) NOT NULL,
+  `id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -295,9 +246,8 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `name`, `phone_number`, `email`, `passwordhash`, `user_type`, `pass_changed`) VALUES
-(1, 'admin', '0771490344', 'nicubodea96@gmail.com', '9f7382a2dbc31d350f98131cc1b9337ee1e5c759', 1, 1),
-(5, 'testy', '07312', 'abcd', 'b24ffa4f898b756cf8fb6b98641dd90b83f1c02f', 0, 0),
-(6, 'user_normal', 'dummy', 'dummy', 'd8913df37b24c97f28f840114d05bd110dbb2e44', 0, 0);
+(1, 'admin', '0771490344', 'nicubodea96@gmail.com', 'd8913df37b24c97f28f840114d05bd110dbb2e44', 1, 1),
+(5, 'user', '07312', 'abcd', 'd8913df37b24c97f28f840114d05bd110dbb2e44', 0, 0);
 
 --
 -- Indexes for dumped tables
@@ -326,6 +276,12 @@ ALTER TABLE `feedback_trainer`
   ADD KEY `fk_fdbkt_trainer` (`id_trainer`);
 
 --
+-- Indexes for table `icons`
+--
+ALTER TABLE `icons`
+  ADD PRIMARY KEY (`id_icon`);
+
+--
 -- Indexes for table `package_course`
 --
 ALTER TABLE `package_course`
@@ -336,9 +292,10 @@ ALTER TABLE `package_course`
 -- Indexes for table `paid_subscribtions`
 --
 ALTER TABLE `paid_subscribtions`
-  ADD PRIMARY KEY (`id_package`,`id_course`,`id_user`),
-  ADD KEY `fk_user` (`id_user`),
-  ADD KEY `fk_course_c` (`id_course`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_user_paid` (`id_user`),
+  ADD KEY `fk_course_paid` (`id_course`),
+  ADD KEY `fk_package_paid` (`id_package`);
 
 --
 -- Indexes for table `schedule_entry`
@@ -347,7 +304,8 @@ ALTER TABLE `schedule_entry`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_schentry_course` (`id_course`),
   ADD KEY `fk_schentry_trainer` (`id_trainer`),
-  ADD KEY `fk_schentry_room` (`id_training_room`);
+  ADD KEY `fk_schentry_room` (`id_training_room`),
+  ADD KEY `fk_schentry_icon` (`id_icon`);
 
 --
 -- Indexes for table `subscribtion`
@@ -379,7 +337,8 @@ ALTER TABLE `training_room`
 -- Indexes for table `unpaid_subscribtions`
 --
 ALTER TABLE `unpaid_subscribtions`
-  ADD PRIMARY KEY (`id_user`,`id_package`),
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_user_unpaid` (`id_user`),
   ADD KEY `fk_package_unpaid` (`id_package`);
 
 --
@@ -396,31 +355,43 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `course`
 --
 ALTER TABLE `course`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `feedback`
 --
 ALTER TABLE `feedback`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `feedback_trainer`
 --
 ALTER TABLE `feedback_trainer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `icons`
+--
+ALTER TABLE `icons`
+  MODIFY `id_icon` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `paid_subscribtions`
+--
+ALTER TABLE `paid_subscribtions`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `schedule_entry`
 --
 ALTER TABLE `schedule_entry`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
 --
 -- AUTO_INCREMENT for table `subscribtion_package`
 --
 ALTER TABLE `subscribtion_package`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `trainer`
@@ -433,6 +404,12 @@ ALTER TABLE `trainer`
 --
 ALTER TABLE `training_room`
   MODIFY `id_training_room` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `unpaid_subscribtions`
+--
+ALTER TABLE `unpaid_subscribtions`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `user`
@@ -469,15 +446,16 @@ ALTER TABLE `package_course`
 -- Constraints for table `paid_subscribtions`
 --
 ALTER TABLE `paid_subscribtions`
-  ADD CONSTRAINT `fk_course_c` FOREIGN KEY (`id_course`) REFERENCES `course` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_package_psub` FOREIGN KEY (`id_package`) REFERENCES `subscribtion_package` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_user` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_course_paid` FOREIGN KEY (`id_course`) REFERENCES `course` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_package_paid` FOREIGN KEY (`id_package`) REFERENCES `subscribtion_package` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_user_paid` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `schedule_entry`
 --
 ALTER TABLE `schedule_entry`
   ADD CONSTRAINT `fk_schentry_course` FOREIGN KEY (`id_course`) REFERENCES `course` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_schentry_icon` FOREIGN KEY (`id_icon`) REFERENCES `icons` (`id_icon`) ON DELETE SET NULL ON UPDATE SET NULL,
   ADD CONSTRAINT `fk_schentry_room` FOREIGN KEY (`id_training_room`) REFERENCES `training_room` (`id_training_room`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_schentry_trainer` FOREIGN KEY (`id_trainer`) REFERENCES `trainer` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
