@@ -3,13 +3,7 @@ import Rodal from 'rodal';
 import {SingletonService} from "../services/SingletonService";
 import 'rodal/lib/rodal.css';
 import '../template/css/style.css';
-import Dialog, {
-    DialogActions,
-    DialogContent,
-    DialogContentText,
-    DialogTitle,
-} from 'material-ui/Dialog';
-import Button from "react-bootstrap/es/Button";
+
 
 
 export class FeedbackCourseList extends React.Component {

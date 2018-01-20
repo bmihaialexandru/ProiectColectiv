@@ -3,16 +3,6 @@ import Rodal from 'rodal';
 import {SingletonService} from "../services/SingletonService";
 import 'rodal/lib/rodal.css';
 import '../template/css/style.css';
-import {
-    Table,
-    TableBody,
-    TableHeader,
-    td,
-    TableRow,
-    TableRowColumn,
-} from 'material-ui/Table';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-
 
 
 export class FeedbackTrainersList extends React.Component {

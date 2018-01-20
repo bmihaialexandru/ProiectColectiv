@@ -1,0 +1,23 @@
+user one-to-many unpaid_subscribtions
+user one-to-many feedback_trainer
+user many-to-many schedule_entry through subscribtion table
+user one-to-many feedback
+user one-to-many paid subscribtions
+
+trainer one-to-many feedback_trainer
+trainer one-to-many schedule_entry
+
+course one to many feedback
+course one to many schedule_entry
+course many-to-many to subscribtion_package through package_course table
+course one to many paid_subscribtions
+
+subscribtion_package many-to-many to course
+subscribtion_package one-to-many to paid_subscribtions
+subscribtion_package one-to-many to unpaid_subscribtions
+
+training_room one-to-many schedule_entry
+
+icons one-to-many schedule-entry
+
+schedule_entry many-to-many to user through subscribtion table

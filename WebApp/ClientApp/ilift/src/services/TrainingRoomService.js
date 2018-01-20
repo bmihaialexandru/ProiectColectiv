@@ -7,7 +7,6 @@ export class TrainingRoomService extends Component {
 
     constructor() {
         super();
-
         this.server = ServiceCredentials.SERVER_PATH;
     }
 
