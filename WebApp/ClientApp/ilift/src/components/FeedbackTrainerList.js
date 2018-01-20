@@ -3,6 +3,7 @@ import Rodal from 'rodal';
 import {SingletonService} from "../services/SingletonService";
 import 'rodal/lib/rodal.css';
 import '../template/css/style.css';
+import {NotificationManager} from "react-notifications";
 
 
 export class FeedbackTrainersList extends React.Component {
@@ -77,6 +78,9 @@ export class FeedbackTrainersList extends React.Component {
         SingletonService.FeedbackTrainerService.delete_feedback(this.state.currentFeedback.id).then((result) => {
             if(result == null) {
                 alert("Something went wrong.");
+            }
+            else{
+                NotificationManager.success("Delete successful!", "Success");
             }
             this.hide();
             this.update();

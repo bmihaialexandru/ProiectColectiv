@@ -6,6 +6,7 @@ import '../template/css/bootstrap.css';
 
 
 import {PackageCourse} from "../model/PackageCourse";
+import {NotificationManager} from "react-notifications";
 
 
 export class PackagesList extends React.Component {
@@ -70,6 +71,9 @@ export class PackagesList extends React.Component {
         SingletonService.PackageService.delete_package(this.state.currentPackage.id).then((result) => {
             if(result == null) {
                 alert("Something went wrong.");
+            }
+            else{
+                NotificationManager.success("Delete successful!", "Success");
             }
             this.hide();
             this.update();
@@ -318,6 +322,7 @@ class PackageTable extends React.Component {
             SingletonService.PackageService.add_new_package(courseName, description, pricing, days, courses2).then((result) => {
 
                 console.log(result);
+                NotificationManager.success("Add successful!", "Success");
                 this.props.update();
 
             });

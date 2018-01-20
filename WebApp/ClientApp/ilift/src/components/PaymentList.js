@@ -3,6 +3,7 @@ import Rodal from 'rodal';
 import {SingletonService} from "../services/SingletonService";
 import 'rodal/lib/rodal.css';
 import '../template/css/style.css';
+import {NotificationManager} from "react-notifications";
 
 
 export class PaymentList extends React.Component {
@@ -73,7 +74,10 @@ export class PaymentList extends React.Component {
         console.log(this.state.currentPayment);
         SingletonService.PackageService.make_payment(this.state.currentPayment.user_id,this.state.currentPayment.package_id,this.state.currentPayment.id).then((result) => {
             if(result == null) {
-                alert("Something went wrong.");
+                NotificationManager.error("Something went wrong.", "Error");
+            }
+            else{
+                NotificationManager.success("Delete successful!", "Success");
             }
             this.hide();
             this.update();

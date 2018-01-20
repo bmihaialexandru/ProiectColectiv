@@ -4,6 +4,7 @@ import {SingletonService} from "../services/SingletonService";
 import 'rodal/lib/rodal.css';
 import '../template/css/bootstrap.css';
 import '../template/css/custom-style.css';
+import {NotificationManager} from "react-notifications";
 
 export class CoursesList extends React.Component {
 
@@ -63,7 +64,11 @@ export class CoursesList extends React.Component {
 
         SingletonService.CourseService.delete_course(this.state.currentCourse.id).then((result) => {
             if(result == null) {
+
                 alert("Something went wrong.");
+            }
+            else{
+                NotificationManager.success("Delete successful!", "Success");
             }
             this.hide();
             this.update();
@@ -222,6 +227,7 @@ class CourseTable extends React.Component {
         SingletonService.CourseService.add_new_course(this.photo, courseName, description).then((result) => {
 
                 console.log(result);
+                NotificationManager.success("Add successful!", "Success");
                 this.props.update();
 
         });
@@ -292,6 +298,7 @@ class CourseRow extends React.Component {
                     if (result != null) {
 
                         console.log( result.image);
+                        NotificationManager.success("Update successful!", "Success");
                         this.setState({photoForShow: result.image});
                     }
                 });

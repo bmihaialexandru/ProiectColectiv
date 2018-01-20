@@ -12,6 +12,7 @@ import 'react-select/dist/react-select.css';
 import 'react-times/css/classic/default.css';
 import '../template/css/bootstrap.css';
 import {_reloadJs} from '../js/reloadJs';
+import {NotificationManager} from "react-notifications";
 
 
 export class ScheduleList extends React.Component {
@@ -235,6 +236,9 @@ export class ScheduleList extends React.Component {
             if (result == null) {
                 alert("Something went wrong.");
             }
+            else{
+                NotificationManager.success("Delete successful!", "Success");
+            }
             this.hide();
             this.loadDataForSpecificWeek();
         });
@@ -269,6 +273,7 @@ export class ScheduleList extends React.Component {
         console.log(this.state.currentSchedule);
         SingletonService.ScheduleService.add_schedule_entry(localStorage.getItem("token"), schedule.type, schedule.dateStart, schedule.dateEnd, schedule.hourStart, schedule.hourFinish, course_id, trainer_id, room_id, this.state.id_icon).then((result) => {
             console.log(result);
+            NotificationManager.success("Add successful!", "Success");
             this.loadData();
 
         });
@@ -454,11 +459,13 @@ export class ScheduleList extends React.Component {
                         </div>
                     </div>
                     <Rodal visible={this.state.visible} onClose={this.hide.bind(this)} animation={this.state.animation}>
-                        <div className="rodalheader">Delete schedule ?</div>
-                        <div className="rodalbody"><h4>Are you sure you want to delete this schedule ?</h4>
+                        <div><p> </p></div>
+                        <div className="rodalbody"><h4>This action is irreversible. <br/>Are you sure you want to delete this schedule ?</h4>
                         </div>
-                        <button className="rodal-confirm-btn" onClick={this.onOkClick.bind(this)}>ok</button>
-                        <button className="rodal-cancel-btn" onClick={this.hide.bind(this)}>close</button>
+                        <div style={{marginLeft:150, marginTop:70}}>
+                            <button className="btn btn-danger" onClick={this.onOkClick.bind(this)}>delete</button><t> </t>
+                        <button className="btn" onClick={this.hide.bind(this)}>cancel</button>
+                        </div>
                     </Rodal>
                 </div>
             );
@@ -570,6 +577,7 @@ class ScheduleRow extends React.Component {
             this.state.trainer_id, this.state.room_id).then((result) => {
             if (result != null) {
                 console.log("result!=null la update");
+                NotificationManager.success("Update successful!", "Success");
                 console.log(result);
                 this.props.onUpdate();
             }
