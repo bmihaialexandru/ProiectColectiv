@@ -155,7 +155,7 @@ class CourseTable extends React.Component {
                         <p style={{display: 'inline'}}> </p>
                         <br/>
                         <div className="file-input-wrapper ">
-                        <button className="btn btn-default">Upload File</button>
+                        <button className="btn btn-default">image</button>
                         <input type="file"  name="photo" id="photo" style={{}} placeholder="Photo" onChange={(e) => this.photo = e.target.files[0]} />
                         </div>
                             <p style={{display: 'inline'}}> </p>

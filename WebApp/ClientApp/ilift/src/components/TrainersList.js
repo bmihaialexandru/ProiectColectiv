@@ -149,7 +149,7 @@ class TrainerTable extends React.Component {
                         <p style={{display: 'inline'}}> </p>
                         <br/>
                         <div className="file-input-wrapper ">
-                            <button className="btn btn-default">Upload File</button>
+                            <button className="btn btn-default">image</button>
                             <input type="file"  name="photo" style={{width: 200}} id="photo" placeholder="Photo" onChange={(e) => this.photo = e.target.files[0]} />
                             <p style={{display: 'inline'}}> </p>
                         </div>

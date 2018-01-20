@@ -271,7 +271,7 @@ export class ScheduleList extends React.Component {
         }
         var schedule = this.state.currentSchedule;
         console.log(this.state.currentSchedule);
-        SingletonService.ScheduleService.TrainingRoomService.add_schedule_entry(localStorage.getItem("token"), schedule.type, schedule.dateStart, schedule.dateEnd, schedule.hourStart, schedule.hourFinish, course_id, trainer_id, room_id, this.state.id_icon).then((result) => {
+        SingletonService.ScheduleService.add_schedule_entry(localStorage.getItem("token"), schedule.type, schedule.dateStart, schedule.dateEnd, schedule.hourStart, schedule.hourFinish, course_id, trainer_id, room_id, this.state.id_icon).then((result) => {
             console.log(result);
             NotificationManager.success("Add successful!", "Success");
             this.loadData();
@@ -453,14 +453,14 @@ export class ScheduleList extends React.Component {
                                 </div>
                             </div>
                             <div>
-                                <button className="rodal-confirm-btn" onClick={this.handleAddEvent.bind(this)}>Add
+                                <button className="btn btn-success" onClick={this.handleAddEvent.bind(this)}>Add
                                 </button>
                             </div>
                         </div>
                     </div>
                     <Rodal visible={this.state.visible} onClose={this.hide.bind(this)} animation={this.state.animation}>
                         <div><p> </p></div>
-                        <div className="rodalbody"><h4>This action is irreversible. <br/>Are you sure you want to delete this schedule ?</h4>
+                        <div className="rodalbody"><h4>This action is irreversible. <br/>Are you sure you want to delete this schedule?</h4>
                         </div>
                         <div style={{marginLeft:150, marginTop:70}}>
                             <button className="btn btn-danger" onClick={this.onOkClick.bind(this)}>delete</button><t> </t>
