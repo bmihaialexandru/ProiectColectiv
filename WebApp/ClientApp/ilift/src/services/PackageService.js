@@ -91,7 +91,7 @@ export class PackageService extends Component {
     }
 
     get_paid_packages_for_me() {
-        SingletonService.UserService.get_current_user(localStorage.getItem("token")).then((result) => {
+        return SingletonService.UserService.get_current_user(localStorage.getItem("token")).then((result) => {
 
             let user_id = result.id;
             return fetch(this.server + "/interface/get_paid_packages_for_user.php", {
@@ -126,7 +126,7 @@ export class PackageService extends Component {
     }
 
     get_unpaid_packages_for_me() {
-        SingletonService.UserService.get_current_user(localStorage.getItem("token")).then((result) => {
+        return SingletonService.UserService.get_current_user(localStorage.getItem("token")).then((result) => {
 
             let user_id = result.id;
             return fetch(this.server + "/interface/get_unpaid_packages_for_user.php", {
@@ -189,7 +189,8 @@ export class PackageService extends Component {
              */
 
             return result["packages"].map((pack) => {
-                return new PaidPackage(pack["id"], pack["id_user"], pack["id_package"], pack["nr_courses"], pack["due_date"], pack["name"], pack["package_name"]);
+                return new PaidPackage(pack["id"], pack["id_user"], pack["id_package"], pack["nr_courses"],
+                pack["due_date"], pack["name"], pack["package_name"], pack["pricing"], pack["description"], pack["days"]);
             });
 
 

@@ -37,7 +37,7 @@ export class PaymentList extends React.Component {
                     }
                     for (let payment = 0; payment < result2.length; payment++) {
                         var newPayment = {id: result2[payment].id, userName: result[user].name,packageName: result2[payment].package_name,
-                            pricing:result2[payment].pricing, user_id: result2[payment].id_user, package_id: result2[payment].id_user};
+                            pricing:result2[payment].pricing, user_id: result2[payment].id_user, package_id: result2[payment].id_package};
                         allPayments.push(newPayment);
                     }
 

@@ -8,9 +8,10 @@ import {
 export class Header extends Component {
 
   render() {
+        const link = localStorage.username && localStorage.username === "admin" ? '/admin' : '/profile';
         const account = localStorage.username && 
         <li>
-            <Link to={'/profile'}>
+            <Link to={link}>
                 <Persona
                     primaryText={localStorage.username}
                     initialsColor={PersonaInitialsColor.red}

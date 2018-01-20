@@ -83,6 +83,7 @@ export class LoginPage extends Component {
           }
 
           localStorage.setItem("username", username);
+          localStorage.setItem("password", password);
           localStorage.setItem("token", result);
 
           window.location.replace("/");

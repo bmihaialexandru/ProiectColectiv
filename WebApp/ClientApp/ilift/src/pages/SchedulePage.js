@@ -37,7 +37,7 @@ export class SchedulePage extends Component {
         </div>
       </div>
     
-      <Schedule/>  
+      <Schedule title={"Class schedule"} isPersonalised={false}/>
 
       <Footer/>
              

@@ -54,18 +54,20 @@ else{
                 }
             }
 
+            if(!$should_decrement)
+            {
+                $message->answer = "Error";
+                $message->reason = "This course is not included in your paid packages. You should buy a package which includes this course.";
+                echo json_encode($message);
+                exit(0);
+            }
+
             $res=$ctrl->subctrl->add_subscribtion($user["id"], $sc_entry);
             if($res == 0)
             {
                 if($should_decrement) {
                     $ctrl->pctrl->decrement_subscribtion_for_user($package_id);
                     $message->answer = "Success";
-                    echo json_encode($message);
-                }
-                else
-                {
-                    $message->answer = "Error";
-                    $message->reason = "This course is not included in your paid packages. You should buy a package which includes this course.";
                     echo json_encode($message);
                 }
             }
