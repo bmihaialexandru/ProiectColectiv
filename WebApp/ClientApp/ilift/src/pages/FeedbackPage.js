@@ -8,6 +8,7 @@ import {_reloadJs} from '../js/reloadJs';
 import {Redirect} from 'react-router-dom';
 import {FeedbackCard} from '../components/FeedbackCard';
 import {SingletonService} from "../services/SingletonService";
+import {NotificationManager} from "react-notifications";
 import $ from 'jquery';
 
 export class FeedbackPage extends Component {
@@ -181,7 +182,7 @@ export class FeedbackPage extends Component {
         if(this.props.location.state.entityType.localeCompare("course") === 0) {
             SingletonService.FeedbackCourseService.add_new_feedback(stars, message, e_id).then((result) => {
                 if (result !== null) {
-                    alert("Feedback added succesfully!");
+                    NotificationManager.success("Feedback added succesfully!", "Success");
                     window.location.replace("/courses")
                 }
             })
@@ -189,7 +190,7 @@ export class FeedbackPage extends Component {
         else if(this.props.location.state.entityType.localeCompare("trainer") === 0) {
             SingletonService.FeedbackTrainerService.add_new_feedback(stars, message, e_id).then((result) => {
                 if (result !== null) {
-                    alert("Feedback added succesfully!");
+                    NotificationManager.success("Feedback added succesfully!", "Success");
                     window.location.replace("/trainers")
                 }
             })

@@ -356,7 +356,7 @@ export class ScheduleList extends React.Component {
 
 
     render() {
-        if(this.state.isLoaded===3) {
+        if(this.state.isLoaded >= 3) {
             return (
                 <div>
                     <div>
@@ -499,19 +499,19 @@ class ScheduleTable extends React.Component {
 
         return (
             <div className="row">
-                <div className="row"></div>
-                <div className="col-xs-12" id="container" ref="container">
+                <div className="col-xs-12" >
+                    <br/>
                     <table className="table table-bordered">
                         <tbody style={bodystyle}>
                         <tr>
-                            <td>Scheduled Course Name</td>
-                            <td>Scheduled Trainer Name</td>
+                            <td> Course Name</td>
+                            <td> Trainer Name</td>
                             <td>Day</td>
                             <td>Start time</td>
                             <td>End time</td>
-                            <td>Scheduled Room Name</td>
-                            <td>Delete</td>
-                            <td>Save</td>
+                            <td>Room Name</td>
+                            <td> </td>
+
                         </tr>
                         {schedule}
                         </tbody>
@@ -635,26 +635,26 @@ class ScheduleRow extends React.Component {
 
     render() {
         return (
-            <tr className="eachRow">
-                <SelectableCell options={this.props.courses} onChangeValue={this.onChangeData.bind(this)}
+            <tr className="eachRow" >
+                <SelectableCell style={{width:180}} className="form-control" options={this.props.courses} onChangeValue={this.onChangeData.bind(this)}
                                 onUpdate={this.props.onUpdate} cellData={{
                     value: this.props.schedule.course,
                     id: this.props.schedule.id,
                     nameTag: 'course'
                 }}/>
-                <SelectableCell options={this.props.trainers} onChangeValue={this.onChangeData.bind(this)}
+                <SelectableCell style={{width:180}}  className="form-control" options={this.props.trainers} onChangeValue={this.onChangeData.bind(this)}
                                 onUpdate={this.props.onUpdate}
                                 cellData={{
                                     value: this.props.schedule.trainer,
                                     id: this.props.schedule.id,
                                     nameTag: 'trainer'
                                 }}/>
-                <td>
-                    <DateCell onDateUpdate={this.props.onDateUpdate} onChangeValue={this.onChangeData.bind(this)}
+                <td >
+                    <DateCell  className="form-control" onDateUpdate={this.props.onDateUpdate} onChangeValue={this.onChangeData.bind(this)}
                               cellData={{value: this.props.schedule.day, id: this.props.schedule.id,nameTag:'date'}}/>
                 </td>
-                <td>
-                    <TimeCell onTrainerTableUpdate={this.props.onTrainerTableUpdate}
+                <td style={{width:100}} >
+                    <TimeCell  onTrainerTableUpdate={this.props.onTrainerTableUpdate}
                               onChangeTime={this.onChangeTime.bind(this)}
                               cellData={{
                                   value: this.props.schedule.hourStart,
@@ -662,7 +662,7 @@ class ScheduleRow extends React.Component {
                                   nameTag: 'startHour'
                               }}/>
                 </td>
-                <td>
+                <td style={{width:100}} >
                     <TimeCell onTrainerTableUpdate={this.props.onTrainerTableUpdate}
                               onChangeTime={this.onChangeTime.bind(this)}
                               cellData={{
@@ -671,19 +671,20 @@ class ScheduleRow extends React.Component {
                                   nameTag: 'endHour'
                               }}/>
                 </td>
-                <SelectableCell options={this.props.rooms} onChangeValue={this.onChangeData.bind(this)}
+                <SelectableCell style={{width:200}}  options={this.props.rooms} onChangeValue={this.onChangeData.bind(this)}
                                 onUpdate={this.props.onUpdate} cellData={{
                     value: this.props.schedule.room,
                     id: this.props.schedule.id,
                     nameTag: 'room'
                 }}/>
                 <td className="del-cell">
+                    <input type="button" onClick={this.onUpdateEvent.bind(this)} value="save"
+                           className="btn btn-success btn-sm" style={{marginRight:5}}/>
+
                     <input type="button" className="btn btn-danger btn-sm" onClick={this.onDelEvent.bind(this)}
                            value="X"/>
-                </td>
-                <td className="del-cell">
-                    <input type="button" onClick={this.onUpdateEvent.bind(this)} value="OK"
-                           className="btn btn-success btn-sm"/>
+
+
                 </td>
             </tr>
         );
@@ -734,7 +735,6 @@ class TimeCell extends React.Component {
                 initTime={this.state.time}
                 ref="TimeInputWrapper"
                 className='form-control'
-                mountFocus='true'
                 onTimeChange={this.onTimeChangeHandler.bind(this)}
             />
         );
@@ -769,7 +769,7 @@ class DateCell extends React.Component {
         const {selectedDay} = this.state;
         return (
 
-            <DayPickerInput onDayChange={this.handleDayChange}
+            <DayPickerInput  onDayChange={this.handleDayChange}
                             placeholder={`${formatDate(this.state.selectedDay, 'YYYY-MM-DD')}`}/>
 
         );
@@ -813,6 +813,7 @@ class SelectableCell extends React.Component {
         this.state = {
             index: index,
             option: this.props.cellData.value,
+            style: this.props.style
 
         };
 
@@ -820,7 +821,7 @@ class SelectableCell extends React.Component {
 
     render() {
         return (
-            <td>
+            <td  style={this.state.style}>
                 <Dropdown options={this.props.options} onChangeValue={this.props.onChangeValue}
                           selectedOption={this.state.option} onUpdate={this.props.onUpdate}
                           nameTag={this.props.cellData.nameTag}/>

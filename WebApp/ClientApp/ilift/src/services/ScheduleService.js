@@ -3,6 +3,8 @@ import {ServiceCredentials} from './ServiceCredentials';
 import {ScheduleEntry} from "../model/ScheduleEntry";
 import {Icon} from "../model/Icon"
 
+import {NotificationManager} from "react-notifications";
+
 export class ScheduleService extends Component {
 
 
@@ -120,7 +122,7 @@ export class ScheduleService extends Component {
         try {
             if(result["answer"].localeCompare("Success") !== 0)
             {
-                alert(result["reason"]);
+                NotificationManager.error(result["reason"], "Error");
                 return null;
             }
             let arr = result["icons"].map((icon) => new Icon(icon['id_icon'], ServiceCredentials.SERVER_PATH + icon['path_to_icon']));
@@ -138,7 +140,7 @@ export class ScheduleService extends Component {
         try {
             if(result["answer"].localeCompare("Success") !== 0)
             {
-                alert(result["reason"]);
+                NotificationManager.error(result["reason"], "Error");
                 return null;
             }
             let arr = [];
@@ -172,12 +174,12 @@ export class ScheduleService extends Component {
         try {
             if(result["answer"].localeCompare("Success") !== 0 && result["answer"].localeCompare("Warning") !== 0)
             {
-                alert(result["reason"]);
+                NotificationManager.error(result["reason"], "Error");
                 return null;
             }
             if(result["answer"].localeCompare("Warning") === 0)
             {
-                alert(result["reason"]);
+                NotificationManager.error(result["reason"], "Error");
             }
 
             return "Success";

@@ -4,6 +4,7 @@ import {
     Persona,
     PersonaInitialsColor,
   } from 'office-ui-fabric-react/lib/Persona';
+import {NotificationContainer} from 'react-notifications';
 
 export class Header extends Component {
 
@@ -25,6 +26,7 @@ export class Header extends Component {
 
         return (
         <div id="fh5co-header">
+            <NotificationContainer/>
         <header id="fh5co-header-section">
         <div className="container">
             <div className="nav-header">

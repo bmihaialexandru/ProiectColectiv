@@ -3,7 +3,10 @@ import Rodal from 'rodal';
 import {SingletonService} from "../services/SingletonService";
 import 'rodal/lib/rodal.css';
 import '../template/css/bootstrap.css';
-import Modal from 'react-bootstrap-modal'
+import Modal from 'react-bootstrap-modal';
+import {NotificationContainer, NotificationManager} from 'react-notifications';
+import "react-notifications/lib/notifications.css";
+
 
 export class UsersList extends React.Component {
 
@@ -85,7 +88,6 @@ export class UsersList extends React.Component {
     render() {
         return (
             <div>
-
                 <Rodal visible={this.state.visible}
                        onClose={this.hide.bind(this)}
                        animation={this.state.animation}>
@@ -102,6 +104,8 @@ export class UsersList extends React.Component {
                 <SearchBar filterText={this.state.filterText} onUserInput={this.handleUserInput.bind(this)} onButtonPressed={this.reRender.bind(this)}/>
                 <br />
                 <UserTable update={this.update.bind(this)} isButtonPressed={this.state.isAddButtonClicked} onRowDel={this.handleRowDel.bind(this)} users={this.state.users} filterText={this.state.filterText}/>
+
+
             </div>
         );
 
@@ -168,7 +172,7 @@ class UserTable extends React.Component {
                     <br/>
                 </div>
 
-                
+
             );
         }
     }
@@ -237,7 +241,7 @@ class UserTable extends React.Component {
         SingletonService.UserService.register(token, username, password, phone, email).then((result) => {
             console.log(result);
             if(result != null) {
-                alert("Register successful!");
+                NotificationManager.success("Register successful!", "Success");
                 this.props.update();
 
             }
@@ -311,14 +315,15 @@ class UserRow extends React.Component {
         }
 
         if (this.state.changePass === true && this.state.password === '') {
-            alert("Password can not be empty!");
+
+            NotificationManager.error("Password cannot be empty", "Error");
         }
         else {
             SingletonService.UserService.edit_user(this.props.user.id, this.state.name, this.state.phone, this.state.email, pass).then((result) => {
                 if (result != null) {
                     console.log(result);
                     this.props.update();
-                    alert("User changed.")
+                    NotificationManager.success("User modified successfully", "Success");
                 }
             });
         }

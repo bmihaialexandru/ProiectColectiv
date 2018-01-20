@@ -6,6 +6,8 @@ import {UnpaidPackage} from "../model/UnpaidPackage";
 import {PackageCourse} from "../model/PackageCourse";
 import {SingletonService} from "./SingletonService";
 
+import {NotificationManager} from "react-notifications";
+
 export class PackageService extends Component {
 
 
@@ -180,7 +182,7 @@ export class PackageService extends Component {
         try {
             if(result["answer"].localeCompare("Success") !== 0)
             {
-                alert(result["reason"]);
+                NotificationManager.error(result["reason"], "Error");
                 return null;
             }
 
@@ -204,7 +206,7 @@ export class PackageService extends Component {
         try {
             if(result["answer"].localeCompare("Success") !== 0)
             {
-                alert(result["reason"]);
+                NotificationManager.error(result["reason"], "Error");
                 return null;
             }
 
@@ -229,7 +231,7 @@ export class PackageService extends Component {
         try {
             if(result["answer"].localeCompare("Success") !== 0)
             {
-                alert(result["reason"]);
+                NotificationManager.error(result["reason"], "Error");
                 return null;
             }
 
@@ -264,12 +266,12 @@ export class PackageService extends Component {
         try {
             if(result["answer"].localeCompare("Success") !== 0 && result["answer"].localeCompare("Warning") !== 0)
             {
-                alert(result["reason"]);
+                NotificationManager.error(result["reason"], "Error");
                 return null;
             }
             if(result["answer"].localeCompare("Warning") === 0)
             {
-                alert(result["reason"]);
+                NotificationManager.error(result["reason"], "Error");
             }
 
             return "Success";
