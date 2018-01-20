@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {FooterAdmin} from '../components/FooterAdmin';
 import {HeaderAdmin} from '../components/HeaderAdmin';
-
+import {RoomsList} from '../components/RoomsList';
 
 export class AdminHome extends Component {
    componentWillReceiveProps(nextProps){
@@ -32,15 +32,12 @@ export class AdminHome extends Component {
 
         <div id="fh5co-team-section">
         <div className="container">
-          <div>Punem toate inputurile pt admin</div>
           <div className="row about">
-            <div className="col-md-12 col-md-offset-0 animate-box">
-              <p>Info pt admin etc.. </p>
+            <div className="col-md-12 animate-box">
+              <RoomsList/>
             </div>
+
           </div>
-
-          
-
         </div>
       </div>
 

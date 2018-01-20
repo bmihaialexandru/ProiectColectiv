@@ -63,14 +63,15 @@ else{
                     break;
                 }
             }
-            if($index == -1)
+            /*if($index == -1)
             {
                 $message->answer = "Error";
                 $message->reason = "Updating a non-existend schedule entry";
                 echo json_encode($message);
             }
-            else {
-                array_splice($entries, $index, 1);
+            else {*/
+                if($index != -1)
+                        array_splice($entries, $index, 1);
                 foreach ($entries as $entry) {
                     if (($id_trainer == $entry['id_trainer'] or $id_training_room == $entry['id_training_room']) and
                         (($entry['hour_start'] <= $hour_start and $entry['hour_finish'] > $hour_start)
@@ -90,7 +91,7 @@ else{
                     $message->answer = "Success";
                     echo json_encode($message);
                 }
-            }
+            //}
         }
         else
         {

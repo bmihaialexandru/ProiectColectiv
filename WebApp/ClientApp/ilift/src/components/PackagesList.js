@@ -15,8 +15,6 @@ export class PackagesList extends React.Component {
         super(props);
         this.state = {packages: []};
         this.state.filterText = "";
-
-
         this.state.visible= false;
         this.state.currentPackage={id:0,name:'',description:'', pricing: 0, days: 0, courses: []};
         this.state.isAddButtonClicked = false;
@@ -35,9 +33,6 @@ export class PackagesList extends React.Component {
             let list = [];
 
             for (var packag = 0; packag < result.length; packag++){
-
-
-
                 let newPackage = {id: result[packag].id, name : result[packag].package_name, description: result[packag].description,
                     pricing: result[packag].pricing, days: result[packag].days, courses: result[packag].courses};
                 list.push(newPackage);
