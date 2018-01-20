@@ -55,7 +55,7 @@ class PackageDAO
     }
 
     public function get_unpaid_packages($user_id) {
-        $sql = "SELECT unpaid_subscribtions.*, subscribtion_package.package_name, subscribtion_package.pricing, subscribtion_package.days FROM unpaid_subscribtions INNER JOIN subscribtion_package ON unpaid_subscribtions.id_package = subscribtion_package.id WHERE id_user = ?";
+        $sql = "SELECT unpaid_subscribtions.*, subscribtion_package.package_name, subscribtion_package.pricing, subscribtion_package.days, subscribtion_package.description FROM unpaid_subscribtions INNER JOIN subscribtion_package ON unpaid_subscribtions.id_package = subscribtion_package.id WHERE id_user = ?";
         $stmt = $this->db->prepare($sql);
         $stmt->execute([$user_id]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -68,7 +68,7 @@ class PackageDAO
     }
 
     public function get_paid_packages($user_id) {
-        $sql = "SELECT paid_subscribtions.*, course.name, subscribtion_package.package_name FROM paid_subscribtions INNER JOIN subscribtion_package on paid_subscribtions.id_package = subscribtion_package.id INNER JOIN course on paid_subscribtions.id_course = course.id WHERE id_user = ? ";
+        $sql = "SELECT paid_subscribtions.*, course.name, subscribtion_package.package_name, subscribtion_package.pricing, subscribtion_package.description FROM paid_subscribtions INNER JOIN subscribtion_package on paid_subscribtions.id_package = subscribtion_package.id INNER JOIN course on paid_subscribtions.id_course = course.id WHERE id_user = ? ";
         $stmt = $this->db->prepare($sql);
         $stmt->execute([$user_id]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);

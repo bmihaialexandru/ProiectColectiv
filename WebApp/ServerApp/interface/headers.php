@@ -6,6 +6,6 @@
  * Time: 7:36 PM
  */
 
-header("Access-Control-Allow-Origin: http://localhost:3000", false);
+//header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: Content-Type");
 ?>

@@ -5,6 +5,11 @@ export class HeaderAdmin extends Component {
 
 
   render() {
+        const logoutButton = localStorage.username && 
+        <li onClick={() => localStorage.clear()} id="sign-out-btn">
+            <Link to={'/'} id="sign-out-link">Sign out</Link>
+        </li>;
+
         return (
 
         <div id="fh5co-header">
@@ -31,6 +36,7 @@ export class HeaderAdmin extends Component {
                         <li><Link to={'/managefeedback'}>Feedback</Link></li>
                         <li><Link to={'/managepackage'}>Packages</Link></li>
                         <li><Link to={'/managepayments'}>Payments</Link></li>
+                        {logoutButton}
                     </ul>
                 </nav>
             </div>

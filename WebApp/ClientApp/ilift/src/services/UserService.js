@@ -128,6 +128,21 @@ export class UserService extends Component {
         });
     }
 
+    change_password(oldPassword, newPassword){
+        return fetch(this.server + "/interface/change_password.php", {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: "username="+localStorage.getItem("username")+"&old_password="+oldPassword+"&new_password="+newPassword+"&token="+localStorage.getItem("token")
+        }).then(result=> {
+            return result.json();
+        }).then(result => {
+            return UserService._get_token_from_result(result)
+        });
+    }
+
     static _get_token_from_result(result) {
         try {
             if(result["answer"].localeCompare("Success") !== 0)
