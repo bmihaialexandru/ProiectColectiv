@@ -54,6 +54,9 @@ export class ScheduleService extends Component {
         })
     }
 
+
+
+
     delete_schedule_entry(token, id_entry) {
         return fetch(this.server + "/interface/delete_schedule_entry.php", {
             method: 'POST',
@@ -86,8 +89,9 @@ export class ScheduleService extends Component {
                 'Accept': 'application/json',
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: "token="+token+"&id="+id+"&day="+day+"&hour_start="+hour_start+"&hour_finish="+hour_finish+"&id_course="+id_course+"&id_trainer="+id_trainer+"&id_training_room="+id_training_room
+            body: "token="+localStorage.getItem("token")+"&id="+id+"&day="+day+"&hour_start="+hour_start+"&hour_finish="+hour_finish+"&id_course="+id_course+"&id_trainer="+id_trainer+"&id_training_room="+id_training_room
         }).then(result => {
+            console.log("data to update",id,day,hour_start,hour_finish,id_course,id_trainer,id_training_room);
             return result.json();
         }).then(result => {
             return ScheduleService._get_result_simple(result);

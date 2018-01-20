@@ -89,12 +89,14 @@ export class PaymentList extends React.Component {
 
                 <Rodal visible={this.state.visible}
                        onClose={this.hide.bind(this)}
-                       animation={this.state.animation}>
-                    <div className="rodalheader">.</div>
-                    <div className="rodalbody"><h4>{this.state.currentPayment.userName} paid for {this.state.currentPayment.packageName}.</h4>
+                       animation={this.state.animation}
+                        >
+                    <div><p> </p></div>
+                    <div className="rodalbody" style={{display: 'center'}}>
+                        <h4>{this.state.currentPayment.userName} paid for package {this.state.currentPayment.packageName}.</h4>
                     </div>
-                    <button className="btn " onClick={this.deleteAccepted.bind(this)}>ok</button> <t>   </t>
-                    <button className="btn " onClick={this.hide.bind(this)}>close</button>
+                    <button className="btn btn-success" onClick={this.deleteAccepted.bind(this)}>ok</button> <t>   </t>
+                    <button className="btn " onClick={this.hide.bind(this)}>cancel</button>
                 </Rodal>
                 <SearchBar filterText={this.state.filterText} onUserInput={this.handleUserInput.bind(this)}/>
                 <PaymentTable  update={this.update.bind(this)} onRowDel={this.handleRowDel.bind(this)} payments={this.state.payments} filterText={this.state.filterText}/>

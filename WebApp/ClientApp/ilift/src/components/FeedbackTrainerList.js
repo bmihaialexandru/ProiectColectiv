@@ -3,16 +3,6 @@ import Rodal from 'rodal';
 import {SingletonService} from "../services/SingletonService";
 import 'rodal/lib/rodal.css';
 import '../template/css/style.css';
-import {
-    Table,
-    TableBody,
-    TableHeader,
-    td,
-    TableRow,
-    TableRowColumn,
-} from 'material-ui/Table';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-
 
 
 export class FeedbackTrainersList extends React.Component {
@@ -102,12 +92,16 @@ export class FeedbackTrainersList extends React.Component {
 
                 <Rodal visible={this.state.visible}
                        onClose={this.hide.bind(this)}
-                       animation={this.state.animation}>
-                    <div className="rodalheader">Delete feedback</div>
-                    <div className="rodalbody"><h4>Are you sure you want to delete this feedback? </h4>
+                       animation={this.state.animation}
+                        style={{zIndex:1000}}>
+                    <div><p> </p></div>
+                    <div className="rodalbody" style={{display: 'center'}}>
+                        <h4>This action is irreversible. <br/>Are you sure you want to delete this feedback? </h4>
                     </div>
-                    <button className="btn " onClick={this.deleteAccepted.bind(this)}>ok</button> <t>   </t>
-                    <button className="btn " onClick={this.hide.bind(this)}>close</button>
+                    <div style={{marginLeft:150, marginTop:70}}>
+                    <button className="btn btn-danger" onClick={this.deleteAccepted.bind(this)}>delete</button> <t>   </t>
+                    <button className="btn " onClick={this.hide.bind(this)}>cancel</button>
+                    </div>
                 </Rodal>
                 <SearchBar filterText={this.state.filterText} onUserInput={this.handleUserInput.bind(this)}/>
                 <FeedbackTable  update={this.update.bind(this)} onRowDel={this.handleRowDel.bind(this)} feedbacks={this.state.feedbacks} filterText={this.state.filterText}/>
@@ -155,7 +149,7 @@ class FeedbackTable extends React.Component {
         return (
             <div className="row">
                 <div className="col-xs-12" id="container" ref="container" >
-                    <table className="table ">
+                    <table className="table " style={{zIndex:-100}}>
                         <thead>
 
                         </thead>
@@ -212,7 +206,7 @@ class FeedbackRow extends React.Component {
                     {this.props.feedback.message}
                 </td >
                 <td style={{textAlign:'center'}}>
-                    <input type="button" style={{alignSelf:'center'}} onClick={this.onDelEvent.bind(this)} value="X" className="btn btn-danger btn-xs"/>
+                    <input type="button"onClick={this.onDelEvent.bind(this)} value="X" className="btn btn-danger btn-xs"/>
                 </td>
             </tr>
 

@@ -3,7 +3,7 @@ import Rodal from 'rodal';
 import {SingletonService} from "../services/SingletonService";
 import 'rodal/lib/rodal.css';
 import '../template/css/bootstrap.css';
-
+import Modal from 'react-bootstrap-modal'
 
 export class UsersList extends React.Component {
 
@@ -89,11 +89,14 @@ export class UsersList extends React.Component {
                 <Rodal visible={this.state.visible}
                        onClose={this.hide.bind(this)}
                        animation={this.state.animation}>
-                    <div className="rodalheader">Delete user</div>
-                    <div className="rodalbody"><h4>Are you sure you want to delete  {this.state.currentUser.name} ? </h4>
+                    <div><p> </p></div>
+                    <div className="rodalbody" style={{display: 'center'}}>
+                        <h4>This action is irreversible. <br/> Are you sure you want to delete {this.state.currentUser.name}? </h4>
                     </div>
-                    <button className="btn " onClick={this.deleteAccepted.bind(this)}>ok</button> <t>   </t>
-                    <button className="btn " onClick={this.hide.bind(this)}>close</button>
+                    <div style={{marginLeft:150, marginTop:70}}>
+                    <button className="btn btn-danger" onClick={this.deleteAccepted.bind(this)}>delete</button> <t>   </t>
+                    <button className="btn " onClick={this.hide.bind(this)}>cancel</button>
+                    </div>
                 </Rodal>
 
                 <SearchBar filterText={this.state.filterText} onUserInput={this.handleUserInput.bind(this)} onButtonPressed={this.reRender.bind(this)}/>
@@ -164,6 +167,8 @@ class UserTable extends React.Component {
                     </div>
                     <br/>
                 </div>
+
+                
             );
         }
     }
@@ -288,8 +293,9 @@ class UserRow extends React.Component {
                 </td>
 
                 <td className="del-cell" style={{align:'center', paddingTop:15}}>
-                    <input type="button" style={{alignSelf:'center'}} onClick={this.onDelEvent.bind(this)} value="X" className="btn btn-danger btn-sm"/><t> </t>
-                    <input type="button" onClick={this.updateRow.bind(this)} value="Save" className="btn btn-success btn-sm"/>
+                    <input type="button" onClick={this.updateRow.bind(this)} value="Save" className="btn btn-success btn-sm"/><t> </t>
+                    <input type="button" style={{alignSelf:'center'}} onClick={this.onDelEvent.bind(this)} value="X" className="btn btn-danger btn-sm"/>
+
                 </td>
             </tr>
         );
