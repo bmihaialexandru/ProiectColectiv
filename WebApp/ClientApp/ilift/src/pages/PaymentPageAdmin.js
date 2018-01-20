@@ -30,9 +30,13 @@ export class PaymentPageAdmin extends Component {
                     <div id="fh5co-team-section">
                         <div className="container">
                             <div className="row about">
-                                <div className="col-md-12 col-md-offset-0 animate-box">
+                                <div className="col-md-4 col-md-offset-0 animate-box">
+
+                                </div>
+                                <div className="col-md-6 col-md-offset-0 animate-box">
                                     <PaymentList/>
                                 </div>
+
 
                             </div>
 
