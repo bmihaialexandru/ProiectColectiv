@@ -40,6 +40,7 @@ class App extends Component {
             <Route exact path='/manageusers' component={UsersPageAdmin}/>
             <Route exact path='/managefeedback' component={FeedbackPageAdmin}/>
             <Route exact path='/profile' component={ProfilePage} />
+            <Route exact path='/feedback' component={FeedbackPage} />
             <Route exact path='/managepackage' component={PackagePageAdmin} />
              <Route exact path='/managepayments' component={PaymentPageAdmin} />
              <Route exact path={'/testing'} component={RunAllTests}/>
