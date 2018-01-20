@@ -267,12 +267,12 @@ export class ScheduleList extends React.Component {
         }
         var schedule = this.state.currentSchedule;
         console.log(this.state.currentSchedule);
-        SingletonService.ScheduleService.add_schedule_entry(localStorage.getItem("token"), schedule.type, schedule.dateStart, schedule.dateEnd, schedule.hourStart, schedule.hourFinish, course_id, trainer_id, room_id, this.state.id_icon).then((result) => {
+        SingletonService.ScheduleService.TrainingRoomService.add_schedule_entry(localStorage.getItem("token"), schedule.type, schedule.dateStart, schedule.dateEnd, schedule.hourStart, schedule.hourFinish, course_id, trainer_id, room_id, this.state.id_icon).then((result) => {
             console.log(result);
             this.loadData();
 
         });
-        this.render();
+        //this.render();
 
 
     }
@@ -732,9 +732,7 @@ class TimeCell extends React.Component {
         return (
             <TimeInput
                 initTime={this.state.time}
-                ref="TimeInputWrapper"
                 className='form-control'
-                mountFocus='true'
                 onTimeChange={this.onTimeChangeHandler.bind(this)}
             />
         );

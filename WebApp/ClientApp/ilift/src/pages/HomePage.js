@@ -49,7 +49,6 @@ export class HomePage extends Component {
       <Schedule/>
       
       <div className="fh5co-parallax back-3" data-stellar-background-ratio="0.5">
-        <div className="overlay"></div>
         <div className="container">
           <div className="row">
             <div className="col-md-8 col-md-offset-2 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0 text-center fh5co-table">
