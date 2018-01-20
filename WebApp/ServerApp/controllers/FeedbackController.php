@@ -44,4 +44,9 @@ class FeedbackController
         }
         return $this->feedbackDb->GetFeedbacksForCourse($id);
     }
+	
+	  public function get_all_courses_feedback()
+    {
+        return $this->feedbackDb->GetAllFeedbacks();
+    }
 }

@@ -8,7 +8,7 @@ export class HeaderAdmin extends Component {
         return (
         <div id="fh5co-header">
         <header id="fh5co-header-section">
-        <div className="container">
+        <div className="container" >
             <div className="nav-header">
                 <h1 id="fh5co-logo"><Link to={'/'}><div className="header-logo-ilift"></div></Link></h1>
                 
@@ -25,7 +25,9 @@ export class HeaderAdmin extends Component {
                         </li>
                         <li><Link to={'/manageschedules'}>Schedule</Link></li>
                         <li><Link to={'/manageusers'}>Users</Link></li>
-                        <li><Link to={'/managesubscpritions'}>Subscriptions</Link></li>
+                        <li><Link to={'/managefeedback'}>Feedback</Link></li>
+                        <li><Link to={'/managepackage'}>Packages</Link></li>
+                        <li><Link to={'/managepayments'}>Payments</Link></li>
                     </ul>
                 </nav>
             </div>

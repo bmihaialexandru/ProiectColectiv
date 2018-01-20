@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {ServiceCredentials} from './ServiceCredentials';
 import {ScheduleEntry} from "../model/ScheduleEntry";
+import {Icon} from "../model/Icon"
 
 export class ScheduleService extends Component {
 
@@ -26,7 +27,7 @@ export class ScheduleService extends Component {
         });
     }
 
-    add_schedule_entry(token, type, start_day, end_day, hour_start, hour_finish, id_course, id_trainer, id_training_room) {
+    add_schedule_entry(token, type, start_day, end_day, hour_start, hour_finish, id_course, id_trainer, id_training_room, id_icon) {
         /*
         $type=$_POST['type'];
         $start_day=$_POST['start_day'];
@@ -44,16 +45,17 @@ export class ScheduleService extends Component {
                 'Accept': 'application/json',
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: "token="+localStorage.getItem("token")+"&type="+type+"&start_day="+start_day+"&end_day="+end_day+"&hour_start="+hour_start+"&hour_finish="+hour_finish+"&id_course="+id_course+"&id_trainer="+id_trainer
-            +"&id_training_room="+id_training_room
+            body: "token="+token+"&type="+type+"&start_day="+start_day+"&end_day="+end_day+"&hour_start="+hour_start+"&hour_finish="+hour_finish+"&id_course="+id_course+"&id_trainer="+id_trainer+"&id_icon="+id_icon+"&id_training_room="+id_training_room
+
         }).then(result => {
-            console.log('yas',result);
             return result.json();
         }).then(result => {
-            console.log('got here');
             return ScheduleService._get_result_simple(result);
         })
     }
+
+
+
 
     delete_schedule_entry(token, id_entry) {
         return fetch(this.server + "/interface/delete_schedule_entry.php", {
@@ -97,6 +99,38 @@ export class ScheduleService extends Component {
 
     }
 
+    get_icons() {
+        return fetch(this.server + "/interface/get_icons.php", {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: ""
+        }).then(result => {
+            return result.json();
+        }).then(result => {
+            return ScheduleService._get_icons_for_result(result);
+        })
+    }
+
+    static _get_icons_for_result(result) {
+        console.log("ICONS:" + JSON.stringify(result))
+        try {
+            if(result["answer"].localeCompare("Success") !== 0)
+            {
+                alert(result["reason"]);
+                return null;
+            }
+            let arr = result["icons"].map((icon) => new Icon(icon['id_icon'], ServiceCredentials.SERVER_PATH + icon['path_to_icon']));
+            return arr;
+
+        } catch(error) {
+            alert("Critical error: "+ error + ", please try again later");
+            return null;
+        }
+    }
+
 
     static _get_schedule_for_result(result) {
 
@@ -119,7 +153,8 @@ export class ScheduleService extends Component {
                     sched["id_training_room"],
                     sched["course_name"],
                     sched["trainer_name"],
-                    sched["room_name"]
+                    sched["room_name"],
+                    this.server + sched["path_to_icon"]
                 ));
                 arr.push(dict);
             }

@@ -20,7 +20,7 @@ export class SubscriptionTypes extends Component {
 					<div className="col-md-3 animate-box">
 						<div className="price-box animate-box">
 							<h2 className="pricing-plan">Starter</h2>
-							<div className="price"><sup className="currency">$</sup>9<small>/month</small></div>
+							<div className="price"><sup className="currency">RON</sup>50<small>/month</small></div>
 							<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia</p>
 							<ul className="classes">
 								<li>15 Cardio Classes</li>
@@ -38,7 +38,7 @@ export class SubscriptionTypes extends Component {
 					<div className="col-md-3 animate-box">
 						<div className="price-box animate-box">
 							<h2 className="pricing-plan">Basic</h2>
-							<div className="price"><sup className="currency">$</sup>27<small>/month</small></div>
+							<div className="price"><sup className="currency">RON</sup>80<small>/month</small></div>
 							<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia</p>
 							<ul className="classes">
 								<li>15 Cardio Classes</li>
@@ -56,7 +56,7 @@ export class SubscriptionTypes extends Component {
 					<div className="col-md-3 animate-box">
 						<div className="price-box animate-box popular">
 							<h2 className="pricing-plan pricing-plan-offer">Pro <span>Best Offer</span></h2>
-							<div className="price"><sup className="currency">$</sup>74<small>/month</small></div>
+							<div className="price"><sup className="currency">RON</sup>110<small>/month</small></div>
 							<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia</p>
 							<ul className="classes">
 								<li>15 Cardio Classes</li>
@@ -74,7 +74,7 @@ export class SubscriptionTypes extends Component {
 					<div className="col-md-3 animate-box">
 						<div className="price-box animate-box">
 							<h2 className="pricing-plan">Unlimited</h2>
-							<div className="price"><sup className="currency">$</sup>140<small>/month</small></div>
+							<div className="price"><sup className="currency">RON</sup>150<small>/month</small></div>
 							<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia</p>
 							<ul className="classes">
 								<li>15 Cardio Classes</li>

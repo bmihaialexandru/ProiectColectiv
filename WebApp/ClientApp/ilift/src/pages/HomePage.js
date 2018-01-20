@@ -7,17 +7,23 @@ import {News} from '../components/News';
 import {Footer} from '../components/Footer';
 import { Link } from 'react-router-dom';
 
+import $ from 'jquery';
 import {_reloadJs} from '../js/reloadJs';
 
 export class HomePage extends Component {
 
-  componentWillReceiveProps(nextProps){
-    window.location.reload();
+  componentWillMount(){
+    $('html,body').scrollTop(0);
   }
 
   render() {
     _reloadJs();
-    console.log("session token: " + localStorage.getItem("token"));
+    
+    const signInBtn = !localStorage.username && 
+    <span>
+      <Link to={'/login'}><button className="btn btn-primary">Sign in!</button></Link>
+    </span>;
+
     return (
       <div id="fh5co-wrapper">
         <div id="fh5co-page">
@@ -32,7 +38,7 @@ export class HomePage extends Component {
                 <div className="row" >
                   <div className="col-md-7" style={{paddingTop: "20px"}}>
                     <h2 style={{fontSize: '50px'}}>Fitness &amp; Health <br/>is a <b>Mentality</b></h2>
-                    <span><Link to={'/login'}><button className="btn btn-primary">Sign in!</button></Link></span>
+                    {signInBtn}
                   </div>
                 </div>
               </div>
@@ -68,7 +74,7 @@ export class HomePage extends Component {
                 <div className="animate-box">
                   <h1>Fitness Classes this winter</h1>
                   <p>So you'll be proud this summer!</p>
-                  <a href="#" className="btn btn-primary">Subscribe to a class!</a>
+                  <Link to={'/schedule'} className="btn btn-primary">Subscribe to a class!</Link>
                 </div>
               </div>
             </div>

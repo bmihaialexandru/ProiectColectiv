@@ -101,7 +101,7 @@ export class TrainerService extends Component {
                 'Accept': 'application/json',
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: "token="+localStorage.getItem("token")
+            body: ''
         }).then(result => {
             return result.json();
         }).then(result => {

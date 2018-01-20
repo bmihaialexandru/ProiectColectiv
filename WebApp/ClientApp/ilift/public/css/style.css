@@ -69,16 +69,18 @@ figure {
 }
 
 #fh5co-header {
-  position: relative;
-  margin-bottom: 0;
-  z-index: 9999999;
-}
+   position: relative;
+   margin-bottom: 0;
+   z-index: 9999999;
+ }
 
 .fh5co-cover,
 .fh5co-hero {
   position: relative;
   height: 800px;
 }
+
+
 @media screen and (max-width: 768px) {
   .fh5co-cover,
   .fh5co-hero {
@@ -302,6 +304,15 @@ figure {
   z-index: 2;
 }
 
+#fh5co-header-section-admin {
+  padding: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 100px;
+  width: 100%;
+  z-index: 2;
+}
 .nav-header {
   margin-top: 40px;
   position: relative;
@@ -854,6 +865,11 @@ figure {
 #fh5co-contact input[type="text"] {
   height: 50px;
 }
+
+#fh5co-contact input[type="password"] {
+  height: 50px !important;
+}
+
 #fh5co-contact .form-group {
   margin-bottom: 30px;
 }

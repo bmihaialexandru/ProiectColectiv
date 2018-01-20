@@ -51,8 +51,7 @@ export class Classes extends Component {
 
     render() {
         return (
-          <div id="fh5co-programs-section">
-            <div className="container">
+            <div className="container animate-box">
                 {this.state.list.map( x => 
                         <ClassCard
                             id = {x.id}
@@ -63,7 +62,6 @@ export class Classes extends Component {
                         />
                 )}
             </div>
-        </div>
         );
     };
 }

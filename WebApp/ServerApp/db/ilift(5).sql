@@ -40,8 +40,12 @@ CREATE TABLE `course` (
 --
 
 INSERT INTO `course` (`id`, `name`, `description`, `url_photo`) VALUES
-(2, 'muie steaua', 'am venit aicisa sa predam strigate de galerie augh augh augh hei hei hei forta steaua', '../uploads/phpE817.png'),
-(3, 'sadqrq dasf asf ', 'afasf e qf afasf ', '');
+(2, 'Swimming program', 'Lorem ipsum', '../uploads/fit-swimming.svg'),
+(3, 'Boxing fitness ', 'Lorem ipsum ', '../uploads/fit-boxing.svg'),
+(4, 'Cycling program', 'Lorem ipsum', '../uploads/fit-cycling.svg'),
+(5, 'Massage', 'Lorem ipsum', '../uploads/fit-massage.svg'),
+(6, 'Body training', 'Lorem ipsum', '../uploads/fit-dumbell.svg'),
+(7, 'Yoga program', 'Lorem ipsum', '../uploads/fit-yoga.svg');
 
 -- --------------------------------------------------------
 
@@ -62,15 +66,15 @@ CREATE TABLE `feedback` (
 --
 
 INSERT INTO `feedback` (`id`, `stars`, `message`, `user_id`, `course_id`) VALUES
-(1, 4, 'ii rau rau', 1, 2),
-(3, 5, '[object HTMLTextAreaElement]', 1, 2),
+(1, 4, 'Refershing! Felt amazing!', 5, 2),
+(3, 5, 'Loved it.', 6, 2),
 (4, 3, 'ii ok cred', 1, 2),
-(5, 5, 'lol cemi plake', 1, 2),
+(5, 5, 'Great investment', 3, 5),
 (6, 3, 'ii fainut', 1, 2),
-(7, 5, 'super super', 1, 2),
-(8, 4, 'asdasdasd', 1, 2),
-(9, 2, 'asfasfaf', 1, 2),
-(10, 4, 'salut', 1, 2);
+(7, 4, 'I would try it again some other time.', 5, 8),
+(8, 4, 'super', 4, 7),
+(9, 5, 'Difficult but worth it i guess.', 5, 7),
+(10, 4, "That's my son!", 4, 2);
 
 -- --------------------------------------------------------
 
@@ -91,9 +95,10 @@ CREATE TABLE `feedback_trainer` (
 --
 
 INSERT INTO `feedback_trainer` (`id`, `stars`, `message`, `id_user`, `id_trainer`) VALUES
-(1, 4, 'imi plake', 1, 2),
-(2, 1, 'ii cretin la kap', 1, 2),
-(3, 2, 'pute urat', 1, 2);
+(1, 4, 'profesionist', 5, 8),
+(2, 4, "He's ok", 4, 2),
+(3, 5, "She's great", 6, 1),
+(4, 5, 'Yes yes excellent', 4, 6);
 
 -- --------------------------------------------------------
 
@@ -274,8 +279,14 @@ CREATE TABLE `trainer` (
 --
 
 INSERT INTO `trainer` (`id`, `name`, `url_photo`, `description`) VALUES
-(1, 'Gica Ionica', '../uploads/php7571png', ''),
-(2, 'banel', '../uploads/phpB0A3.png', 'nicolita');
+(1, 'Bica Denisa', '../uploads/trainer-2.jpg', 'Boxing fitness'),
+(2, 'Badila Mihai', '../uploads/trainer-1.jpg', 'Body training'),
+(3, 'Codrin Stimbei', '../uploads/trainer-3.jpg', 'Massage, Cycling instructor')
+(4, 'Sabina Alexa', '../uploads/trainer-5.jpg', 'Pilates instrutor'),
+(5, 'Bocioc Titus', '../uploads/trainer-6.jpg', 'Cross-fit instructor'),
+(6, 'Carausu Catrinel', '../uploads/trainer-4.jpg', 'TRX, Zumba intructor'),
+(7, 'Bodea Nicolae', '../uploads/trainer-7.jpg', 'Strongman instructor'),
+(8, 'Baciu Cristian', '../uploads/trainer-8.jpg', 'Swimming, Yoga insturctor');
 
 -- --------------------------------------------------------
 

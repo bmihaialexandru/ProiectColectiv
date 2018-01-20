@@ -10,11 +10,11 @@ import 'rodal/lib/rodal.css';
 import 'react-day-picker/lib/style.css';
 import 'react-select/dist/react-select.css';
 import 'react-times/css/classic/default.css';
+import '../template/css/bootstrap.css';
 import {_reloadJs} from '../js/reloadJs';
 
 
 export class ScheduleList extends React.Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -26,7 +26,8 @@ export class ScheduleList extends React.Component {
                 course: '',
                 trainer: '',
                 room: '',
-                type: 'weekly'
+                type: 'weekly',
+                id_icon: 0,
             },
             scheduleToUpdate: {day: '', hourStart: '', hourEnd: '', course: '', trainer: '', room: '', id: 0},
             type: [{value: 'weekly', label: 'weekly'}, {value: 'monthly', label: 'monthly'}, {
@@ -36,29 +37,52 @@ export class ScheduleList extends React.Component {
             courses: [],
             trainers: [],
             rooms: [],
-            icons:[],
+            icons: [],
             schedules: [],
             visible: false,
             scheduleToDelete: 0,
-            icon_id: 0,
+            id_icon: 0,
             icon_path: "",
             selected_week: "",
             weeks: []
         };
         this.loadData();
     }
-
-
     loadData() {
-        let currentDate = new Date();
+        /*let currentDate = new Date();
         let year = currentDate.getFullYear();
         let month = currentDate.getMonth() + 1;
         let day = currentDate.getDate();
-        let today = year + '-' + month + '-' + day;
+        let today = year + '-' + month + '-' + day;*/
+        this.load_dem_weeks();
         this.loadRooms();
+        this.loadIcons();
         this.loadCourses();
         this.loadTrainers();
-        this.loadDataForSpecificWeek(today);
+        this.loadDataForSpecificWeek();
+    }
+
+    loadIcons() {
+
+        SingletonService.ScheduleService.get_icons().then((result) => {
+            if (result === null) {
+                return;
+            }
+            let list = [];
+            console.log(result);
+            for (let i = 0; i < result.length; i++) {
+                let newIcon = {value: result[i].id_icon, label: result[i].path_to_icon};
+                list.push(newIcon);
+            }
+            this.state.icons = list;
+            this.setState({icons: this.state.icons});
+            if (list.length > 0) {
+                this.state.id_icon = list[0].id_icon;
+                this.state.icon_path = list[0].path_to_icon;
+                this.setState({id_icon: this.state.icon_id});
+                this.setState({icon_path: this.state.path_to_icon});
+            }
+        });
     }
 
     loadRooms() {
@@ -107,26 +131,18 @@ export class ScheduleList extends React.Component {
         });
     }
 
-    loadDataForSpecificWeek(week) {
-        SingletonService.ScheduleService.get_schedule_for_week(week).then((result) => {
-            if (result === null) {
-                return;
-            }
-            var days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+    loadDataForSpecificWeek() {
+        SingletonService.ScheduleService.get_schedule_for_week(this.state.selected_week).then((result) => {
+            if(result === null)
+            {return;}
+            var days=['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
             var list = [];
-            for (var index = 0; index < result.length; index++) {
-                var day = days[index];
-                var newschedules = result[index][day];
-                for (var i = 0; i < newschedules.length; i++) {
-                    list.push({
-                        id: newschedules[i].id,
-                        day: newschedules[i].day,
-                        hourStart: this.parseTime(newschedules[i].hour_start),
-                        hourEnd: this.parseTime(newschedules[i].hour_finish),
-                        course: newschedules[i].course_name,
-                        trainer: newschedules[i].trainer_name,
-                        room: newschedules[i].room_name
-                    });
+            for (var index = 0; index < result.length; index++){
+                var day=days[index];
+                var newschedules=result[index][day];
+                for(var i=0;i<newschedules.length;i++)
+                {
+                    list.push({id:newschedules[i].id,day:newschedules[i].day,hourStart:this.parseTime(newschedules[i].hour_start),hourEnd:this.parseTime(newschedules[i].hour_finish),course:newschedules[i].course_name,trainer:newschedules[i].trainer_name,room:newschedules[i].room_name});
                     this.parseTime(newschedules[i].hour_start);
                 }
             }
@@ -135,14 +151,56 @@ export class ScheduleList extends React.Component {
         });
     }
 
+    load_dem_weeks() {
+        Date.prototype.addDays = function (days) {
+            var date = new Date(this.valueOf());
+            date.setDate(date.getDate() + days);
+            return date;
+        };
+
+        let today = new Date();
+        let dd = today.getDate();
+        let mm = today.getMonth() + 1; //January is 0!
+        let yyyy = today.getFullYear();
+
+        if (dd < 10) {
+            dd = '0' + dd
+        }
+
+        if (mm < 10) {
+            mm = '0' + mm
+        }
+
+        let wkdy = yyyy + '-' + mm + '-' + dd;
+        this.state.selected_week = wkdy;
+        this.setState({selected_week: this.state.selected_week});
+
+        let dateArray = [];
+        let currentDate = today;
+        // 10 weeks will do...
+        while (currentDate <= today.addDays(10 * 7)) {
+            let dd = currentDate.getDate();
+            let mm = currentDate.getMonth() + 1;
+            let yyyy = today.getFullYear();
+            let wkdy = yyyy + '-' + mm + '-' + dd;
+            dateArray.push(wkdy);
+            currentDate = currentDate.addDays(7);
+        }
+        this.state.weeks = dateArray;
+        this.setState({weeks: this.state.weeks});
+    }
+
+
+
+
     parseTime(time) {
         var res = time.split(':');
         return res[0] + ':' + res[1];
     }
 
+
     show(schedule) {
         this.setState({visible: true, scheduleToDelete: schedule.id});
-
     }
 
     hide() {
@@ -159,43 +217,51 @@ export class ScheduleList extends React.Component {
                 alert("Something went wrong.");
             }
             this.hide();
-            this.loadData();
+            this.loadDataForSpecificWeek();
         });
         _reloadJs();
     }
 
     handleAddEvent() {
-        var course_id = 0;
-        var trainer_id = 0;
-        var room_id = 0;
-        for (var i = 0; i < this.state.trainers.length; i++) {
-            if (this.state.currentSchedule.trainer == this.state.trainers[i].label) {
-                trainer_id = this.state.trainers[i].value;
+        var course_id=0;
+        var trainer_id=0;
+        var room_id=0;
+        for(var i=0;i<this.state.trainers.length;i++)
+        {
+            if(this.state.currentSchedule.trainer==this.state.trainers[i].label)
+            {
+                trainer_id=this.state.trainers[i].value;
                 break;
             }
-        }
-        for (var i = 0; i < this.state.courses.length; i++) {
-            if (this.state.currentSchedule.course == this.state.courses[i].label) {
-                course_id = this.state.courses[i].value;
-                break;
-            }
-        }
-        for (var i = 0; i < this.state.rooms.length; i++) {
-            if (this.state.currentSchedule.room == this.state.rooms[i].label) {
-                room_id = this.state.rooms[i].value;
-                break;
-            }
-        }
-        console.log("room :", room_id, "course", course_id, "trainer", trainer_id);
-        console.log("trying to add a new schedule");
-        var schedule = this.state.currentSchedule;
-        SingletonService.ScheduleService.add_schedule_entry(localStorage.getItem("token"), schedule.type, schedule.dateStart, schedule.dateEnd, schedule.hourStart, schedule.hourFinish, course_id, trainer_id, room_id).then((result) => {
-            console.log("added", result);
-            this.loadData();
-        });
 
-        //_reloadJs();
+        }
+        for(var i=0;i<this.state.courses.length;i++)
+        {
+            if(this.state.currentSchedule.course==this.state.courses[i].label)
+            {
+                course_id=this.state.courses[i].value;
+                break;
+            }
+        }
+        console.log("ROOM: " +this.state.currentSchedule.room);
+        for(var i=0;i<this.state.rooms.length;i++)
+        {
+            if(this.state.currentSchedule.room==this.state.rooms[i].label)
+            {
+                room_id=this.state.rooms[i].value;
+                break;
+            }
+        }
+        var schedule=this.state.currentSchedule;
+        console.log(this.state.currentSchedule);
+        SingletonService.ScheduleService.add_schedule_entry(localStorage.getItem("token"),schedule.type,schedule.dateStart,schedule.dateEnd,schedule.hourStart,schedule.hourFinish,course_id,trainer_id,room_id, this.state.id_icon).then((result) => {
+            console.log(result);
+            this.loadData();
+
+        });
         this.render();
+
+
 
     }
 
@@ -207,17 +273,6 @@ export class ScheduleList extends React.Component {
             this.state.currentSchedule[name] = '';
         }
         this.setState({currentSchedule: this.state.currentSchedule});
-    }
-
-    handleScheduleTable(name, value) {
-        if (value != null) {
-            this.state.scheduleToUpdate[name] = value.label;
-        }
-        else {
-            this.state.scheduleToUpdate[name] = '';
-        }
-        this.setState({scheduleToUpdate: this.state.scheduleToUpdate});
-
     }
 
     handleStartDateUpdate(day, id, name) {
@@ -247,10 +302,57 @@ export class ScheduleList extends React.Component {
         this.state.currentSchedule[nameTag] = time + ':00';
         this.setState({currentSchedule: this.state.currentSchedule});
     }
+    /*o varianta mai ciudata
+    handleScheduleTable(name, value) {
+        if (value != null) {
+            this.state.scheduleToUpdate[name] = value.label;
+        }*/
+
+    handleScheduleTable(name,value) {
+        if(value!=null)
+        {
+            this.state.scheduleToUpdate[name]=value.label;
+        }
+        else
+        {
+            this.state.scheduleToUpdate[name]='';
+        }
+        this.setState({scheduleToUpdate:this.state.scheduleToUpdate});
+
+    }
+
+
+    updateIcon(name, value)
+    {
+        if (value === null) {
+            return;
+        }
+        for (let i = 0; i < this.state.icons.length; i++) {
+            if (this.state.icons[i].label.localeCompare(value.label) === 0) {
+                this.state.id_icon = this.state.icons[i].value;
+                this.setState({id_icon: this.state.id_icon});
+                this.state.icon_path = this.state.icons[i].label;
+                this.setState({icon_path: this.state.icon_path});
+            }
+        }
+
+    }
+
+    updateCurrentWeek(name, value)
+    {
+        this.state.selected_week = value.label;
+        this.setState({selected_week: this.state.selected_week});
+        this.loadDataForSpecificWeek();
+    }
+
+
 
     render() {
         return (
             <div>
+                <div>
+                    <Dropdown options={this.state.weeks.map((x) => {return {value: x, label: x} })} onChangeValue={() => {}} selectedOption={this.state.selected_week} onUpdate={this.updateCurrentWeek.bind(this)} nameTag = {'week'}/>
+                </div>
                 <div>
                     <ScheduleTable types={this.state.type} schedules={this.state.schedules} courses={this.state.courses}
                                    trainers={this.state.trainers} rooms={this.state.rooms}
@@ -308,18 +410,13 @@ export class ScheduleList extends React.Component {
                     </div>
                     <div>
                         <div className="row">
-                            <div className="col-xs-1">Room</div>
-                            <div className="col-xs-2"><Dropdown onChangeValue={() => {
-                            }} options={this.state.rooms} selectedOption={''}
-                                                                onUpdate={this.updateValue.bind(this)}
-                                                                nameTag={'room'}/></div>
-                            <div className="col-xs-1">Type</div>
-                            <div className="col-xs-2"><Dropdown options={this.state.type}
-                                                                selectedOption={this.state.type[0].label}
-                                                                onUpdate={this.updateValue.bind(this)}
-                                                                nameTag={'type'}
-                                                                onChangeValue={() => {
-                                                                }}/></div>
+                            <div className="col-xs-1">Room </div>
+                            <div className="col-xs-2"><Dropdown options={this.state.rooms} selectedOption={''} onChangeValue={() => {}} onUpdate={this.updateValue.bind(this)} nameTag={'room'}/></div>
+                            <div className="col-xs-1">Type </div>
+                            <div className="col-xs-2"><Dropdown options={this.state.type} selectedOption={this.state.type[0].label} onChangeValue={() => {}} onUpdate={this.updateValue.bind(this)} nameTag={'type'}/></div>
+                            <div className="col-xs-1">Icon</div>
+                            <div className="col-xs-2"><Dropdown options={this.state.icons} selectedOption={this.state.icon_path} onChangeValue={() => {}} onUpdate={this.updateIcon.bind(this)} nameTag={'icon'}/></div>
+                            <div className="col-xs-2"><img src={this.state.icon_path} width={100} height={100}/></div>
                         </div>
                         <div>
                             <button className="rodal-confirm-btn" onClick={this.handleAddEvent.bind(this)}>Add</button>
@@ -351,8 +448,7 @@ class ScheduleTable extends React.Component {
         var rooms = this.props.rooms;
         var bodystyle = {
             height: 350,
-            overflow: 'scroll',
-            display: 'block'
+            display: 'relative'
         };
 
         var schedule = this.props.schedules.map(function (schedule) {
@@ -516,10 +612,10 @@ class ScheduleRow extends React.Component {
                     nameTag: 'room'
                 }}/>
                 <td className="del-cell">
-                    <input type="button" onClick={this.onDelEvent.bind(this)} value="X" className="del-btn"/>
+                    <input type="button" className="btn btn-danger btn-sm" onClick={this.onDelEvent.bind(this)} value="X" />
                 </td>
                 <td className="del-cell">
-                    <input type="button" onClick={this.onUpdateEvent.bind(this)} value="OK" className="del-btn"/>
+                    <input type="button" onClick={this.onUpdateEvent.bind(this)} value="OK" className="btn btn-success btn-sm"/>
                 </td>
             </tr>
         );

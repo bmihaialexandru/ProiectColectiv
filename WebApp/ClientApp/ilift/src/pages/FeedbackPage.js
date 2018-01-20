@@ -3,13 +3,12 @@ import {Header} from '../components/Header';
 import {Schedule} from '../components/Schedule';
 import {Footer} from '../components/Footer';
 import {Classes} from '../components/Classes';
-import {session} from '../Session/Session';
 import StarRatingComponent from 'react-star-rating-component';
 import {_reloadJs} from '../js/reloadJs';
 import {Redirect} from 'react-router-dom';
-import $ from 'jquery';
 import {FeedbackCard} from '../components/FeedbackCard';
 import {SingletonService} from "../services/SingletonService";
+import $ from 'jquery';
 
 export class FeedbackPage extends Component {
 
@@ -47,8 +46,8 @@ export class FeedbackPage extends Component {
               */
             ]
         };
-        let e_id = this.props.location.state.id;
-        console.log("Entity is: "+ this.props.location.state.entityType);
+
+        const e_id = this.props.location.state.id;
         if(this.props.location.state.entityType.localeCompare("course") === 0)
         {
             SingletonService.FeedbackCourseService.get_all_feedbacks(e_id).then((result) => {
@@ -71,11 +70,12 @@ export class FeedbackPage extends Component {
 
   render() {
       _reloadJs();
-      console.log(this.props.location.entityName);
+      
       if(!this.props.location.state){
           return <Redirect to="/"/>
       }
 
+      const text = this.state.list.length === 0 ? "No previous feedback" : "Previous feedback:";
 
     const description = this.props.location.state.entityDescription ? 
       <div>
@@ -110,7 +110,7 @@ export class FeedbackPage extends Component {
       <br/>
       {description}
       <br/>
-      <div className="col-md-11 col-md-offset-2 animate-box" style={{fontSize: "24px"}}>Previous feedbacks:</div>
+      <div className="col-md-11 col-md-offset-2 animate-box" style={{fontSize: "24px"}}>{text}</div>
       <div className="row text-center animate-box">
          <div className="col-md-8 col-md-offset-2 schedule-container">
           {this.state.list.map( x => 

@@ -15,13 +15,13 @@ export class ScheduleCard extends Component {
     }
 	render() {
         const image = this.props.image;
-        const button = this.state.isSubscribed ? 
-        <button className="btn btn-default" onClick={this._unSubscribeToClass}>
-            <img style={{marginBottom: "0"}} src={require("./images/accept_icon.svg.png")}/>{"Subscribed"}
-        </button> :
-        <button className="btn btn-default" onClick={this._subscribeToClass}>
-            {"Subscribe"}
-        </button>;
+        const button = localStorage.username ? this.state.isSubscribed ? 
+            <button className="btn btn-default" onClick={this._unSubscribeToClass}>
+                <img style={{marginBottom: "0"}} src={require("./images/accept_icon.svg.png")}/>{"Subscribed"}
+            </button> :
+            <button className="btn btn-default" onClick={this._subscribeToClass}>
+                {"Subscribe"}
+            </button> : <div/>;
 
         return (
             <div className="col-md-3 col-sm-6">

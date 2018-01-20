@@ -21,7 +21,7 @@ export class Footer extends Component {
 						<div className="col-md-4 animate-box">
 							<h3 className="section-title">Our Address</h3>
 							<ul className="contact-info">
-								<li><i className="icon-map-marker"></i>198 West 21th Street, Suite 721 New York NY 10016</li>
+								<li><i className="icon-map-marker"></i>Teodor Mihali 58-60, Cluj-Napoca 400591</li>
 								<li><i className="icon-phone"></i>+ 1235 2355 98</li>
 								<li><i className="icon-envelope"></i><a href="#">info@oursite.com</a></li>
 								<li><i className="icon-globe2"></i><a href="#">www.oursite.com</a></li>
@@ -43,7 +43,7 @@ export class Footer extends Component {
 									<textarea className="form-control" id="message" rows="7" placeholder="Message"></textarea>
 								</div>
 								<div className="form-group">
-									<input type="submit" id="btn-submit" className="btn btn-send-message btn-md" value="Send Message"/>
+									<a href="#" className="btn btn-primary">Send Message</a>
 								</div>
 							</form>
 						</div>
