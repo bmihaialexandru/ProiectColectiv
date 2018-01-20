@@ -44,26 +44,23 @@ export class ScheduleList extends React.Component {
             id_icon: 0,
             icon_path: "",
             selected_week: "",
-            weeks: []
+            weeks: [],
+            isLoaded:0,
         };
         this.loadData();
     }
+
     loadData() {
-        /*let currentDate = new Date();
-        let year = currentDate.getFullYear();
-        let month = currentDate.getMonth() + 1;
-        let day = currentDate.getDate();
-        let today = year + '-' + month + '-' + day;*/
         this.load_dem_weeks();
         this.loadRooms();
         this.loadIcons();
         this.loadCourses();
         this.loadTrainers();
         this.loadDataForSpecificWeek();
+
     }
 
     loadIcons() {
-
         SingletonService.ScheduleService.get_icons().then((result) => {
             if (result === null) {
                 return;
@@ -97,6 +94,7 @@ export class ScheduleList extends React.Component {
             }
             this.state.rooms = list;
             this.setState(this.state.rooms);
+            this.setState({isLoaded:this.state.isLoaded+1});
         });
     }
 
@@ -112,7 +110,7 @@ export class ScheduleList extends React.Component {
             }
             this.state.trainers = list;
             this.setState(this.state.trainers);
-
+            this.setState({isLoaded:this.state.isLoaded+1});
         });
     }
 
@@ -128,27 +126,50 @@ export class ScheduleList extends React.Component {
             }
             this.state.courses = list;
             this.setState(this.state.courses);
+            this.setState({isLoaded:this.state.isLoaded+1});
         });
     }
 
     loadDataForSpecificWeek() {
         SingletonService.ScheduleService.get_schedule_for_week(this.state.selected_week).then((result) => {
-            if(result === null)
-            {return;}
-            var days=['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
+            if (result === null) {
+                return;
+            }
+            var days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
             var list = [];
-            for (var index = 0; index < result.length; index++){
-                var day=days[index];
-                var newschedules=result[index][day];
-                for(var i=0;i<newschedules.length;i++)
-                {
-                    list.push({id:newschedules[i].id,day:newschedules[i].day,hourStart:this.parseTime(newschedules[i].hour_start),hourEnd:this.parseTime(newschedules[i].hour_finish),course:newschedules[i].course_name,trainer:newschedules[i].trainer_name,room:newschedules[i].room_name});
+            for (var index = 0; index < result.length; index++) {
+                var day = days[index];
+                var newschedules = result[index][day];
+                for (var i = 0; i < newschedules.length; i++) {
+                    let tr_id=this.getTrainerId(newschedules[i].trainer_name);
+                    list.push({
+                        id: newschedules[i].id,
+                        day: newschedules[i].day,
+                        hourStart: this.parseTime(newschedules[i].hour_start),
+                        hourEnd: this.parseTime(newschedules[i].hour_finish),
+                        course: newschedules[i].course_name,
+                        trainer: newschedules[i].trainer_name,
+                        trainer_id:tr_id,
+                        room: newschedules[i].room_name
+                    });
                     this.parseTime(newschedules[i].hour_start);
                 }
             }
             this.state.schedules = list;
             this.setState(this.state.schedules);
         });
+    }
+
+    getTrainerId(trainer_name)
+    {
+        for(let i=0;i<this.state.trainers.length;i++)
+        {
+            if(this.state.trainers[i].label===trainer_name)
+            {
+                return this.state.trainers[i].value;
+            }
+        }
+        return 0;
     }
 
     load_dem_weeks() {
@@ -191,8 +212,6 @@ export class ScheduleList extends React.Component {
     }
 
 
-
-
     parseTime(time) {
         var res = time.split(':');
         return res[0] + ':' + res[1];
@@ -223,44 +242,37 @@ export class ScheduleList extends React.Component {
     }
 
     handleAddEvent() {
-        var course_id=0;
-        var trainer_id=0;
-        var room_id=0;
-        for(var i=0;i<this.state.trainers.length;i++)
-        {
-            if(this.state.currentSchedule.trainer==this.state.trainers[i].label)
-            {
-                trainer_id=this.state.trainers[i].value;
+        var course_id = 0;
+        var trainer_id = 0;
+        var room_id = 0;
+        for (var i = 0; i < this.state.trainers.length; i++) {
+            if (this.state.currentSchedule.trainer == this.state.trainers[i].label) {
+                trainer_id = this.state.trainers[i].value;
                 break;
             }
 
         }
-        for(var i=0;i<this.state.courses.length;i++)
-        {
-            if(this.state.currentSchedule.course==this.state.courses[i].label)
-            {
-                course_id=this.state.courses[i].value;
+        for (var i = 0; i < this.state.courses.length; i++) {
+            if (this.state.currentSchedule.course == this.state.courses[i].label) {
+                course_id = this.state.courses[i].value;
                 break;
             }
         }
 
-        for(var i=0;i<this.state.rooms.length;i++)
-        {
-            if(this.state.currentSchedule.room==this.state.rooms[i].label)
-            {
-                room_id=this.state.rooms[i].value;
+        for (var i = 0; i < this.state.rooms.length; i++) {
+            if (this.state.currentSchedule.room == this.state.rooms[i].label) {
+                room_id = this.state.rooms[i].value;
                 break;
             }
         }
-        var schedule=this.state.currentSchedule;
+        var schedule = this.state.currentSchedule;
         console.log(this.state.currentSchedule);
-        SingletonService.ScheduleService.add_schedule_entry(localStorage.getItem("token"),schedule.type,schedule.dateStart,schedule.dateEnd,schedule.hourStart,schedule.hourFinish,course_id,trainer_id,room_id, this.state.id_icon).then((result) => {
+        SingletonService.ScheduleService.add_schedule_entry(localStorage.getItem("token"), schedule.type, schedule.dateStart, schedule.dateEnd, schedule.hourStart, schedule.hourFinish, course_id, trainer_id, room_id, this.state.id_icon).then((result) => {
             console.log(result);
             this.loadData();
 
         });
         this.render();
-
 
 
     }
@@ -302,28 +314,26 @@ export class ScheduleList extends React.Component {
         this.state.currentSchedule[nameTag] = time + ':00';
         this.setState({currentSchedule: this.state.currentSchedule});
     }
+
     /*o varianta mai ciudata
     handleScheduleTable(name, value) {
         if (value != null) {
             this.state.scheduleToUpdate[name] = value.label;
         }*/
 
-    handleScheduleTable(name,value) {
-        if(value!=null)
-        {
-            this.state.scheduleToUpdate[name]=value.label;
+    handleScheduleTable(name, value) {
+        if (value != null) {
+            this.state.scheduleToUpdate[name] = value.label;
         }
-        else
-        {
-            this.state.scheduleToUpdate[name]='';
+        else {
+            this.state.scheduleToUpdate[name] = '';
         }
-        this.setState({scheduleToUpdate:this.state.scheduleToUpdate});
+        this.setState({scheduleToUpdate: this.state.scheduleToUpdate});
 
     }
 
 
-    updateIcon(name, value)
-    {
+    updateIcon(name, value) {
         if (value === null) {
             return;
         }
@@ -338,106 +348,136 @@ export class ScheduleList extends React.Component {
 
     }
 
-    updateCurrentWeek(name, value)
-    {
+    updateCurrentWeek(name, value) {
         this.state.selected_week = value.label;
         this.setState({selected_week: this.state.selected_week});
         this.loadDataForSpecificWeek();
     }
 
 
-
     render() {
-        return (
-            <div>
+        if(this.state.isLoaded===3) {
+            return (
                 <div>
-                    <Dropdown options={this.state.weeks.map((x) => {return {value: x, label: x} })} onChangeValue={() => {}} selectedOption={this.state.selected_week} onUpdate={this.updateCurrentWeek.bind(this)} nameTag = {'week'}/>
-                </div>
-                <div>
-                    <ScheduleTable types={this.state.type} schedules={this.state.schedules} courses={this.state.courses}
-                                   trainers={this.state.trainers} rooms={this.state.rooms}
-                                   onScheduleTableUpdate={this.handleScheduleTable.bind(this)}
-                                   onBeginDateUpdate={this.handleStartDateUpdate.bind(this)}
-                                   onRowAdd={this.handleAddEvent.bind(this)} onRowDel={this.handleRowDel.bind(this)}/>
-                </div>
-                <div>
-                    <div className="row">
-                        <div className="col-md-1"></div>
-                        <div className="col-md-5"><h3>Schedule a new course below :</h3></div>
+                    <div>
+                        <Dropdown options={this.state.weeks.map((x) => {
+                            return {value: x, label: x}
+                        })} onChangeValue={() => {
+                        }} selectedOption={this.state.selected_week} onUpdate={this.updateCurrentWeek.bind(this)}
+                                  nameTag={'week'}/>
                     </div>
-                </div>
-                <div>
-                    <div className="row">
-                        <div className="col-xs-1"></div>
-                        <div className="col-xs-2">Choose start date</div>
-                        <div className="col-xs-1"></div>
-                        <div className="col-xs-2">Choose end date</div>
-                        <div className="col-xs-1"></div>
-                        <div className="col-xs-2">Choose start time</div>
-                        <div className="col-xs-1"></div>
-                        <div className="col-xs-2">Choose end time</div>
+                    <div>
+                        <ScheduleTable types={this.state.type} schedules={this.state.schedules}
+                                       courses={this.state.courses}
+                                       trainers={this.state.trainers} rooms={this.state.rooms}
+                                       onScheduleTableUpdate={this.handleScheduleTable.bind(this)}
+                                       onBeginDateUpdate={this.handleStartDateUpdate.bind(this)}
+                                       onRowAdd={this.handleAddEvent.bind(this)}
+                                       onRowDel={this.handleRowDel.bind(this)}/>
                     </div>
-
-                    <div className="row">
-                        <div className="col-xs-1">From date :</div>
-                        <div className="col-xs-2">
-                            <DateInput nameTag={'dateStart'} onUpdate={this.onDateUpdate.bind(this)}/>
-                        </div>
-                        <div className="col-xs-1">To date :</div>
-                        <div className="col-xs-2">
-                            <DateInput nameTag={'dateEnd'} onUpdate={this.onDateUpdate.bind(this)}/>
-                        </div>
-
-                        <div className="col-xs-3">
-                            <TimePick onUpdate={this.onTimeUpdate.bind(this)} nameTag={'hourStart'}/>
-                        </div>
-                        <div className="col-xs-3">
-                            <TimePick onUpdate={this.onTimeUpdate.bind(this)} nameTag={'hourFinish'}/>
-                        </div>
-                    </div>
-                    <div className="row"></div>
-                    <div className="row">
-                        <div className="col-xs-1">Trainer</div>
-                        <div className="col-xs-2"><Dropdown onChangeValue={() => {
-                        }} options={this.state.trainers} selectedOption={''}
-                                                            onUpdate={this.updateValue.bind(this)} nameTag={'trainer'}/>
-                        </div>
-                        <div className="col-xs-1">Course</div>
-                        <div className="col-xs-2"><Dropdown onChangeValue={() => {
-                        }} options={this.state.courses} selectedOption={''}
-                                                            onUpdate={this.updateValue.bind(this)} nameTag={'course'}/>
+                    <div>
+                        <div className="row">
+                            <div className="col-md-1"></div>
+                            <div className="col-md-5"><h3>Schedule a new course below :</h3></div>
                         </div>
                     </div>
                     <div>
                         <div className="row">
-                            <div className="col-xs-1">Room </div>
-                            <div className="col-xs-2"><Dropdown options={this.state.rooms} selectedOption={''} onChangeValue={() => {}} onUpdate={this.updateValue.bind(this)} nameTag={'room'}/></div>
-                            <div className="col-xs-1">Type </div>
-                            <div className="col-xs-2"><Dropdown options={this.state.type} selectedOption={this.state.type[0].label} onChangeValue={() => {}} onUpdate={this.updateValue.bind(this)} nameTag={'type'}/></div>
-                            <div className="col-xs-1">Icon</div>
-                            <div className="col-xs-2"><Dropdown options={this.state.icons} selectedOption={this.state.icon_path} onChangeValue={() => {}} onUpdate={this.updateIcon.bind(this)} nameTag={'icon'}/></div>
-                            <div className="col-xs-2"><img src={this.state.icon_path} width={100} height={100}/></div>
+                            <div className="col-xs-1"></div>
+                            <div className="col-xs-2">Choose start date</div>
+                            <div className="col-xs-1"></div>
+                            <div className="col-xs-2">Choose end date</div>
+                            <div className="col-xs-1"></div>
+                            <div className="col-xs-2">Choose start time</div>
+                            <div className="col-xs-1"></div>
+                            <div className="col-xs-2">Choose end time</div>
+                        </div>
+
+                        <div className="row">
+                            <div className="col-xs-1">From date :</div>
+                            <div className="col-xs-2">
+                                <DateInput nameTag={'dateStart'} onUpdate={this.onDateUpdate.bind(this)}/>
+                            </div>
+                            <div className="col-xs-1">To date :</div>
+                            <div className="col-xs-2">
+                                <DateInput nameTag={'dateEnd'} onUpdate={this.onDateUpdate.bind(this)}/>
+                            </div>
+
+                            <div className="col-xs-3">
+                                <TimePick onUpdate={this.onTimeUpdate.bind(this)} nameTag={'hourStart'}/>
+                            </div>
+                            <div className="col-xs-3">
+                                <TimePick onUpdate={this.onTimeUpdate.bind(this)} nameTag={'hourFinish'}/>
+                            </div>
+                        </div>
+                        <div className="row"></div>
+                        <div className="row">
+                            <div className="col-xs-1">Trainer</div>
+                            <div className="col-xs-2"><Dropdown onChangeValue={() => {
+                            }} options={this.state.trainers} selectedOption={''}
+                                                                onUpdate={this.updateValue.bind(this)}
+                                                                nameTag={'trainer'}/>
+                            </div>
+                            <div className="col-xs-1">Course</div>
+                            <div className="col-xs-2"><Dropdown onChangeValue={() => {
+                            }} options={this.state.courses} selectedOption={''}
+                                                                onUpdate={this.updateValue.bind(this)}
+                                                                nameTag={'course'}/>
+                            </div>
                         </div>
                         <div>
-                            <button className="rodal-confirm-btn" onClick={this.handleAddEvent.bind(this)}>Add</button>
+                            <div className="row">
+                                <div className="col-xs-1">Room</div>
+                                <div className="col-xs-2"><Dropdown options={this.state.rooms} selectedOption={''}
+                                                                    onChangeValue={() => {
+                                                                    }} onUpdate={this.updateValue.bind(this)}
+                                                                    nameTag={'room'}/></div>
+                                <div className="col-xs-1">Type</div>
+                                <div className="col-xs-2"><Dropdown options={this.state.type}
+                                                                    selectedOption={this.state.type[0].label}
+                                                                    onChangeValue={() => {
+                                                                    }} onUpdate={this.updateValue.bind(this)}
+                                                                    nameTag={'type'}/></div>
+                                <div className="col-xs-1">Icon</div>
+                                <div className="col-xs-2"><Dropdown options={this.state.icons}
+                                                                    selectedOption={this.state.icon_path}
+                                                                    onChangeValue={() => {
+                                                                    }} onUpdate={this.updateIcon.bind(this)}
+                                                                    nameTag={'icon'}/></div>
+                                <div className="col-xs-2"><img src={this.state.icon_path} width={100} height={100}/>
+                                </div>
+                            </div>
+                            <div>
+                                <button className="rodal-confirm-btn" onClick={this.handleAddEvent.bind(this)}>Add
+                                </button>
+                            </div>
                         </div>
                     </div>
+                    <Rodal visible={this.state.visible} onClose={this.hide.bind(this)} animation={this.state.animation}>
+                        <div className="rodalheader">Delete schedule ?</div>
+                        <div className="rodalbody"><h4>Are you sure you want to delete this schedule ?</h4>
+                        </div>
+                        <button className="rodal-confirm-btn" onClick={this.onOkClick.bind(this)}>ok</button>
+                        <button className="rodal-cancel-btn" onClick={this.hide.bind(this)}>close</button>
+                    </Rodal>
                 </div>
-                <Rodal visible={this.state.visible} onClose={this.hide.bind(this)} animation={this.state.animation}>
-                    <div className="rodalheader">Delete schedule ?</div>
-                    <div className="rodalbody"><h4>Are you sure you want to delete this schedule ?</h4>
-                    </div>
-                    <button className="rodal-confirm-btn" onClick={this.onOkClick.bind(this)}>ok</button>
-                    <button className="rodal-cancel-btn" onClick={this.hide.bind(this)}>close</button>
-                </Rodal>
-            </div>
-        );
+            );
+        }
+        else{
+            return(<div>Loading...</div>);
+        }
 
     }
 
 }
 
 class ScheduleTable extends React.Component {
+
+    constructor(props)
+    {
+        super(props);
+    }
+
     render() {
         var onScheduleTableUpdate = this.props.onScheduleTableUpdate;
         var onBeginDateUpdate = this.props.onBeginDateUpdate;
@@ -452,10 +492,10 @@ class ScheduleTable extends React.Component {
         };
 
         var schedule = this.props.schedules.map(function (schedule) {
-            return (<ScheduleRow types={types} courses={courses} rooms={rooms} trainers={trainers}
-                                 onBeginDateUpdate={onBeginDateUpdate} onUpdate={onScheduleTableUpdate}
-                                 schedule={schedule} onDelEvent={onRowDel} key={schedule.id}/>)
-        });
+            return (<ScheduleRow types={this.props.types} courses={this.props.courses} rooms={this.props.rooms} trainers={this.props.trainers}
+                                 onBeginDateUpdate={this.props.onBeginDateUpdate} onUpdate={this.props.onScheduleTableUpdate}
+                                 schedule={schedule} onDelEvent={this.props.onRowDel} key={schedule.id}/>)
+        }.bind(this));
 
         return (
             <div className="row">
@@ -485,28 +525,33 @@ class ScheduleTable extends React.Component {
 }
 
 class ScheduleRow extends React.Component {
+
     constructor(props) {
         super(props);
-
+        let hs = this.props.schedule.hourStart;
+        let hr = this.props.schedule.hourEnd;
         this.state = {
             courses: this.props.courses,
             rooms: this.props.rooms,
             trainers: this.props.trainers,
             schedule: this.props.schedule,
-            course_id:0,
-            trainer_id:0,
-            room_id:0,
-            date:this.props.schedule.day,
+            date: this.props.schedule.day,
+            hourStartInput: hs,
+            hourEndInput: hr,
+            trainer_id:this.props.schedule.trainer_id,
         };
-        let tr_id=this.findCurrentTrainerId();
-        let cr_id=this.findCurrentCourseId();
-        let rm_id=this.findCurrentRoomId();
+        console.log(this.state.rooms,this.state.trainers,this.state.courses);
+        let tr_id = this.findCurrentTrainerId();
+        let cr_id = this.findCurrentCourseId();
+        let rm_id = this.findCurrentRoomId();
+        this.state.course_id=cr_id;
+        this.state.trainer_id=tr_id;
+        this.state.room_id=rm_id;
         this.setState({
-            course_id:cr_id,
-            trainer_id:tr_id,
-            room_id:rm_id,
+            course_id:this.state.course_id,
+            room_id:this.state.room_id,
         });
-        console.log(this.state.schedule);
+        console.log("ids for trainer,course,room",this.state.trainer_id,this.state.course_id,this.state.room_id);
 
     }
 
@@ -518,40 +563,43 @@ class ScheduleRow extends React.Component {
     onUpdateEvent() {
         let schedule_id = this.state.schedule.id;
         let date = this.state.schedule.day;
-        let hour_start = this.state.schedule.hourStart;
-        let hour_end = this.state.schedule.hourEnd;
+        let hour_start = this.state.hourStartInput;
+        let hour_end = this.state.hourEndInput;
 
-
-        SingletonService.ScheduleService.edit_schedule_entry('',schedule_id,date,hour_start,hour_end,this.state.course_id,
-            this.state.trainer_id,this.state.room_id).then((result) => {
+        SingletonService.ScheduleService.edit_schedule_entry('', schedule_id, date, hour_start, hour_end, this.state.course_id,
+            this.state.trainer_id, this.state.room_id).then((result) => {
             if (result != null) {
+                console.log("result!=null la update");
                 console.log(result);
                 this.props.onUpdate();
             }
         });
     }
 
-    onChangeData(option,nameTag) {
-        //console.log(option,nameTag);
-        if(nameTag==='trainer')
-        {
-            this.setState({trainer_id:option.value});
-        }
-        if(nameTag==='room')
-        {
-            this.setState({room_id:option.value});
-        }
-        if(nameTag==='course')
-        {
-            this.setState({course_id:option.value});
-            console.log("Changed value for "+nameTag+" into"+this.state.course_id)
-        }
+    onChangeData(option, nameTag) {
 
+        if (nameTag === 'trainer') {
+            this.setState({trainer_id: option.value});
+        }
+        if (nameTag === 'room') {
+            this.setState({room_id: option.value});
+        }
+        if (nameTag === 'course') {
+            this.setState({course_id: option.value});
+        }
 
     }
 
-    findCurrentCourseId() {
+    onChangeTime(option, nameTag) {
+        if (nameTag === 'startHour') {
+            this.setState({hourStartInput: option});
+        }
+        else if (nameTag === 'endHour') {
+            this.setState({hourEndInput: option});
+        }
+    }
 
+    findCurrentCourseId() {
         let course = this.props.schedule.course;
         for (let i = 0; i < this.state.courses.length; i++) {
             if (this.state.courses[i].label === course) {
@@ -570,6 +618,7 @@ class ScheduleRow extends React.Component {
         }
         return -1;
     }
+
     findCurrentRoomId() {
         let tr = this.props.schedule.room;
         for (let i = 0; i < this.state.rooms.length; i++) {
@@ -583,12 +632,14 @@ class ScheduleRow extends React.Component {
     render() {
         return (
             <tr className="eachRow">
-                <SelectableCell options={this.props.courses} onChangeValue={this.onChangeData.bind(this)} onUpdate={this.props.onUpdate} cellData={{
+                <SelectableCell options={this.props.courses} onChangeValue={this.onChangeData.bind(this)}
+                                onUpdate={this.props.onUpdate} cellData={{
                     value: this.props.schedule.course,
                     id: this.props.schedule.id,
                     nameTag: 'course'
                 }}/>
-                <SelectableCell options={this.props.trainers} onChangeValue={this.onChangeData.bind(this)} onUpdate={this.props.onUpdate}
+                <SelectableCell options={this.props.trainers} onChangeValue={this.onChangeData.bind(this)}
+                                onUpdate={this.props.onUpdate}
                                 cellData={{
                                     value: this.props.schedule.trainer,
                                     id: this.props.schedule.id,
@@ -599,23 +650,36 @@ class ScheduleRow extends React.Component {
                               cellData={{value: this.props.schedule.day, id: this.props.schedule.id}}/>
                 </td>
                 <td>
-                    <TimeCell onTrainerTableUpdate={this.props.onTrainerTableUpdate} onUpdateValue={this.onChangeData.bind()}
-                              cellData={{value: this.props.schedule.hourStart, id: this.props.schedule.id,nameTag:'startTime'}}/>
+                    <TimeCell onTrainerTableUpdate={this.props.onTrainerTableUpdate}
+                              onChangeTime={this.onChangeTime.bind(this)}
+                              cellData={{
+                                  value: this.props.schedule.hourStart,
+                                  id: this.props.schedule.id,
+                                  nameTag: 'startHour'
+                              }}/>
                 </td>
                 <td>
-                    <TimeCell onTrainerTableUpdate={this.props.onTrainerTableUpdate} onUpdateValue={this.onChangeData.bind()}
-                              cellData={{value: this.props.schedule.hourEnd, id: this.props.schedule.id,nameTag:'endTime'}}/>
+                    <TimeCell onTrainerTableUpdate={this.props.onTrainerTableUpdate}
+                              onChangeTime={this.onChangeTime.bind(this)}
+                              cellData={{
+                                  value: this.state.hourEndInput,
+                                  id: this.props.schedule.id,
+                                  nameTag: 'endHour'
+                              }}/>
                 </td>
-                <SelectableCell options={this.props.rooms} onChangeValue={this.onChangeData.bind(this)} onUpdate={this.props.onUpdate} cellData={{
+                <SelectableCell options={this.props.rooms} onChangeValue={this.onChangeData.bind(this)}
+                                onUpdate={this.props.onUpdate} cellData={{
                     value: this.props.schedule.room,
                     id: this.props.schedule.id,
                     nameTag: 'room'
                 }}/>
                 <td className="del-cell">
-                    <input type="button" className="btn btn-danger btn-sm" onClick={this.onDelEvent.bind(this)} value="X" />
+                    <input type="button" className="btn btn-danger btn-sm" onClick={this.onDelEvent.bind(this)}
+                           value="X"/>
                 </td>
                 <td className="del-cell">
-                    <input type="button" onClick={this.onUpdateEvent.bind(this)} value="OK" className="btn btn-success btn-sm"/>
+                    <input type="button" onClick={this.onUpdateEvent.bind(this)} value="OK"
+                           className="btn btn-success btn-sm"/>
                 </td>
             </tr>
         );
@@ -655,7 +719,9 @@ class TimeCell extends React.Component {
     }
 
     onTimeChangeHandler(val) {
-        this.props.onUpdateValue(val,this.props.cellData.nameTag);
+        this.setState({time: val});
+        //this.props.onUpdateValue(val,this.props.cellData.nameTag);
+        this.props.onChangeTime(val,this.props.cellData.nameTag);
     }
 
     render() {
@@ -766,7 +832,7 @@ class Dropdown extends React.Component {
 
     handleChange = (selectedOption) => {
         this.setState({selectedOption});
-        this.props.onChangeValue(selectedOption,this.state.nameTag);
+        this.props.onChangeValue(selectedOption, this.state.nameTag);
         this.props.onUpdate(this.state.nameTag, selectedOption);
 
     }
