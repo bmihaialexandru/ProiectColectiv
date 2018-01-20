@@ -562,7 +562,7 @@ class ScheduleRow extends React.Component {
 
     onUpdateEvent() {
         let schedule_id = this.state.schedule.id;
-        let date = this.state.schedule.day;
+        let date = this.state.date;
         let hour_start = this.state.hourStartInput;
         let hour_end = this.state.hourEndInput;
 
@@ -586,6 +586,10 @@ class ScheduleRow extends React.Component {
         }
         if (nameTag === 'course') {
             this.setState({course_id: option.value});
+        }
+        if(nameTag==='date')
+        {
+           this.setState({date:option});
         }
 
     }
@@ -646,8 +650,8 @@ class ScheduleRow extends React.Component {
                                     nameTag: 'trainer'
                                 }}/>
                 <td>
-                    <DateCell onDateUpdate={this.props.onDateUpdate}
-                              cellData={{value: this.props.schedule.day, id: this.props.schedule.id}}/>
+                    <DateCell onDateUpdate={this.props.onDateUpdate} onChangeValue={this.onChangeData.bind(this)}
+                              cellData={{value: this.props.schedule.day, id: this.props.schedule.id,nameTag:'date'}}/>
                 </td>
                 <td>
                     <TimeCell onTrainerTableUpdate={this.props.onTrainerTableUpdate}
@@ -752,7 +756,13 @@ class DateCell extends React.Component {
     handleDayChange(day) {
 
         //this.props.onDateUpdate(day,this.props.cellData.id,this.props.cellData.type);
+        let d=new Date(day);
+        let dd=d.getDate();
+        let m=d.getMonth()+1;
+        let y=d.getFullYear();
+        let finalDay=y+'-'+m+'-'+dd;
         this.setState({selectedDay: day});
+        this.props.onChangeValue(finalDay,'date');
     }
 
     render() {
