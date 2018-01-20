@@ -21,8 +21,8 @@ export class ScheduleList extends React.Component {
             currentSchedule: {
                 dateStart: '',
                 dateEnd: '',
-                hourStart: '',
-                hourFinish: '',
+                hourStart: '00:00:00',
+                hourFinish: '00:00:01',
                 course: '',
                 trainer: '',
                 room: '',
@@ -243,7 +243,7 @@ export class ScheduleList extends React.Component {
                 break;
             }
         }
-        console.log("ROOM: " +this.state.currentSchedule.room);
+
         for(var i=0;i<this.state.rooms.length;i++)
         {
             if(this.state.currentSchedule.room==this.state.rooms[i].label)
