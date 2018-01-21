@@ -216,7 +216,7 @@ export class PackageService extends Component {
              */
 
             return result["packages"].map((pack) => {
-                return new UnpaidPackage(pack["id"], pack["id_user"], pack["id_package"], pack["package_name"], pack["pricing"], pack["days"]);
+                return new UnpaidPackage(pack["id"], pack["id_user"], pack["id_package"], pack["package_name"], pack["pricing"], pack["days"], pack["description"]);
             });
 
 
