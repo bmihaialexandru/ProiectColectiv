@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import {FooterAdmin} from '../components/FooterAdmin';
 import {HeaderAdmin} from '../components/HeaderAdmin';
 import {RoomsList} from '../components/RoomsList';
+import {_reloadJs} from '../js/reloadJs';
+
 
 export class AdminHome extends Component {
    componentWillReceiveProps(nextProps){
@@ -10,6 +12,7 @@ export class AdminHome extends Component {
   }
 
   render() {
+      _reloadJs();
       return (
         <div id="fh5co-wrapper">
         <div id="fh5co-page">

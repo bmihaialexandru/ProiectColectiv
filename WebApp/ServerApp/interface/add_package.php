@@ -87,8 +87,12 @@ else{
         }
         catch(Exception $e)
         {
+            $pckg = $ctrl->pctrl->get_package_by_name($name);
+            if($pckg != null) {
+                $ctrl->pctrl->delete_package($pckg['id']);
+            }
             $message->answer = "Error";
-            $message->reason = "Can't have the same course twice in a package";
+            $message->reason = "The data you have given is incorrect. Problems which may occur are: you haven't given any courses, or you have given the same course twice.";
             echo json_encode($message);
         }
     }

@@ -21,7 +21,8 @@ export class ProfilePage extends Component {
       subscriptions: [],
       oldPassword : "",
       newPassword : "",
-      confirmationPass : ""
+      confirmationPass : "",
+        loaded: false
     }
     }
 
@@ -73,8 +74,11 @@ export class ProfilePage extends Component {
                 };
                 unpaid.push(entry);
               
-                this.setState({subscriptions, unpaid});
+
             });
+              this.setState({subscriptions, unpaid});
+              //console.log("SUBS ARE: "+ subscriptions);
+              this.setState({loaded: true});
           });
         });
     }
@@ -103,6 +107,7 @@ export class ProfilePage extends Component {
             return <Redirect to='/'/>;
         }
 
+        if(this.state.loaded === true)
         return (
         <div id="fh5co-wrapper">
         <div id="fh5co-page">
@@ -234,6 +239,7 @@ export class ProfilePage extends Component {
         </div>
         </div>
         );
+        else return(<div>Loading...</div>);
     }
 
     _change_password(){

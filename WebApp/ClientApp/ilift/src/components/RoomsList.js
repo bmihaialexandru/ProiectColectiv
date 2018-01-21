@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {SingletonService} from "../services/SingletonService";
 import 'rodal/lib/rodal.css';
 import '../template/css/bootstrap.css';
-
+import {NotificationManager} from 'react-notifications';
 
 export class RoomsList extends React.Component {
 
@@ -48,8 +48,10 @@ export class RoomsList extends React.Component {
 
     addRoom() {
         SingletonService.TrainingRoomService.add_training_room(localStorage.getItem("token"), this.state.room_name, this.state.max_capacity).then((result) => {
-            this.update();
-
+            if(result!== null) {
+                NotificationManager.success("Room was created", "Success");
+                this.update();
+            }
         });
 
     }

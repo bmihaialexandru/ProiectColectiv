@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {ServiceCredentials} from './ServiceCredentials';
 import {User} from "../model/User";
-import * as alertify from "alertifyjs";
 import {NotificationManager} from "react-notifications";
 
 export class UserService extends Component {

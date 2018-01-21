@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {SingletonService} from "../services/SingletonService";
+import {NotificationManager} from "react-notifications"
 
 export class SubscriptionCard extends Component {
 
@@ -46,7 +47,10 @@ export class SubscriptionCard extends Component {
     _subscribeToPackage(){
         SingletonService.PackageService.subscribe_for_new_package(this.state.id)
         .then((response) => {
-            alert("You subscribed successfully.")
+            if(response != null) {
+                NotificationManager.success("You subscribed successfully.")
+            }
+
         });
     }
 

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import {SingletonService} from "../services/SingletonService";
+import {NotificationManager} from "react-notifications";
 
 export class ScheduleCard extends Component {
 
@@ -46,15 +47,22 @@ export class ScheduleCard extends Component {
     _subscribeToClass = () => {
         SingletonService.SubscribtionService.add_subscribtion(localStorage.getItem("token"), this.props.id)
             .then((response) => {
-                if(response)
+                if(response !== null) {
+                    NotificationManager.success("Subscribed to the course!", "Success");
                     window.location.reload();
+
+                }
             });
     }
 
     _unSubscribeToClass = () => {
         SingletonService.SubscribtionService.delete_subscribtion(localStorage.getItem("token"), this.props.id)
             .then((response) => {
+            if(response !== null) {
+                NotificationManager.success("Unsubscribed to the course!", "Success");
                 window.location.reload();
+
+            }
             });
     }
 }

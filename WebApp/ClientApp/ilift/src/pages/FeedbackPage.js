@@ -160,7 +160,7 @@ export class FeedbackPage extends Component {
             SingletonService.FeedbackCourseService.add_new_feedback(stars, message, e_id).then((result) => {
                 if (result !== null) {
                     NotificationManager.success("Feedback added succesfully!", "Success");
-                    window.location.replace("/courses")
+                    window.location.reload();
                 }
             })
         }
@@ -168,7 +168,7 @@ export class FeedbackPage extends Component {
             SingletonService.FeedbackTrainerService.add_new_feedback(stars, message, e_id).then((result) => {
                 if (result !== null) {
                     NotificationManager.success("Feedback added succesfully!", "Success");
-                    window.location.replace("/trainers")
+                    window.location.reload();
                 }
             })
         }

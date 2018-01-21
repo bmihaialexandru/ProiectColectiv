@@ -249,6 +249,7 @@ export class Schedule extends Component {
                 <li><a href="#" data-sched="thursday">Thursday</a></li>
                 <li><a href="#" data-sched="monday">Friday</a></li>
                 <li><a href="#" data-sched="saturday">Saturday</a></li>
+                <li><a href="#" data-sched="sunday">Sunday</a></li>
               </ul>
             </div>
             <div className="row text-center" style={{marginBottom: 300}}>

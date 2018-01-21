@@ -316,9 +316,10 @@ class PackageTable extends React.Component {
 
             SingletonService.PackageService.add_new_package(courseName, description, pricing, days, courses2).then((result) => {
 
-                console.log(result);
+                if(result !== null) {
                 NotificationManager.success("Add successful!", "Success");
                 this.props.update();
+                }
 
             });
     }
