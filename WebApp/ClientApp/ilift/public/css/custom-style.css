@@ -55,12 +55,15 @@
     position: relative;
 }
 
-.file-input-wrapper > input[type="file"] {
-    font-size: 10px;
-    position: absolute;
-    top: 0;
-    right: 0;
-    opacity: 0;
+.custom-file-upload > input[type="file"] {
+    display:none;
+}
+
+.custom-file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
 }
 
 .file-input-wrapper > .btn-file-input {
@@ -78,6 +81,7 @@
     padding: 10px 20px 10px 20px;
     border: solid #9e909e 1px;
     text-decoration: none;
+
 }
 
 

@@ -148,10 +148,11 @@ class TrainerTable extends React.Component {
                         <textarea className="form-control" placeholder="Trainer Description" cols="25"  id="description"/>
                         <p style={{display: 'inline'}}> </p>
                         <br/>
-                        <div className="file-input-wrapper ">
-                            <button className="btn btn-default">image</button>
-                            <input type="file"  name="photo" style={{width: 200}} id="photo" placeholder="Photo" onChange={(e) => this.photo = e.target.files[0]} />
-                            <p style={{display: 'inline'}}> </p>
+                        <div className="file-input-wrapper"  style={{display: "inline"}}>
+                            <label class="custom-file-upload">
+                                <input type="file"  name="photo" style={{width: 200}} id="photo" placeholder="Photo" onChange={(e) => this.photo = e.target.files[0]} />
+                                <i class="fa fa-cloud-upload"/> Upload Image
+                            </label>
                         </div>
                         <br />
                         <button type="submit" className="btn btn-success" name="add_submit" value="Add trainer" onClick={() => this.addTrainer()}>SAVE</button>
@@ -252,10 +253,14 @@ class TrainerRow extends React.Component {
               <img src={ this.state.photoForShow } style={{width: 100, height: 140, marginLeft:20}} id="imgStyle"/>
           </td>
           <td>
-              <div className="file-input-wrapper "  style={{display: "inline"}}>
-                  <button className="btn btn-default btn-sm"  style={{marginTop:50, marginLeft: 10, display:'inline'}} >Upload IMAGE</button>
-              <input type="file" name="photo" id="photo" placeholder="Photo" defaultValue={this.props.trainer.photo}
-                     onChange={(e) => {var fileName = 'require(\'' + e.target.value + '\')'; this.setState({photoForUpdate : e.target.files[0]})}} />
+              <div className="file-input-wrapper"  style={{display: "inline"}}>
+                  <label class="custom-file-upload">
+
+                      <input type="file" name="photo" id="photo" placeholder="Photo" defaultValue={this.props.trainer.photo}
+                             onChange={(e) => {var fileName = 'require(\'' + e.target.value + '\')'; this.setState({photoForUpdate : e.target.files[0]})}} />
+
+                      <i class="fa fa-cloud-upload"/> Upload Image
+                  </label>
               </div>
           </td>
 
