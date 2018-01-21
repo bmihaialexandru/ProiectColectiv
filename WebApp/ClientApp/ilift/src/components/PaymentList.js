@@ -77,7 +77,7 @@ export class PaymentList extends React.Component {
                 NotificationManager.error("Something went wrong.", "Error");
             }
             else{
-                NotificationManager.success("Delete successful!", "Success");
+                NotificationManager.success("Payment successful!", "Success");
             }
             this.hide();
             this.update();

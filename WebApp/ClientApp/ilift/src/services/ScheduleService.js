@@ -157,7 +157,7 @@ export class ScheduleService extends Component {
                     sched["course_name"],
                     sched["trainer_name"],
                     sched["room_name"],
-                    this.server + sched["path_to_icon"]
+                    ServiceCredentials.SERVER_PATH + sched["path_to_icon"]
                 ));
                 arr.push(dict);
             }

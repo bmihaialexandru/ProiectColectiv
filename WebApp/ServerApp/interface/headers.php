@@ -6,6 +6,6 @@
  * Time: 7:36 PM
  */
 
-//header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: Content-Type");
 ?>
