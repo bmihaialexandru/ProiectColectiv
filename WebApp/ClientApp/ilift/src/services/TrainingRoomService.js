@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import {ServiceCredentials} from './ServiceCredentials';
 import {TrainingRoom} from "../model/TrainingRoom";
 
+import {NotificationManager} from "react-notifications";
 export class TrainingRoomService extends Component {
 
 
     constructor() {
         super();
-
         this.server = ServiceCredentials.SERVER_PATH;
     }
 
@@ -48,7 +48,7 @@ export class TrainingRoomService extends Component {
         try {
             if(result["answer"].localeCompare("Success") !== 0)
             {
-                alert(result["reason"]);
+                NotificationManager.error(result["reason"], "Error");
                 return null;
             }
             return result["rooms"].map((room) => new TrainingRoom(room["id_training_room"],
@@ -66,7 +66,7 @@ export class TrainingRoomService extends Component {
         try {
             if(result["answer"].localeCompare("Success") !== 0)
             {
-                alert(result["reason"]);
+                NotificationManager.error(result["reason"], "Error");
                 return null;
             }
             return "Success";

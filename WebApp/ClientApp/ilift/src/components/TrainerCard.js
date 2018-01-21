@@ -12,7 +12,7 @@ export class TrainerCard extends Component {
         const description = this.props.description;
         const numberOfFeedbacks = this.props.numberOfFeedbacks;
 
-        const feedbackBtn = localStorage.username && 
+        const feedbackBtn = 
             <p className="fh5co-social-icons">
                 <span className="comment">
                     <Link to={{ pathname: '/feedback', state: {id: id, entityName: name, entityType: "trainer"} }}>

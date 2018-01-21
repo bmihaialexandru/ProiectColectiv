@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import {ServiceCredentials} from './ServiceCredentials';
 import {Trainer} from "../model/Trainer";
 
+import {NotificationManager} from "react-notifications";
+
 export class TrainerService extends Component {
 
 
@@ -114,7 +116,7 @@ export class TrainerService extends Component {
         try {
             if(result["answer"].localeCompare("Success") !== 0)
             {
-                alert(result["reason"]);
+                NotificationManager.error(result["reason"], "Error");
                 return null;
             }
             return new Trainer(result["trainer"]["id"],
@@ -133,7 +135,7 @@ export class TrainerService extends Component {
         try {
             if(result["answer"].localeCompare("Success") !== 0)
             {
-                alert(result["reason"]);
+                NotificationManager.error(result["reason"], "Error");
                 return null;
             }
             return result["trainers"].map((trainer) => new Trainer(trainer["id"],
@@ -153,7 +155,7 @@ export class TrainerService extends Component {
         try {
             if(result["answer"].localeCompare("Success") !== 0)
             {
-                alert(result["reason"]);
+                NotificationManager.error(result["reason"], "Error");
                 return null;
             }
             return "Success";

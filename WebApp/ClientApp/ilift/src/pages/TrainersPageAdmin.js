@@ -46,9 +46,9 @@ export class TrainersPageAdmin extends Component {
         </div>
 
         <div id="fh5co-team-section">
-        <div>
+        <div className="container">
           <div className="row about">
-            <div className="col-md-12 col-md-offset-0 animate-box" style={{paddingLeft:150}}>
+            <div className="col-md-12 col-md-offset-0 animate-box" >
               <TrainersList/>
             </div>
 

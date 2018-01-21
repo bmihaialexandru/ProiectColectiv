@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {ServiceCredentials} from './ServiceCredentials';
 import {FeedbackCourse} from "../model/FeedbackCourse";
+import {NotificationManager} from "react-notifications";
 
 export class FeedbackTrainerService extends Component {
 
@@ -79,7 +80,7 @@ export class FeedbackTrainerService extends Component {
         try {
             if(result["answer"].localeCompare("Success") !== 0)
             {
-                alert(result["reason"]);
+                NotificationManager.error(result["reason"], "Error");
                 return null;
             }
             return result["feedbacks"].map((feedback) => new FeedbackCourse(feedback["id"],
@@ -101,7 +102,7 @@ export class FeedbackTrainerService extends Component {
         try {
             if(result["answer"].localeCompare("Success") !== 0)
             {
-                alert(result["reason"]);
+                NotificationManager.error(result["reason"], "Error");
                 return null;
             }
             return "Success";

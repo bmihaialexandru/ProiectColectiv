@@ -36,7 +36,7 @@ export class ContactPage extends Component {
 			<div className="container">
 				<form action="#">
 					<div className="row">
-						<div className="col-md-6 animate-box">
+						<div className="col-md-8 animate-box col-md-offset-2">
 							<h3 className="section-title">Our Address</h3>
 							<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
 							<ul className="contact-info">
@@ -45,30 +45,6 @@ export class ContactPage extends Component {
 								<li><i className="icon-mail"></i><a href="#">info@yoursite.com</a></li>
 								<li><i className="icon-globe2"></i><a href="#">www.yoursite.com</a></li>
 							</ul>
-						</div>
-						<div className="col-md-6 animate-box">
-							<div className="row">
-								<div className="col-md-6">
-									<div className="form-group">
-										<input type="text" className="form-control" placeholder="Name"/>
-									</div>
-								</div>
-								<div className="col-md-6">
-									<div className="form-group">
-										<input type="text" className="form-control" placeholder="Email"/>
-									</div>
-								</div>
-								<div className="col-md-12">
-									<div className="form-group">
-										<textarea name="" className="form-control" id="" cols="30" rows="7" placeholder="Message"></textarea>
-									</div>
-								</div>
-								<div className="col-md-12">
-									<div className="form-group">
-									<a href="#" className="btn btn-primary">Send Message</a>
-									</div>
-								</div>
-							</div>
 						</div>
 					</div>
 				</form>

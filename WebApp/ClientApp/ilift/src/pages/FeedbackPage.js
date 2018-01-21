@@ -8,6 +8,7 @@ import {_reloadJs} from '../js/reloadJs';
 import {Redirect} from 'react-router-dom';
 import {FeedbackCard} from '../components/FeedbackCard';
 import {SingletonService} from "../services/SingletonService";
+import {NotificationManager} from "react-notifications";
 import $ from 'jquery';
 
 export class FeedbackPage extends Component {
@@ -16,35 +17,7 @@ export class FeedbackPage extends Component {
         super(props);
         this.state = {
             rating: null,
-            list : [
-                /*
-              {
-                author: "Anna Kendrick",
-                rating: 4,
-                description: "Those abs!"
-              },
-              {
-                author: "Jason Momoa",
-                rating: 5,
-                description: "Great energy!"
-              },
-              {
-                author: "Bradley Cooper",
-                rating: 4,
-                description: "Definitely trying that again!"
-              },
-              {
-                author: "Nicole Sherzinger",
-                rating: 3,
-                description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum non molestie est. Sed mattis sem vitae faucibus vehicula. "
-              },
-              {
-                author: "The Rock",
-                rating: 5,
-                description: "Great guy, but I can lift more than him!"
-              }
-              */
-            ]
+            list : []
         };
 
         const e_id = this.props.location.state.id;
@@ -52,14 +25,12 @@ export class FeedbackPage extends Component {
         {
             SingletonService.FeedbackCourseService.get_all_feedbacks(e_id).then((result) => {
                 this.setState({list: result});
-                console.log(result);
             })
         }
         else if(this.props.location.state.entityType.localeCompare("trainer") === 0)
         {
             SingletonService.FeedbackTrainerService.get_all_feedbacks(e_id).then((result) => {
                 this.setState({list: result});
-                console.log(result);
             })
         }
     }
@@ -92,7 +63,7 @@ export class FeedbackPage extends Component {
       <div id="fh5co-page">
       
       <Header/>
-
+      
       <div className="fh5co-parallax back-4" data-stellar-background-ratio="0.5">
         <div className="overlay"></div>
         <div className="container">
@@ -108,6 +79,8 @@ export class FeedbackPage extends Component {
       </div>
       <div style={{backgroundColor: "#fcfcfc"}}>
       <br/>
+      
+      { !localStorage.username && <div style={{marginTop: 100}}/>}
       {description}
       <br/>
       <div className="col-md-11 col-md-offset-2 animate-box" style={{fontSize: "24px"}}>{text}</div>
@@ -123,6 +96,10 @@ export class FeedbackPage extends Component {
         </div>
       </div>
 
+      
+      { !localStorage.username && <div style={{marginBottom: 150}}/>}
+
+  { localStorage.username &&
     <div id="fh5co-contact">
 		<div className="container">
         <div className="row">
@@ -160,6 +137,7 @@ export class FeedbackPage extends Component {
       </div>
       </div>
       </div>
+      }
       </div>
       <Footer/>
   
@@ -181,16 +159,16 @@ export class FeedbackPage extends Component {
         if(this.props.location.state.entityType.localeCompare("course") === 0) {
             SingletonService.FeedbackCourseService.add_new_feedback(stars, message, e_id).then((result) => {
                 if (result !== null) {
-                    alert("Feedback added succesfully!");
-                    window.location.replace("/courses")
+                    NotificationManager.success("Feedback added succesfully!", "Success");
+                    window.location.reload();
                 }
             })
         }
         else if(this.props.location.state.entityType.localeCompare("trainer") === 0) {
             SingletonService.FeedbackTrainerService.add_new_feedback(stars, message, e_id).then((result) => {
                 if (result !== null) {
-                    alert("Feedback added succesfully!");
-                    window.location.replace("/trainers")
+                    NotificationManager.success("Feedback added succesfully!", "Success");
+                    window.location.reload();
                 }
             })
         }

@@ -3,7 +3,8 @@ import Rodal from 'rodal';
 import {SingletonService} from "../services/SingletonService";
 import 'rodal/lib/rodal.css';
 import '../template/css/bootstrap.css';
-
+import '../template/css/custom-style.css';
+import {NotificationManager} from "react-notifications";
 
 export class CoursesList extends React.Component {
 
@@ -63,7 +64,11 @@ export class CoursesList extends React.Component {
 
         SingletonService.CourseService.delete_course(this.state.currentCourse.id).then((result) => {
             if(result == null) {
+
                 alert("Something went wrong.");
+            }
+            else{
+                NotificationManager.success("Delete successful!", "Success");
             }
             this.hide();
             this.update();
@@ -88,10 +93,13 @@ export class CoursesList extends React.Component {
                 <Rodal visible={this.state.visible}
                        onClose={this.hide.bind(this)}
                        animation={this.state.animation}>
-                    <div className="rodalbody"><h4>Are you sure you want to delete course {this.state.currentCourse.name}? </h4>
+                    <div><p> </p></div>
+                    <div className="rodalbody"><h4>This action is irreversible. <br/>Are you sure you want to delete course {this.state.currentCourse.name}? </h4>
                     </div>
-                    <button className="btn " onClick={this.deleteAccepted.bind(this)}>ok</button> <t>   </t>
-                    <button className="btn " onClick={this.hide.bind(this)}>close</button>
+                    <div style={{marginLeft:150, marginTop:70}}>
+                    <button className="btn btn-danger" onClick={this.deleteAccepted.bind(this)}>DELTE</button> <t>   </t>
+                    <button className="btn " onClick={this.hide.bind(this)}>CANCEL</button>
+                    </div>
                 </Rodal>
                 <SearchBar filterText={this.state.filterText} onUserInput={this.handleUserInput.bind(this)} onButtonPressed={this.reRender.bind(this)}/>
                 <CourseTable update={this.update.bind(this)} isButtonPressed={this.state.isAddButtonClicked} onRowDel={this.handleRowDel.bind(this)} courses={this.state.courses} filterText={this.state.filterText}/>
@@ -115,7 +123,7 @@ class SearchBar extends React.Component {
                         <input type="text" className="form-control" style={{width: 350}} placeholder="Search..." value={this.props.filterText} ref="filterTextInput" onChange={this.handleChange.bind(this)}/>
                     </div>
                     <div className="col-xs-2" id="container" >
-                    <button className="btn btn-default" style={{marginLeft:30}} onClick={this.props.onButtonPressed}>Add course</button>
+                    <button className="btn btn-default" onClick={this.props.onButtonPressed}>Add course</button>
 
                     </div>
             </div>
@@ -140,20 +148,26 @@ class CourseTable extends React.Component {
                 <div>
                     <div>
                         <br/>
-                        <input className="form-control" style={{width: 200}} type="text" name="courseName" id="courseName" placeholder="Name" />
+                        <input className="form-control" style={{width: 400}} type="text" name="courseName" id="courseName" placeholder="Name" />
                         <p style={{display: 'inline'}}> </p>
                         <br/>
                         <textarea className="form-control" style={{width: 400}}  name="description" id="description" cols="25"   placeholder="Description"/>
                         <p style={{display: 'inline'}}> </p>
                         <br/>
-                        <input type="file"  name="photo" id="photo" style={{}} placeholder="Photo" onChange={(e) => this.photo = e.target.files[0]} />
-                        <p style={{display: 'inline'}}> </p>
+                        <div className="file-input-wrapper"  style={{display: "inline"}}>
+                            <label class="custom-file-upload">
+                                <input type="file"  name="photo" id="photo" style={{}} placeholder="Photo" onChange={(e) => this.photo = e.target.files[0]} />
+                                <i class="fa fa-cloud-upload"/> Upload Image
+                            </label>
+                        </div>
+
                         <br/>
                         <button type="submit" className="btn btn-success" style={{}} name="addCourse_submit" value="Add course" onClick={() => this.addCourse()}>Save</button>
 
                     </div>
                     <br/>
                 </div>
+
             );
         }
     }
@@ -215,6 +229,7 @@ class CourseTable extends React.Component {
         SingletonService.CourseService.add_new_course(this.photo, courseName, description).then((result) => {
 
                 console.log(result);
+                NotificationManager.success("Add successful!", "Success");
                 this.props.update();
 
         });
@@ -256,13 +271,19 @@ class CourseRow extends React.Component {
                 </td>
                 <td className="del-cell" >
                     <img src={ this.state.photoForShow } style={bodystyle} id="imgStyle"/>
-                    <input type="file" style={{display: "inline", paddingLeft: 10}}  name="photo" id="photo" placeholder="Photo" defaultValue={this.props.course.photo}
-                           onChange={(e) => {var fileName = 'require(\'' + e.target.value + '\')'; this.setState({photoForUpdate : e.target.files[0]})}} />
+                    <div className="file-input-wrapper"  style={{display: "inline"}}>
+                        <label class="custom-file-upload">
+                            <input type="file"   name="photo" id="photo" placeholder="Photo" defaultValue={this.props.course.photo}
+                                   onChange={(e) => {var fileName = 'require(\'' + e.target.value + '\')'; this.setState({photoForUpdate : e.target.files[0]})}} />
+                            <i class="fa fa-cloud-upload"/> Upload Image
+                        </label>
+                    </div>
                 </td>
 
                 <td className="del-cell" >
-                    <input type="button" style={{marginTop:50}}  onClick={this.onDelEvent.bind(this)} value="X" className="btn btn-danger btn-sm"/><t> </t>
-                    <input type="button"style={{marginTop:50}} onClick={this.updateRow.bind(this)} value="Save" className="btn btn-success btn-sm"/>
+                    <input type="button"style={{marginTop:60}} onClick={this.updateRow.bind(this)} value="Save" className="btn btn-success btn-sm"/><t> </t>
+                    <input type="button" style={{marginTop:60}}  onClick={this.onDelEvent.bind(this)} value="X" className="btn btn-danger btn-sm"/>
+
                 </td>
             </tr>
         );
@@ -280,6 +301,7 @@ class CourseRow extends React.Component {
                     if (result != null) {
 
                         console.log( result.image);
+                        NotificationManager.success("Update successful!", "Success");
                         this.setState({photoForShow: result.image});
                     }
                 });

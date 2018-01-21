@@ -10,7 +10,7 @@ export class ClassCard extends Component {
         const numberOfFeedbacks = this.props.numberOfFeedbacks;
         const id = this.props.id;
 
-        const feedbackBtn = localStorage.username && 
+        const feedbackBtn =
             <p className="fh5co-social-icons">
                 <span className="comment">
                     <Link to={{ pathname: '/feedback', state: {id: id, entityName: courseName, entityType: "course"} }}>

@@ -3,7 +3,8 @@ import Rodal from 'rodal';
 import {SingletonService} from "../services/SingletonService";
 import 'rodal/lib/rodal.css';
 import '../template/css/style.css';
-
+import '../template/css/custom-style.css';
+import {NotificationManager} from "react-notifications";
 
 export class TrainersList extends React.Component {
 
@@ -66,6 +67,9 @@ export class TrainersList extends React.Component {
           if(result == null) {
               alert("Something went wrong.");
           }
+          else{
+              NotificationManager.success("Delete successful!", "Success");
+          }
           this.hide();
           this.update();
 
@@ -89,11 +93,15 @@ export class TrainersList extends React.Component {
                  <Rodal visible={this.state.visible}
                        onClose={this.hide.bind(this)}
                        animation={this.state.animation}>
-                    <div className="rodalheader">Delete trainer</div>
-                    <div className="rodalbody"><h4>Are you sure you want to delete trainer {this.state.currentTrainer.name} ? </h4>
+
+                     <div><p> </p></div>
+                     <div className="rodalbody" style={{display: 'center'}}>
+                         <h4>This action is irreversible. <br/>Are you sure you want to delete trainer {this.state.currentTrainer.name} ? </h4>
                     </div>
-                    <button className="btn " onClick={this.deleteAccepted.bind(this)}>ok</button> <t>   </t>
-                    <button className="btn " onClick={this.hide.bind(this)}>close</button>
+                     <div style={{marginLeft:150, marginTop:70}}>
+                    <button className="btn btn-danger" onClick={this.deleteAccepted.bind(this)}>delete</button> <t>   </t>
+                    <button className="btn " onClick={this.hide.bind(this)}>cancel</button>
+                     </div>
                 </Rodal>
                 <SearchBar filterText={this.state.filterText} onUserInput={this.handleUserInput.bind(this)} onButtonPressed={this.reRender.bind(this)}/>
                 <TrainerTable  update={this.update.bind(this)} isButtonPressed={this.state.isAddButtonClicked} onRowDel={this.handleRowDel.bind(this)} trainers={this.state.trainers} filterText={this.state.filterText}/>
@@ -115,7 +123,7 @@ class SearchBar extends React.Component {
                 <input type="text" className="form-control" style={{width: 350}} placeholder="Search..." value={this.props.filterText} ref="filterTextInput" onChange={this.handleChange.bind(this)}/>
             </div>
             <div className="col-xs-2" id="container" >
-                <button className="btn btn-default" style={{marginLeft:30}} onClick={this.props.onButtonPressed}>Add course</button>
+                <button className="btn btn-default" style={{marginLeft:10}} onClick={this.props.onButtonPressed}>Add trainer</button>
 
             </div>
         </div>
@@ -140,10 +148,14 @@ class TrainerTable extends React.Component {
                         <textarea className="form-control" placeholder="Trainer Description" cols="25"  id="description"/>
                         <p style={{display: 'inline'}}> </p>
                         <br/>
-                        <input type="file"  name="photo" style={{width: 200}} id="photo" placeholder="Photo" onChange={(e) => this.photo = e.target.files[0]} />
-                        <p style={{display: 'inline'}}> </p>
+                        <div className="file-input-wrapper"  style={{display: "inline"}}>
+                            <label class="custom-file-upload">
+                                <input type="file"  name="photo" style={{width: 200}} id="photo" placeholder="Photo" onChange={(e) => this.photo = e.target.files[0]} />
+                                <i class="fa fa-cloud-upload"/> Upload Image
+                            </label>
+                        </div>
                         <br />
-                        <button type="submit" className="btn btn-success" name="add_submit" value="Add trainer" onClick={() => this.addTrainer()}>Add trainer</button>
+                        <button type="submit" className="btn btn-success" name="add_submit" value="Add trainer" onClick={() => this.addTrainer()}>SAVE</button>
 
                     </div>
                     <br/>
@@ -200,6 +212,7 @@ class TrainerTable extends React.Component {
         console.log(name);
 
         SingletonService.TrainerService.add_new_trainer(this.photo, name, description).then((result) => {
+            NotificationManager.success("Add successful!", "Success");
             console.log(result);
             this.props.update();
         });
@@ -234,19 +247,27 @@ class TrainerRow extends React.Component {
               <input className="form-control" type="text" placeholder="Trainer Name" defaultValue={this.props.trainer.name} onChange={(e) =>  this.setState({nameTrainer : e.target.value})}  id="name"/>
           </td>
           <td className="del-cell">
-              <textarea defaultValue={this.props.trainer.category} onChange={(e) => this.setState({description : e.target.value})} rows={6}/>
+              <textarea className="form-control"  defaultValue={this.props.trainer.category} onChange={(e) => this.setState({description : e.target.value})} rows={6}/>
           </td>
           <td className="del-cell">
-              <img src={ this.state.photoForShow } style={{width: 100, height: 140}} id="imgStyle"/>
+              <img src={ this.state.photoForShow } style={{width: 100, height: 140, marginLeft:20}} id="imgStyle"/>
           </td>
           <td>
-              <input type="file" style={{marginTop:50, paddingLeft: 10, display:'inline'}}  name="photo" id="photo" placeholder="Photo" defaultValue={this.props.trainer.photo}
-                     onChange={(e) => {var fileName = 'require(\'' + e.target.value + '\')'; this.setState({photoForUpdate : e.target.files[0]})}} />
+              <div className="file-input-wrapper"  style={{display: "inline"}}>
+                  <label class="custom-file-upload">
+
+                      <input type="file" name="photo" id="photo" placeholder="Photo" defaultValue={this.props.trainer.photo}
+                             onChange={(e) => {var fileName = 'require(\'' + e.target.value + '\')'; this.setState({photoForUpdate : e.target.files[0]})}} />
+
+                      <i class="fa fa-cloud-upload"/> Upload Image
+                  </label>
+              </div>
           </td>
 
         <td className="del-cell">
-            <input  type="button" style={{marginTop:50}} onClick={this.onDelEvent.bind(this)} value="X" className="btn btn-danger btn-sm"/><t> </t>
-            <input type="button" style={{marginTop:50}} onClick={this.updateRow.bind(this)} value="Save" className="btn btn-success btn-sm"/>
+            <input type="button" style={{marginTop:50}} onClick={this.updateRow.bind(this)} value="Save" className="btn btn-success btn-sm"/><t> </t>
+            <input  type="button" style={{marginTop:50}} onClick={this.onDelEvent.bind(this)} value="X" className="btn btn-danger btn-sm"/>
+
         </td>
       </tr>
     );
@@ -264,6 +285,7 @@ class TrainerRow extends React.Component {
                   if (result != null) {
 
                       console.log( result.imageUrl);
+                      NotificationManager.success("Update successful!", "Success");
                       this.setState({photoForShow: result.imageUrl});
                   }
               });

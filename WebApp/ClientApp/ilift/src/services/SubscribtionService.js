@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import {ServiceCredentials} from './ServiceCredentials';
 import {Subscribtion} from "../model/Subscribtion";
 
+import {NotificationManager} from "react-notifications";
+
 export class SubscribtionService extends Component {
 
 
@@ -63,7 +65,7 @@ export class SubscribtionService extends Component {
         try {
             if(result["answer"].localeCompare("Success") !== 0)
             {
-                alert(result["reason"]);
+                NotificationManager.error(result["reason"], "Error");
                 return null;
             }
             return result["subscribtions"].map((subs) => new Subscribtion(subs["id_user"],
@@ -80,12 +82,12 @@ export class SubscribtionService extends Component {
         try {
             if(result["answer"].localeCompare("Success") !== 0 && result["answer"].localeCompare("Warning") !== 0)
             {
-                alert(result["reason"]);
+                NotificationManager.error(result["reason"], "Error");
                 return null;
             }
             if(result["answer"].localeCompare("Warning") === 0)
             {
-                alert(result["reason"]);
+                NotificationManager.error(result["reason"], "Error");
             }
 
             return "Success";

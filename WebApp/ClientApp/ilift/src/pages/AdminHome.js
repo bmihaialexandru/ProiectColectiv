@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import {FooterAdmin} from '../components/FooterAdmin';
 import {HeaderAdmin} from '../components/HeaderAdmin';
+import {RoomsList} from '../components/RoomsList';
+import {_reloadJs} from '../js/reloadJs';
 
 
 export class AdminHome extends Component {
@@ -10,6 +12,7 @@ export class AdminHome extends Component {
   }
 
   render() {
+      _reloadJs();
       return (
         <div id="fh5co-wrapper">
         <div id="fh5co-page">
@@ -22,7 +25,7 @@ export class AdminHome extends Component {
             <div className="row">
               <div className="col-md-8 col-md-offset-2 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0 text-center fh5co-table">
                 <div className="fh5co-intro fh5co-table-cell animate-box">
-                  <h1 className="text-center">Hello , admin !</h1>
+                  <h1 className="text-center">Hello, admin !</h1>
                   <p> Here you can manage all the page data </p>
                 </div>
               </div>
@@ -32,15 +35,12 @@ export class AdminHome extends Component {
 
         <div id="fh5co-team-section">
         <div className="container">
-          <div>Punem toate inputurile pt admin</div>
           <div className="row about">
-            <div className="col-md-12 col-md-offset-0 animate-box">
-              <p>Info pt admin etc.. </p>
+            <div className="col-md-12 animate-box">
+              <RoomsList/>
             </div>
+
           </div>
-
-          
-
         </div>
       </div>
 

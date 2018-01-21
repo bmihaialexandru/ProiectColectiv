@@ -6,6 +6,7 @@ import '../template/css/bootstrap.css';
 
 
 import {PackageCourse} from "../model/PackageCourse";
+import {NotificationManager} from "react-notifications";
 
 
 export class PackagesList extends React.Component {
@@ -14,8 +15,6 @@ export class PackagesList extends React.Component {
         super(props);
         this.state = {packages: []};
         this.state.filterText = "";
-
-
         this.state.visible= false;
         this.state.currentPackage={id:0,name:'',description:'', pricing: 0, days: 0, courses: []};
         this.state.isAddButtonClicked = false;
@@ -34,9 +33,6 @@ export class PackagesList extends React.Component {
             let list = [];
 
             for (var packag = 0; packag < result.length; packag++){
-
-
-
                 let newPackage = {id: result[packag].id, name : result[packag].package_name, description: result[packag].description,
                     pricing: result[packag].pricing, days: result[packag].days, courses: result[packag].courses};
                 list.push(newPackage);
@@ -71,6 +67,9 @@ export class PackagesList extends React.Component {
             if(result == null) {
                 alert("Something went wrong.");
             }
+            else{
+                NotificationManager.success("Delete successful!", "Success");
+            }
             this.hide();
             this.update();
 
@@ -93,12 +92,19 @@ export class PackagesList extends React.Component {
                 <Rodal visible={this.state.visible}
                        onClose={this.hide.bind(this)}
                        animation={this.state.animation}>
-                    <div className="rodalheader">Delete package</div>
-                    <div className="rodalbody"><h4>Are you sure you want to delete package {this.state.currentPackage.name} ? </h4>
+
+                    <div><p> </p></div>
+                    <div className="rodalbody" style={{display: 'center'}}>
+                        <h4>This action is irreversible. <br/> Are you sure you want to delete package {this.state.currentPackage.name}? </h4>
+
+                    <div style={{marginLeft:150, marginTop:70}}>
+
+                    <button style={{marginRight:0}} className="btn btn-danger" onClick={this.deleteAccepted.bind(this)}>delete</button> <t>   </t>
+                    <button style={{marginRight:0}} className="btn " onClick={this.hide.bind(this)}>cancel</button>
                     </div>
-                    <button className="btn btn-success" onClick={this.deleteAccepted.bind(this)}>ok</button> <t>   </t>
-                    <button className="btn " onClick={this.hide.bind(this)}>close</button>
+                    </div>
                 </Rodal>
+
                 <SearchBar filterText={this.state.filterText} onUserInput={this.handleUserInput.bind(this)}  onButtonPressed={this.reRender.bind(this)}/>
                 <PackageTable update={this.update.bind(this)}  isButtonPressed={this.state.isAddButtonClicked}  onRowDel={this.handleRowDel.bind(this)} packages={this.state.packages} filterText={this.state.filterText}/>
             </div>
@@ -114,6 +120,8 @@ class SearchBar extends React.Component {
     render() {
         return (
             <div className="row">
+
+
 
                 <div className="col-xs-8" id="container" >
                     <input type="text" className="form-control" style={{width: 350}} placeholder="Search..." value={this.props.filterText} ref="filterTextInput" onChange={this.handleChange.bind(this)}/>
@@ -308,8 +316,10 @@ class PackageTable extends React.Component {
 
             SingletonService.PackageService.add_new_package(courseName, description, pricing, days, courses2).then((result) => {
 
-                console.log(result);
+                if(result !== null) {
+                NotificationManager.success("Add successful!", "Success");
                 this.props.update();
+                }
 
             });
     }
@@ -358,13 +368,13 @@ class PackageRow extends React.Component {
                     {this.state.days}
                     <p style={{display:'inline'}}> </p>
                 </td>
-                <td style={{textAlign:'left'}}>
+                <td style={{textAlign:'center'}}>
                     <p style={{display:'inline'}}> </p>
-                    <ul> {this.state.course.map((x) => <li style={{textDecorationColor:'#848484', fontSize:16}}>{x.name} : {x.number_subscribtions} classes</li>)} </ul>
+                    <ul> {this.state.course.map((x) => <li style={{textDecorationColor:'#848484', fontSize:16, display:"block"}}>{x.name} : {x.number_subscribtions} classes</li>)} </ul>
                     <p style={{display:'inline'}}> </p>
                 </td>
                 <td style={{textAlign:'center'}}>
-                    <input type="button" style={{alignSelf:'center'}} onClick={this.onDelEvent.bind(this)} value="X" className="btn btn-danger btn-xs"/><t> </t>
+                    <input type="button" style={{alignSelf:'center'}} onClick={this.onDelEvent.bind(this)} value="X" className="btn btn-danger btn-sm"/><t> </t>
 
                 </td>
             </tr>

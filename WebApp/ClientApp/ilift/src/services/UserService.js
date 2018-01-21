@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {ServiceCredentials} from './ServiceCredentials';
 import {User} from "../model/User";
+import {NotificationManager} from "react-notifications";
 
 export class UserService extends Component {
 
@@ -112,6 +113,7 @@ export class UserService extends Component {
         data.append("password", password);
         data.append("token", localStorage.getItem("token"));
 
+
         return fetch(this.server + "/interface/edit_user.php", {
             method: 'POST',
             headers: {
@@ -125,12 +127,27 @@ export class UserService extends Component {
         });
     }
 
+    change_password(oldPassword, newPassword){
+        return fetch(this.server + "/interface/change_password.php", {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: "username="+localStorage.getItem("username")+"&old_password="+oldPassword+"&new_password="+newPassword+"&token="+localStorage.getItem("token")
+        }).then(result=> {
+            return result.json();
+        }).then(result => {
+            return UserService._get_token_from_result(result)
+        });
+    }
+
     static _get_token_from_result(result) {
         try {
             if(result["answer"].localeCompare("Success") !== 0)
             {
                 // TODO: do this preetier maybe :D
-                alert(result["reason"]);
+                NotificationManager.error(result["reason"], "Error");
                 return null;
             }
             return result["token"];
@@ -144,7 +161,7 @@ export class UserService extends Component {
         try {
             if(result["answer"].localeCompare("Success") !== 0)
             {
-                alert(result["reason"]);
+                NotificationManager.error(result["reason"], "Error");
                 return null;
             }
             return new User(result["user"]["id"], result["user"]["name"], result["user"]["phone_number"], result["user"]["email"], result["user"]["user_type"], result["user"]["pass_changed"]);
@@ -158,9 +175,10 @@ export class UserService extends Component {
         try {
             if(result["answer"].localeCompare("Success") !== 0)
             {
-                alert(result["reason"]);
+                NotificationManager.error(result["reason"], "Error");
                 return null;
             }
+
             return "Success";
         } catch(error) {
             alert("Critical error: "+ error + ", please try again later");
@@ -172,7 +190,7 @@ export class UserService extends Component {
         try {
             if(result["answer"].localeCompare("Success") !== 0)
             {
-                alert(result["reason"]);
+                NotificationManager.error(result["reason"], "Error");
                 return null;
             }
             return result["users"].map((user) => new User(user["id"],

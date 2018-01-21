@@ -3,6 +3,7 @@ import Rodal from 'rodal';
 import {SingletonService} from "../services/SingletonService";
 import 'rodal/lib/rodal.css';
 import '../template/css/style.css';
+import {NotificationManager} from "react-notifications";
 
 
 export class PaymentList extends React.Component {
@@ -37,7 +38,7 @@ export class PaymentList extends React.Component {
                     }
                     for (let payment = 0; payment < result2.length; payment++) {
                         var newPayment = {id: result2[payment].id, userName: result[user].name,packageName: result2[payment].package_name,
-                            pricing:result2[payment].pricing, user_id: result2[payment].id_user, package_id: result2[payment].id_user};
+                            pricing:result2[payment].pricing, user_id: result2[payment].id_user, package_id: result2[payment].id_package};
                         allPayments.push(newPayment);
                     }
 
@@ -73,7 +74,10 @@ export class PaymentList extends React.Component {
         console.log(this.state.currentPayment);
         SingletonService.PackageService.make_payment(this.state.currentPayment.user_id,this.state.currentPayment.package_id,this.state.currentPayment.id).then((result) => {
             if(result == null) {
-                alert("Something went wrong.");
+                NotificationManager.error("Something went wrong.", "Error");
+            }
+            else{
+                NotificationManager.success("Payment successful!", "Success");
             }
             this.hide();
             this.update();
@@ -89,12 +93,14 @@ export class PaymentList extends React.Component {
 
                 <Rodal visible={this.state.visible}
                        onClose={this.hide.bind(this)}
-                       animation={this.state.animation}>
-                    <div className="rodalheader">.</div>
-                    <div className="rodalbody"><h4>{this.state.currentPayment.userName} paid for {this.state.currentPayment.packageName}.</h4>
+                       animation={this.state.animation}
+                        >
+                    <div><p> </p></div>
+                    <div className="rodalbody" style={{display: 'center'}}>
+                        <h4>{this.state.currentPayment.userName} paid for package {this.state.currentPayment.packageName}.</h4>
                     </div>
-                    <button className="btn " onClick={this.deleteAccepted.bind(this)}>ok</button> <t>   </t>
-                    <button className="btn " onClick={this.hide.bind(this)}>close</button>
+                    <button className="btn btn-success" onClick={this.deleteAccepted.bind(this)}>ok</button> <t>   </t>
+                    <button className="btn " onClick={this.hide.bind(this)}>cancel</button>
                 </Rodal>
                 <SearchBar filterText={this.state.filterText} onUserInput={this.handleUserInput.bind(this)}/>
                 <PaymentTable  update={this.update.bind(this)} onRowDel={this.handleRowDel.bind(this)} payments={this.state.payments} filterText={this.state.filterText}/>

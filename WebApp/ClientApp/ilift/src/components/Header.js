@@ -4,13 +4,15 @@ import {
     Persona,
     PersonaInitialsColor,
   } from 'office-ui-fabric-react/lib/Persona';
+import {NotificationContainer} from 'react-notifications';
 
 export class Header extends Component {
 
   render() {
+        const link = localStorage.username && localStorage.username === "admin" ? '/admin' : '/profile';
         const account = localStorage.username && 
         <li>
-            <Link to={'/profile'}>
+            <Link to={link}>
                 <Persona
                     primaryText={localStorage.username}
                     initialsColor={PersonaInitialsColor.red}
@@ -25,6 +27,7 @@ export class Header extends Component {
 
         return (
         <div id="fh5co-header">
+            <NotificationContainer/>
         <header id="fh5co-header-section">
         <div className="container">
             <div className="nav-header">

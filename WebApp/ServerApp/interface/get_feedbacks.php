@@ -26,33 +26,16 @@ else {
     $token_ok = true;
     $data = null;
 
-    try {
-        $data = $tokenService->validateToken($token);
-        $user = $ctrl->uctrl->get_user_by_name($data['name']);
-        if ($user["user_type"] != $data["role"]) {
-            throw new Exception("Mismatch user role");
-        }
-    } catch (Exception $e) {
-        $token_ok = false;
-    }
-
-    if ($token_ok == false) {
+    $feedbacks = $ctrl->fctrl->GetFeedbacks($id);
+    if($feedbacks == 1){
         $message->answer = "Error";
-        $message->reason = "Invalid token given";
+        $message->reason = "Invalid course id";
         echo json_encode($message);
-    } else {
-
-        $feedbacks = $ctrl->fctrl->GetFeedbacks($id);
-        if($feedbacks == 1){
-            $message->answer = "Error";
-            $message->reason = "Invalid course id";
-            echo json_encode($message);
-        }
-        else{
-            $message->answer = "Success";
-            $message->feedbacks = $feedbacks;
-            echo json_encode($message);
-        }
+    }
+    else{
+        $message->answer = "Success";
+        $message->feedbacks = $feedbacks;
+        echo json_encode($message);
     }
 }
 ?>
