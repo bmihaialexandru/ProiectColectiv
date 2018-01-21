@@ -272,9 +272,10 @@ export class ScheduleList extends React.Component {
         var schedule = this.state.currentSchedule;
         console.log(this.state.currentSchedule);
         SingletonService.ScheduleService.add_schedule_entry(localStorage.getItem("token"), schedule.type, schedule.dateStart, schedule.dateEnd, schedule.hourStart, schedule.hourFinish, course_id, trainer_id, room_id, this.state.id_icon).then((result) => {
-            console.log(result);
-            NotificationManager.success("Add successful!", "Success");
-            this.loadData();
+            if(result !== null) {
+                NotificationManager.success("Add successful!", "Success");
+                this.loadData();
+            }
 
         });
         //this.render();

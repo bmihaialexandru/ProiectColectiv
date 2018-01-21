@@ -48,13 +48,18 @@ else{
     else
     {
         if(!empty($type) and !empty($start_day) and !empty($end_day) and !empty($hour_start) and !empty($hour_finish)
-            and !empty($id_course) and !empty($id_trainer) and !empty($id_training_room) and !empty($id_icon))
+            and !empty($id_course) and !empty($id_trainer) and !empty($id_training_room) and !empty($id_icon) and $id_icon != 'undefined')
         {
 
             $begin = new DateTime( $start_day );
             $end = new DateTime( $end_day );
 
+
+
             $interval = DateInterval::createFromDateString('1 day');
+            if($start_day == $end_day) {
+                $end->add($interval);
+            }
             if($type=="weekly"){
                 $interval = DateInterval::createFromDateString('1 week');
             }

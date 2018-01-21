@@ -15,7 +15,8 @@ export class SubscriptionCard extends Component {
             courses: this.props.courses,
             expirationDate: this.props.expirationDate,
             isRenew: this.props.isRenew,
-            isSubscribed: this.props.isSubscribed
+            isSubscribed: this.props.isSubscribed,
+            isLoggedIn: localStorage.getItem("token") !== null
         }
     }
 
@@ -36,7 +37,7 @@ export class SubscriptionCard extends Component {
                         })
                     }
                 </ul>
-                { ( !this.state.isSubscribed || this.props.isRenew ) &&
+                { ( !this.state.isSubscribed || this.props.isRenew ) && this.state.isLoggedIn &&
                     <button className="btn btn-default" onClick={() => {this._subscribeToPackage();}}>{buttonText}</button>
                 }
             </div>
